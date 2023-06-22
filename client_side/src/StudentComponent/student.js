@@ -6,11 +6,11 @@ import designs from "../StudentComponent/CSShandler.json"
 
 const Student = () => {
     return (
-        <div>
+        <div >
             <div>
                 <nav className={`${designs.Navbar["d-1"]}`}>
                     <div className={`${designs.Navbar["d-2"]}`}>
-                        <img src={Niit_logo} className={`${designs.Navbar["d-3"]}`} />
+                        <img src={Niit_logo} alt={`${Strings.navbar_heading_1}`} className={`${designs.Navbar["d-3"]}`} />
                         <h1 className={`${designs.Navbar["d-4"]}`}>{Strings.navbar_heading_1}</h1>
                     </div>
                     <div className={`${designs.Navbar["d-5"]}`}>
@@ -18,7 +18,7 @@ const Student = () => {
                             <li className={`${designs.Navbar["d-7"]}`}>{Strings.list_1}</li>
                             <li className={`${designs.Navbar["d-7"]}`}>{Strings.list_2}</li>
                         </ul>
-                        <img src={Logout} alt="logout" className={`${designs.Navbar["d-8"]}`} />
+                        <img src={Logout} alt={`${Strings["alt-1"]}`} className={`${designs.Navbar["d-8"]}`} />
                     </div>
                 </nav>
             </div>
