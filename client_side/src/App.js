@@ -1,5 +1,5 @@
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
-import Student from './StudentComponent/Student';
+import Student from './StudentComponent/StudentsDashboard/Student';
 
 
 function App() {

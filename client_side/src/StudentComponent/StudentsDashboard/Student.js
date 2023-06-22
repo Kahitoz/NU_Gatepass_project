@@ -1,8 +1,8 @@
 import React from "react";
-import Niit_logo from "../StudentComponent/icons/icon-niit.png";
-import Logout from "../StudentComponent/icons/icon-logout.png";
-import Strings from "../StudentComponent/Strings.json";
-import designs from "../StudentComponent/CSShandler.json"
+import Niit_logo from "../../StudentComponent/icons/icon-niit.png";
+import Logout from "../../StudentComponent/icons/icon-logout.png";
+import Strings from "../StudentsDashboard/Strings.json";
+import designs from "../StudentsDashboard/CSShandler.json"
 
 const Student = () => {
     return (
@@ -22,8 +22,6 @@ const Student = () => {
                     </div>
                 </nav>
             </div>
-
-
         </div>
     );
 };
