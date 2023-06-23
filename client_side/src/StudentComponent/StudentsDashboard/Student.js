@@ -2,9 +2,10 @@ import React from "react";
 import Niit_logo from "../../StudentComponent/icons/icon-niit.png";
 import Logout from "../../StudentComponent/icons/icon-logout.png";
 import Strings from "../StudentsDashboard/Strings.json";
-import designs from "../StudentsDashboard/CSShandler.json";
+import designs from "./CSShandler";
 
 const Student = () => {
+
   return (
     <div>
       <div>

@@ -1,4 +1,4 @@
-{
+const designs={
     "Navbar":{
         "d-1":"bg-background flex justify-between items-center",
         "d-2":"flex items-center",
@@ -10,3 +10,5 @@
         "d-8":"mb-2 mr-2 mt-2 w-8 h-8"
     }
 }
+
+export default designs;
