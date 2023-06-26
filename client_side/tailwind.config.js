@@ -16,7 +16,7 @@ module.exports = {
         background: '#FAEEEE',
         foreground: '#EEDFDF',
         Card: '#FFFFFF',
-        'Navbar-bg': '#85151C',
+        "Navbar_bg": '#85151C',
       },
     },
   },

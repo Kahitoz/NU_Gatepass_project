@@ -1,8 +1,8 @@
 import React from "react";
-import Niit_logo from "../StudentComponent/icons/icon-niit.png"
-import Logout from "../StudentComponent/icons/icon-logout.png";
-import Strings from "./StudentsDashboard/Strings.json";
-import designs from "./NavbarCSS";
+import Niit_logo from "../icons/icon-niit.png"
+import Logout from "../icons/icon-logout.png";
+import Strings from "../StudentsDashboard/Strings.json";
+import designs from "../StudentStyling/S1_NavbarCSS";
 
 const StudentNavbar = () => {
 
@@ -14,11 +14,12 @@ const StudentNavbar = () => {
             <img
               src={Niit_logo}
               alt={`${Strings.navbar_heading_1}`}
-              className={`${designs.Navbar["d-3"]}`}
+              className={`${designs.Navbar["d-3"]}`}w
             />
             <h1 className={`${designs.Navbar["d-4"]}`}>
               {Strings.navbar_heading_1}
             </h1>
+            
           </div>
           <div className={`${designs.Navbar["d-5"]}`}>
             <ul className={`${designs.Navbar["d-6"]}`}>
