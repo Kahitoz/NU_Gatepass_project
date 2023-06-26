@@ -1,13 +1,18 @@
-import React from 'react'
-import StudentNavbar from "../StudentNavbar"
-
+import React from "react";
+import StudentNavbar from "../StudentSkeleton/StudentNavbar";
+import StudentSubNavbar from "../StudentSkeleton/StudentSubNavbar";
 
 const StudentDashboard = () => {
   return (
     <div>
-       <StudentNavbar/>
+      <div>
+        <StudentNavbar />
+      </div>
+      <div>
+        <StudentSubNavbar/>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default StudentDashboard
+export default StudentDashboard;
