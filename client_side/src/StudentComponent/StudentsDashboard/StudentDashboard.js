@@ -1,6 +1,6 @@
 import React from "react";
-import StudentNavbar from "../StudentSkeleton/StudentNavbar";
-import StudentSubNavbar from "../StudentSkeleton/StudentSubNavbar";
+import StudentNavbar from "../StudentSkeleton/S1_Navbar";
+import StudentSubNavbar from "../StudentSkeleton/S2_SubNavbar";
 
 const StudentDashboard = () => {
   return (

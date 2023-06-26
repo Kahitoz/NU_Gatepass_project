@@ -1,6 +1,6 @@
 import React from "react";
 import Clouds from "../icons/icon-clouds.png";
-import designs from "../StudentStyling/StudentSubNavbarCSS"
+import designs from "../StudentStyling/S2_SubNavbarCSS"
 const StudentSubNavbar = () => {
   return (
     <div className={`${designs.subnav.d1}`}>
