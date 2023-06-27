@@ -9,7 +9,7 @@ const GuardSubNavbar = () => {
         <button className=" text-white mt-5 mb-0 pb-0 text-xs text-center p-2 rounded-sm hover:text-Navbar_bg hover:bg-white" onClick={()=>{alert('clicked')}}> Check in</button>
       </div>
       <div>
-        <input type="text" placeholder="Search" className="bg-background pl-2 rounded-md"></input>
+        <input type="text" placeholder="Search" className="bg-background p-1.5 text-xs rounded-md"></input>
       </div>
     </div>
   );
