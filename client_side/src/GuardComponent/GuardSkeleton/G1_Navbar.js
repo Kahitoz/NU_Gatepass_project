@@ -23,8 +23,8 @@ const StudentNavbar = () => {
           </div>
           <div className={`${designs.Navbar["d-5"]}`}>
             <ul className={`${designs.Navbar["d-6"]}`}>
-              <li className={`${designs.Navbar["d-7"]}`}>{Strings.list_1}</li>
-              <li className={`${designs.Navbar["d-7"]}`}>{Strings.list_2}</li>
+              <button className={`${designs.Navbar["d-7"]}`} onClick={()=>{alert(`clicked ${Strings.list_1}`)}}>{Strings.list_1}</button>
+              <button className={`${designs.Navbar["d-7"]}`} onClick={()=>{alert(`clicked ${Strings.list_2}`)}}>{Strings.list_2}</button>
             </ul>
             <img
               src={Logout}

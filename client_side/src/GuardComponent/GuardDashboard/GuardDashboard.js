@@ -4,8 +4,8 @@ import GuardSubNavbar from "../GuardSkeleton/G2_SubNavbar";
 import GuardTable from "../GuardSkeleton/G3_Table"
 const GuardDashboard = () => {
   return (
-    <div>
-      <div>
+    <div className="bg-background w-screen h-screen">
+      <div >
         <GuardNavbar />
       </div>
       <div>
