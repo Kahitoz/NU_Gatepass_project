@@ -1,6 +1,6 @@
 const designs={
     "Navbar":{
-        "d-1":"bg-background flex justify-between items-center",
+        "d-1":"bg-background fixed w-full flex border border-b-Items_bg justify-between items-center sm:static sm:border-none",
         "d-2":"flex items-center",
         "d-3":" ml-1 mt-2 mb-2",
         "d-4":"text-text-2 ml-2 text-xs font-bold sm:ml-4 sm:text-xl",
