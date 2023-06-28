@@ -1,27 +1,33 @@
-import designs from "../StudentStyling/S3_WidgetsCSS"
-const S3_Widgets = () => {
+import designs from "../WardenStyling/W3_WidgetsCSS"
+const W3_Widgets = () => {
+  const dropdown_values=["MyGatepassRequest","OthersGatepassRequest"];
   return (
     <div className={`${designs.d1}`}>
       <div className={`${designs.d2 }`}>
       <div className={`items-center justify-center text-center flex flex-col sm:flex-row`}>
-            <h1 className={`font-bold me-2`}>Local Fixed Gatepass Available:</h1>
-            <p>3</p>
+            <select name="GatepassDropdown">
+                <option value={dropdown_values[0]}>My Gatepass Request</option>
+                <option value={dropdown_values[1]}>Others Gatepass Request</option>
+            </select>
       </div>
     
       </div>
 
       <div className={`${designs.d2}`}>
-        <h1 className={`text-green-500 font-bold`}>Gatepass Allowed</h1>
+      <div className={`items-center justify-center text-center flex flex-col sm:flex-row`}>
+         <h1 className={`font-bold me-2`}>Students on Campus:</h1>
+         <p>00</p>
+      </div>
       </div>
 
       <div className={`${designs.d2}`}>
       <div className={`items-center justify-center text-center flex flex-col sm:flex-row`}>
-         <h1 className={`font-bold me-2`}>Last Gatepass Status:</h1>
-         <p className={`text-blue-700`}>Pending</p>
+         <h1 className={`font-bold me-2`}>My Pending Requests:</h1>
+         <p >00</p>
       </div>
        
       </div>
     </div>
   );
 };
-export default S3_Widgets;
+export default W3_Widgets;
