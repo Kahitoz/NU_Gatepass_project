@@ -6,7 +6,7 @@ const WardenSubNavbar = ({tabs}) => {
       <div className={`${designs.subnav.d2}`}>
         <h1 className={`${designs.subnav.d3}`}>Welcome Warden</h1>
         <div>
-        {tabs.map(tab => <button className=" text-white -ml-2 mt-5 mb-0 pb-0 text-xs text-center p-2 rounded-sm  hover:text-Navbar_bg hover:bg-white " onClick={()=>{alert('clicked')}}> {tab}</button>)
+        {tabs.map(tab => <button className=" text-white -ml-1 mr-2 mt-5 mb-0 pb-0 text-xs text-center p-2 rounded-sm  hover:text-Navbar_bg hover:bg-white " onClick={()=>{alert('clicked')}}> {tab}</button>)
         }
       </div>
       </div>
