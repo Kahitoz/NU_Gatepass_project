@@ -3,9 +3,9 @@ import GuardNavbar from "../GuardSkeleton/G1_Navbar";
 import GuardSubNavbar from "../GuardSkeleton/G2_SubNavbar";
 import GuardTable from "../GuardSkeleton/G3_Table"
 const GuardDashboard = () => {
-  const [Suboption, setSubOption] = useState("checkout")
+  const [Suboption, setSubOption] = useState("Check Out")
   const [option, setOption] = useState("Students")
-  useEffect(() => {setSubOption('checkout')},[option])
+  useEffect(() => {setSubOption('Check Out')},[option])
   return (
     <div className="bg-background w-screen h-screen">
       <div >
