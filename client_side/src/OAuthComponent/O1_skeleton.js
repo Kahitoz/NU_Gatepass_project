@@ -58,7 +58,7 @@ const O1_skeleton = () => {
       } else if (role === 5) {
         navigate("/guard");
       } else if (role ===2){
-        navigate("/warden")
+        navigate("/warden/home")
       }
     }
   }, [user, role]);
