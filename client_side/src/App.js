@@ -1,14 +1,14 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Student from "./StudentComponent/StudentsDashboard/StudentDashboard";
 import Guard from "./GuardComponent/GuardDashboard/GuardDashboard";
+import Student from "./StudentComponent/StudentsScreen/S1_Dashboard";
 
 function App() {
   return (
     <div>
       <Router>
         <Routes>
-          <Route exact path="*" element={<Student />}></Route>
           <Route exact path="/guard" element={<Guard />}></Route>
+          <Route exact path="/student/home" element={<Student />}></Route>
         </Routes>
       </Router>
     </div>

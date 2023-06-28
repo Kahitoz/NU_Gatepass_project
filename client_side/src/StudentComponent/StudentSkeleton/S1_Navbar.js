@@ -1,7 +1,7 @@
 import React from "react";
 import Niit_logo from "../icons/icon-niit.png"
 import Logout from "../icons/icon-logout.png";
-import Strings from "../StudentsDashboard/Strings.json";
+import Strings from "../StudentsScreen/Strings.json";
 import designs from "../StudentStyling/S1_NavbarCSS";
 
 const StudentNavbar = () => {

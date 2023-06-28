@@ -4,6 +4,7 @@ import designs from "../StudentStyling/S2_SubNavbarCSS"
 const StudentSubNavbar = () => {
   return (
     <div className={`${designs.subnav.d1}`}>
+
       <div className={`${designs.subnav.d2}`}>
         <h1 className={`${designs.subnav.d3}`}>Welcome Students</h1>
         <div className={`${designs.subnav.d4} `}>
