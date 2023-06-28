@@ -51,46 +51,45 @@ const S6_Form = () => {
 
   return (
     <div className="bg-background">
-      <div className="relative p-2">
-        <button
-          className="bg-gray-200 text-gray-700 py-2 px-4 rounded-md"
-          onClick={handleDropdownToggle}
-        >
-          {selectedOption ? selectedOption : "Select an Option"}
-        </button>
-        {isOpen && (
-          <div className="absolute left-0 mt-2 py-2 w-40 bg-white rounded-md shadow-lg z-10">
-            <button
-              className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-              onClick={() => handleOptionSelect("Local Fixed")}
-            >
-              Local Fixed
-            </button>
-            <button
-              className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-              onClick={() => handleOptionSelect("Local Flexible")}
-            >
-              Local Flexible
-            </button>
-            <button
-              className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-              onClick={() => handleOptionSelect("Outstation")}
-            >
-              Outstation
-            </button>
-            <button
-              className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-              onClick={() => handleOptionSelect("Emergency")}
-            >
-              Emergency
-            </button>
-          </div>
-        )}
-      </div>
-
-      <div className={designs.d10}>
+      <div className="p-2 flex justify-center">
         <div className={designs.d11}>
           <div className={designs.d12}>
+            <div className=" p-2">
+              <button
+                className="bg-gray-200 text-gray-700 py-2 px-4 rounded-md"
+                onClick={handleDropdownToggle}
+              >
+                {selectedOption ? selectedOption : "Select an Option"}
+              </button>
+              {isOpen && (
+                <div className="absolute left-0 mt-2 py-2 w-40 bg-white rounded-md shadow-lg z-10">
+                  <button
+                    className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                    onClick={() => handleOptionSelect("Local Fixed")}
+                  >
+                    Local Fixed
+                  </button>
+                  <button
+                    className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                    onClick={() => handleOptionSelect("Local Flexible")}
+                  >
+                    Local Flexible
+                  </button>
+                  <button
+                    className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                    onClick={() => handleOptionSelect("Outstation")}
+                  >
+                    Outstation
+                  </button>
+                  <button
+                    className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                    onClick={() => handleOptionSelect("Emergency")}
+                  >
+                    Emergency
+                  </button>
+                </div>
+              )}
+            </div>
             {departureDateVisible && (
               <>
                 <p className="font-bold mb-2">Departure Date</p>
@@ -198,6 +197,9 @@ const S6_Form = () => {
                 </div>
               </>
             )}
+            <button className="bg-text-2 p-3 rounded-lg mt-5 text-white">
+              Apply Gatepass
+            </button>
           </div>
         </div>
       </div>
