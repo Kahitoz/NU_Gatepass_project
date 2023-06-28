@@ -1,18 +1,21 @@
-import React from "react";
+import React, { useState,useEffect } from "react";
 import GuardNavbar from "../GuardSkeleton/G1_Navbar";
 import GuardSubNavbar from "../GuardSkeleton/G2_SubNavbar";
 import GuardTable from "../GuardSkeleton/G3_Table"
 const GuardDashboard = () => {
+  const [Suboption, setSubOption] = useState("checkout")
+  const [option, setOption] = useState("Students")
+  useEffect(() => {setSubOption('checkout')},[option])
   return (
     <div className="bg-background w-screen h-screen">
       <div >
-        <GuardNavbar />
+        <GuardNavbar setOption={setOption}/>
       </div>
       <div>
-        <GuardSubNavbar/>
+        <GuardSubNavbar setSubOption={setSubOption}/>
       </div>
       <div>
-        <GuardTable/>
+        <GuardTable NavOption={option} SubNavOption={Suboption}/>
       </div>
     </div>
   );

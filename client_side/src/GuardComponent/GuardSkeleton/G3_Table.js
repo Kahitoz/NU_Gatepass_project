@@ -1,5 +1,27 @@
 import designs from "../GuardStyling/G3_TableCSS";
-const G3_table = (props) => {
+import { useState } from "react";
+import { useEffect } from "react";
+
+const G3_table = (props) => { 
+  useEffect(()=>{
+    if (props.NavOption === "Students") {
+      if(props.SubNavOption === "checkout"){
+        alert("checkout Students")
+  }
+  if(props.SubNavOption === "checkin"){
+    alert("checkin Students")
+}
+}
+if (props.NavOption === "Visitors") {
+  if(props.SubNavOption === "checkout"){
+    alert("checkout Visitors")
+}
+if(props.SubNavOption === "checkin"){
+alert("checkin Visitors")
+}
+}
+},[props.NavOption,props.SubNavOption])
+
   return (
     <div className="bg-background">
       <div>
