@@ -1,9 +1,9 @@
 import React from "react";
 import Niit_logo from "../icons/icon-niit.png"
 import Logout from "../icons/icon-logout.png";
-import Strings from "../WardenDashboard/Strings.json";
+import Strings from "../WardenScreens/Strings.json";
 import designs from "../WardenStyling/W1_NavbarCSS";
-
+import { Link } from "react-router-dom";
 const StudentNavbar = () => {
 
   return (
@@ -23,9 +23,15 @@ const StudentNavbar = () => {
           </div>
           <div className={`${designs.Navbar["d-5"]}`}>
             <ul className={`${designs.Navbar["d-6"]}`}>
-              <button className={`${designs.Navbar["d-7"]}`} onClick={()=>{alert(`clicked ${Strings.list_1}`)}}>{Strings.list_1}</button>
-              <button className={`${designs.Navbar["d-7"]}`} onClick={()=>{alert(`clicked ${Strings.list_2}`)}}>{Strings.list_2}</button>
-              <button className={`${designs.Navbar["d-7"]}`} onClick={()=>{alert(`clicked ${Strings.list_3}`)}}>{Strings.list_3}</button>
+              <Link to="/Warden/home">
+              <li className={`${designs.Navbar["d-7"]}`}>{Strings.list_1}</li>
+              </Link>
+              <Link to="/Warden/reports">
+              <li className={`${designs.Navbar["d-7"]}`}>{Strings.list_2}</li>
+              </Link>
+              <Link to="/Warden/ApplyLeave">
+              <li className={`${designs.Navbar["d-7"]}`}>{Strings.list_3}</li>
+              </Link>
             </ul>
             <button onClick={()=>{alert('clicked')}}> 
             <img

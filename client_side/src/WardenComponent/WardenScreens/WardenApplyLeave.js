@@ -4,14 +4,15 @@ import SubNavbar from "../WardenSkeleton/W2_SubNavbar";
 import Widgets from "../WardenSkeleton/W3_Widgets"
 import Table from "../WardenSkeleton/W4_Table"
 
-const WardenDashboard = () => {
+const WardenApplyLeave = () => {
+  const tabs=["Apply Leave","Warden Leave Management"];
   return (
     <div>
       <div>
         <Navbar />
       </div>
       <div>
-        <SubNavbar/>
+        <SubNavbar tabs={tabs}/>
       </div>
       <div>
       <Widgets/>
@@ -23,4 +24,4 @@ const WardenDashboard = () => {
   );
 };
 
-export default WardenDashboard;
+export default WardenApplyLeave;
