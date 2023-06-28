@@ -1,8 +1,7 @@
 import React from "react";
 import Navbar from "../WardenSkeleton/W1_Navbar";
 import SubNavbar from "../WardenSkeleton/W2_SubNavbar";
-import Widgets from "../WardenSkeleton/W3_Widgets"
-import Table from "../WardenSkeleton/W4_Table"
+import LeaveForm from "../WardenSkeleton/W5_LeaveForm"
 
 const WardenApplyLeave = () => {
   const tabs=["Apply Leave","Warden Leave Management"];
@@ -15,10 +14,7 @@ const WardenApplyLeave = () => {
         <SubNavbar tabs={tabs}/>
       </div>
       <div>
-      <Widgets/>
-      </div>
-      <div>
-        <Table/>
+      <LeaveForm/>
       </div>
     </div>
   );
