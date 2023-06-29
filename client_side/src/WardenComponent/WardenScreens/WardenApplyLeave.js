@@ -6,7 +6,7 @@ import LeaveForm from "../WardenSkeleton/W5_LeaveForm"
 const WardenApplyLeave = () => {
   const tabs=["Apply Leave","Warden Leave Management"];
   return (
-    <div>
+    <div className="w-screen h-screen bg-background">
       <div>
         <Navbar />
       </div>
