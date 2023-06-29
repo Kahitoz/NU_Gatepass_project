@@ -94,6 +94,7 @@ const getData= async () => {
         },
         body: JSON.stringify({
           check_in_by: "nugr11",
+          check_out_by: "nugr11",
           user_id: user_id,
           request_id: request_id,
         }),
