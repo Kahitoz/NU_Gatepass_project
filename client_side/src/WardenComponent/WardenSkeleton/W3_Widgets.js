@@ -1,11 +1,11 @@
 import designs from "../WardenStyling/W3_WidgetsCSS"
-const W3_Widgets = () => {
+const W3_Widgets = ({setGpDropdown}) => {
   const dropdown_values=["MyGatepassRequest","OthersGatepassRequest"];
   return (
     <div className={`${designs.d1}`}>
       <div className={`${designs.d2 }`}>
       <div className={`items-center justify-center text-center flex flex-col sm:flex-row`}>
-            <select name="GatepassDropdown">
+            <select name="GatepassDropdown" onChange={(e) => setGpDropdown(e.target.value)}>
                 <option value={dropdown_values[0]}>My Gatepass Request</option>
                 <option value={dropdown_values[1]}>Others Gatepass Request</option>
             </select>
