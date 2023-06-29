@@ -26,7 +26,7 @@ const WardenSubNavbar = ({tabs}) => {
       </div>
       </div>
       <div>
-        <input type="text" placeholder="Search" className="bg-background p-1.5 text-xs rounded-md"></input>
+        <input type="text" placeholder="Search" className="bg-background p-1.5 text-xs rounded-md mb-4 sm:mb-0"></input>
       </div>
     </div>
   );
