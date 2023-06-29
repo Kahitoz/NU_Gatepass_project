@@ -2,9 +2,10 @@ import React from "react";
 import designs from "../WardenStyling/W2_SubNavbarCSS"
 import { useNavigate } from "react-router-dom";
 
-const WardenSubNavbar = ({tabs}) => {
+const WardenSubNavbar = ({tabs,setSubNavOption}) => {
   const navigate = useNavigate();
   const nav=(e)=>{
+    let dashboardTabs=["Pending Requests","Approved","Cancelled","Visitor Requests","AutoApproved"]  // this is for WardenDashboard SubNavbar
     let name=e.target.name
     if(name==="Apply Leave"){
       navigate("/Warden/ApplyLeave")
@@ -12,8 +13,9 @@ const WardenSubNavbar = ({tabs}) => {
     if(name==="Warden Leave Management"){
       navigate("/Warden/WardenLeaveManagement")
     }
-    if(name in ["Pending Requests","Approved","Cancelled","Visitor Requests","AutoApproved"]){
-      navigate("/Warden/home") // update this area with populate Table Later
+    if( dashboardTabs.includes(name) ){
+      setSubNavOption(name)
+      console.log(name); // update this area with populate Table Later
     }
   }
   return (
@@ -26,7 +28,7 @@ const WardenSubNavbar = ({tabs}) => {
       </div>
       </div>
       <div>
-        <input type="text" placeholder="Search" className="bg-background p-1.5 text-xs rounded-md mb-4 sm:mb-0"></input>
+        <input type="text" placeholder="Search" className="bg-background p-1.5 text-xs rounded-md"></input>
       </div>
     </div>
   );
