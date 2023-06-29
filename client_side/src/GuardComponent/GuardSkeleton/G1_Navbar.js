@@ -4,7 +4,7 @@ import Logout from "../icons/icon-logout.png";
 import Strings from "../GuardDashboard/Strings.json";
 import designs from "../GuardStyling/G1_NavbarCSS";
 
-const StudentNavbar = () => {
+const StudentNavbar = ({setOption}) => {
 
   return (
     <div>
@@ -23,8 +23,8 @@ const StudentNavbar = () => {
           </div>
           <div className={`${designs.Navbar["d-5"]}`}>
             <ul className={`${designs.Navbar["d-6"]}`}>
-              <button className={`${designs.Navbar["d-7"]}`} onClick={()=>{alert(`clicked ${Strings.list_1}`)}}>{Strings.list_1}</button>
-              <button className={`${designs.Navbar["d-7"]}`} onClick={()=>{alert(`clicked ${Strings.list_2}`)}}>{Strings.list_2}</button>
+              <button className={`${designs.Navbar["d-7"]}`} onClick={()=>{setOption(`${Strings.list_1}`)}}>{Strings.list_1}</button>
+              <button className={`${designs.Navbar["d-7"]}`} onClick={()=>{setOption(`${Strings.list_2}`)}}>{Strings.list_2}</button>
             </ul>
             <button onClick={()=>{alert('clicked')}}> 
             <img
