@@ -1,9 +1,13 @@
 import { useState } from "react";
 import designs from "../StudentStyling/S5_ProfileCSS";
+import DatePicker from "react-datepicker";
+import TimePicker from "react-time-picker";
+import "react-datepicker/dist/react-datepicker.css";
+import "react-time-picker/dist/TimePicker.css";
+
 
 const S6_Form = () => {
-  const [selectedOption, setSelectedOption] = useState(""); // State to track the selected option
-  const [isOpen, setIsOpen] = useState(false);
+  const [selectedOption, setSelectedOption] = useState("");
   const [wselec, setWselect] = useState("");
   const [wOpen, setWopen] = useState(false);
 
@@ -17,7 +21,6 @@ const S6_Form = () => {
 
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
-    setIsOpen(false);
     setDepartureDateVisible(true);
     setDepartureTimeVisible(true);
     setArrivalDateVisible(true);
@@ -36,10 +39,6 @@ const S6_Form = () => {
     }
   };
 
-  const handleDropdownToggle = () => {
-    setIsOpen(!isOpen);
-  };
-
   const handleWselect = (option) => {
     setWselect(option);
     setWopen(false);
@@ -49,90 +48,91 @@ const S6_Form = () => {
     setWopen(!wOpen);
   };
 
+  const Altwardens = ["Warden-1", "Warden-2", "Warden-3"];
+
   return (
     <div className="bg-background">
       <div className="p-2 flex justify-center">
         <div className={designs.d11}>
           <div className={designs.d12}>
             <div className=" p-2">
-              <button
+              <select
                 className="bg-gray-200 text-gray-700 py-2 px-4 rounded-md"
-                onClick={handleDropdownToggle}
+                value={selectedOption}
+                onChange={(e) => handleOptionSelect(e.target.value)}
               >
-                {selectedOption ? selectedOption : "Select an Option"}
-              </button>
-              {isOpen && (
-                <div className="absolute left-0 mt-2 py-2 w-40 bg-white rounded-md shadow-lg z-10">
-                  <button
-                    className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                    onClick={() => handleOptionSelect("Local Fixed")}
-                  >
-                    Local Fixed
-                  </button>
-                  <button
-                    className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                    onClick={() => handleOptionSelect("Local Flexible")}
-                  >
-                    Local Flexible
-                  </button>
-                  <button
-                    className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                    onClick={() => handleOptionSelect("Outstation")}
-                  >
-                    Outstation
-                  </button>
-                  <button
-                    className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                    onClick={() => handleOptionSelect("Emergency")}
-                  >
-                    Emergency
-                  </button>
-                </div>
-              )}
+                <option value="">Select an Option</option>
+                <option value="Local Fixed">Local Fixed</option>
+                <option value="Local Flexible">Local Flexible</option>
+                <option value="Outstation">Outstation</option>
+                <option value="Emergency">Emergency</option>
+              </select>
             </div>
+
             {departureDateVisible && (
-              <>
-                <p className="font-bold mb-2">Departure Date</p>
-                <input
-                  type="text"
-                  className={designs.d13}
-                  placeholder="Date to be fetched from server"
-                />
-              </>
-            )}
+  <>
+    <p className="font-bold mb-2">Departure Date</p>
+    <div className={designs.d13}>
+         <DatePicker
+      selected={new Date()} // Provide the selected date value here
+      onChange={(date) => console.log(date)} // Handle the date change
+      className="bg-Items_bg"
+      placeholderText="Date to be fetched from server"
+      disabled={selectedOption === "Local Fixed"} // Disable the picker when Local Fixed is selected
+    />
+    </div>
+ 
+  </>
+)}
 
-            {departureTimeVisible && (
-              <>
-                <p className="font-bold mb-2">Departure Time</p>
-                <input
-                  type="text"
-                  className={designs.d13}
-                  placeholder="Time to be fetched from the server"
-                />
-              </>
-            )}
+{departureTimeVisible && (
+  <>
+    <p className="font-bold mb-2">Departure Time</p>
+    <div className={designs.d13}>
+       <TimePicker
+      value="12:00" // Provide the selected time value here
+      onChange={(time) => console.log(time)} // Handle the time change
 
-            {arrivalDateVisible && (
-              <>
-                <p className="font-bold mb-2">Arrival Date</p>
-                <input
-                  type="text"
-                  className={designs.d13}
-                  placeholder="Date to be fetched from server"
-                />
-              </>
-            )}
+      placeholder="Time to be fetched from server"
+      disabled={selectedOption === "Local Fixed"} // Disable the picker when Local Fixed is selected
+    />
+    </div>
+   
+  </>
+)}
 
-            {arrivalTimeVisible && (
-              <>
-                <p className="font-bold mb-2">Arrival Time</p>
-                <input
-                  type="text"
-                  className={designs.d13}
-                  placeholder="Time to be fetched from server"
-                />
-              </>
-            )}
+{arrivalDateVisible && (
+  <>
+    <p className="font-bold mb-2">Arrival Date</p>
+    <div className={designs.d13}>
+    <DatePicker
+    className="bg-Items_bg "
+      selected={new Date()} // Provide the selected date value here
+      onChange={(date) => console.log(date)} // Handle the date change
+      placeholderText="Date to be fetched from server"
+      disabled={selectedOption === "Local Fixed"} // Disable the picker when Local Fixed is selected
+    />
+    </div>
+   
+  </>
+)}
+
+{arrivalTimeVisible && (
+  <>
+    <p className="font-bold mb-2">Arrival Time</p>
+    <div className={designs.d13}>
+      <TimePicker
+      value="12:00" // Provide the selected time value here
+      onChange={(time) => console.log(time)} // Handle the time change
+      className="bg-Items_bg border border-collapse"
+      placeholder="Time to be fetched from server"
+      disabled={selectedOption === "Local Fixed"} // Disable the picker when Local Fixed is selected
+    />
+    </div>
+   
+  </>
+)}
+
 
             {destinationVisible && (
               <>
@@ -168,30 +168,15 @@ const S6_Form = () => {
                   </button>
                   {wOpen && (
                     <div className="absolute left-0 mt-2 py-2 w-40 bg-white rounded-md shadow-lg z-10">
-                      <button
-                        className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                        onClick={() => handleWselect("Warden 1")}
-                      >
-                        Warden 1
-                      </button>
-                      <button
-                        className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                        onClick={() => handleWselect("Warden 2")}
-                      >
-                        Warden 2
-                      </button>
-                      <button
-                        className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                        onClick={() => handleWselect("Warden 3")}
-                      >
-                        Warden 3
-                      </button>
-                      <button
-                        className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                        onClick={() => handleWselect("Warden 4")}
-                      >
-                        Warden 4
-                      </button>
+                      {Altwardens.map((warden) => (
+                        <button
+                          className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                          onClick={() => handleWselect(warden)}
+                          key={warden}
+                        >
+                          {warden}
+                        </button>
+                      ))}
                     </div>
                   )}
                 </div>
