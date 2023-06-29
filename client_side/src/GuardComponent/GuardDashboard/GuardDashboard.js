@@ -1,10 +1,13 @@
-import React, { useState,useEffect } from "react";
+import React, { useRef, useState,useEffect } from "react";
 import GuardNavbar from "../GuardSkeleton/G1_Navbar";
 import GuardSubNavbar from "../GuardSkeleton/G2_SubNavbar";
 import GuardTable from "../GuardSkeleton/G3_Table"
+import Cookies from "js-cookie";
 const GuardDashboard = () => {
-  const [Suboption, setSubOption] = useState("Check Out")
+  
+  const [Suboption, setSubOption] = useState(Cookies.get("SubOption")||"Check Out")
   const [option, setOption] = useState("Students")
+  
   useEffect(() => {setSubOption('Check Out')},[option])
   return (
     <div className="bg-background w-screen h-screen">
@@ -15,7 +18,7 @@ const GuardDashboard = () => {
         <GuardSubNavbar setSubOption={setSubOption}/>
       </div>
       <div>
-        <GuardTable NavOption={option} SubNavOption={Suboption}/>
+        <GuardTable NavOption={option} SubNavOption={Suboption} setSubNavOption={setSubOption}/>
       </div>
     </div>
   );
