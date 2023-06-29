@@ -8,30 +8,52 @@ const G3_table = (props) => {
   const [data, setData] = useState([]);
   const [pgNo, setPgNo] = useState(1);
   const [TbData, setTbData] = useState([]);
+  const [user, setUser] = useState([]);
+  const[checkin_checkout_api,setCheckin_checkout_api] = useState('http://localhost:4000/gatepass/v2/guard/checkout_student/')
+  const [userStatusApi, setUserStatusApi] = useState([]);
 
-  let url = "";
 
-  useEffect(() => {
-    if (props.NavOption === "Students") {
-      if (props.SubNavOption === "Check Out") {
-        url = "http://localhost:4000/gatepass/v2/guard/approved_students";
-      }
-      if (props.SubNavOption === "Check In") {
-        url = "http://localhost:4000/gatepass/v2/guard/checked_out_students";
-      }
+  let Tb_data_Api='';
+  useEffect(()=>{
+  
+      if(props.SubNavOption === "Check Out"){
+        Tb_data_Api="http://localhost:4000/gatepass/v2/guard/approved_students"
+        setCheckin_checkout_api("http://localhost:4000/gatepass/v2/guard/checkout_student/");
+        setUserStatusApi("http://127.0.0.1:4000/gatepass/v2/guard/update_user_status_absent/");
+        
+  }
+      else{
+        Tb_data_Api="http://localhost:4000/gatepass/v2/guard/checked_out_students"
+        setCheckin_checkout_api("http://localhost:4000/gatepass/v2/guard/checkin_student/");
+        setUserStatusApi("http://127.0.0.1:4000/gatepass/v2/guard/update_user_status_present/");
     }
-  }, [props.NavOption, props.SubNavOption]);
+
+},[props.SubNavOption])
+
+const getData= async () => {
+  try {
+    const response = await fetch(Tb_data_Api, {
+      headers: {
+        Authorization: accessToken,
+      },
+    });
+    const jsonData = await response.json();
+    setData(jsonData);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+};
+
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(url, {
+        const response = await fetch(Tb_data_Api, {
           headers: {
             Authorization: accessToken,
           },
         });
         const jsonData = await response.json();
-        console.log(jsonData);
         setData(jsonData);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -40,7 +62,7 @@ const G3_table = (props) => {
 
     fetchData();
     setPgNo(1);
-  }, [url, accessToken, props.SubNavOption]);
+  }, [Tb_data_Api, accessToken, props.SubNavOption]);
 
   useEffect(() => {
     const paginate = (array, page_size, page_number) => {
@@ -60,6 +82,88 @@ const G3_table = (props) => {
       setPgNo((prevPage) => prevPage - 1);
     }
   };
+// Checkin and Checkout Logic
+  const Student_checkin_checkout = async (api,user_id, request_id) => { //for checkin and checkout
+    let fetchData = fetch(
+     api,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: accessToken,
+        },
+        body: JSON.stringify({
+          check_in_by: "nugr11",
+          user_id: user_id,
+          request_id: request_id,
+        }),
+      }
+    )
+      .then((Response) => Response.json())
+      .then((response) => console.log("Success: " + response.msg))
+      .catch((error) => console.log("error: " + error));
+    return fetchData;
+  };
+  
+  const updateUserStatus = async (api,user_id) => { //for absent or present
+    let fetchData = fetch(
+      api,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: accessToken,
+        },
+        body: JSON.stringify({
+          user_id: user_id,
+        }),
+      }
+    )
+      .then((Response) => Response.json())
+      .then((response) => console.log("success: " + response.msg))
+      .catch((error) => console.log("error: " + error));
+    return fetchData;
+  };
+  
+  
+  const updateDefaulterFlag = async (user_id, request_id) => {
+    let fetchData = fetch(
+      "http://127.0.0.1:4000/gatepass/v2/guard/update_defaulter_flag/",
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: accessToken,
+        },
+        body: JSON.stringify({
+          user_id: user_id,
+          request_id: request_id,
+        }),
+      }
+    )
+      .then((Response) => Response.json())
+      .then((response) => console.log("success: " + response.msg))
+      .catch((error) => console.log("error: " + error));
+    return fetchData;
+  };
+  
+  
+  
+  const handleApprove = async (event) => {
+    const request_id = event.target.name;
+    const currentUser = data.filter((obj) => {
+      return obj.request_id == request_id;
+    });
+    // console.log(currentUser[0].user_id);
+    const user_id = currentUser[0].user_id;
+    await Student_checkin_checkout(checkin_checkout_api,user_id, request_id);
+    await updateUserStatus(userStatusApi,user_id);
+    await updateDefaulterFlag(user_id, request_id);
+    window.location.reload(true);
+    
+  };
+
+
 
   return (
     <div className="bg-background">
@@ -88,15 +192,16 @@ const G3_table = (props) => {
               <h1 className={`${designs.d5}`}>
                 {moment(item.from_time).format("HH:mm:ss")}
               </h1>
-              <h1 className={`${designs.d5}`}>
+              <div className={`${designs.d5}`}>
                 <button
-                  id="button2"
+                  id={`button ${idx}`}
                   name={item.request_id}
+                  onClick={(e) => handleApprove(e)}
                   className=" bg-Navbar_bg p-2 text-white hover:border-2"
                 >
                   {props.SubNavOption}
                 </button>
-              </h1>
+              </div>
             </div>
           ))}
         </div>
