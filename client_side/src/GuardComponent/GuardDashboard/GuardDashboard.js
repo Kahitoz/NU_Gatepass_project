@@ -5,7 +5,7 @@ import GuardTable from "../GuardSkeleton/G3_Table"
 import Cookies from "js-cookie";
 const GuardDashboard = () => {
   
-  const [Suboption, setSubOption] = useState(Cookies.get("SubOption")||"Check Out")
+  const [Suboption, setSubOption] = useState("Check Out")
   const [option, setOption] = useState("Students")
   
   useEffect(() => {setSubOption('Check Out')},[option])
@@ -18,7 +18,7 @@ const GuardDashboard = () => {
         <GuardSubNavbar setSubOption={setSubOption}/>
       </div>
       <div>
-        <GuardTable NavOption={option} SubNavOption={Suboption} setSubNavOption={setSubOption}/>
+        <GuardTable NavOption={option} SubNavOption={Suboption} />
       </div>
     </div>
   );

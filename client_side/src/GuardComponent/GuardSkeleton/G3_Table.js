@@ -160,7 +160,6 @@ const getData= async () => {
     await Student_checkin_checkout(checkin_checkout_api,user_id, request_id);
     await updateUserStatus(userStatusApi,user_id);
     await updateDefaulterFlag(user_id, request_id);
-    Cookies.set("SubOption", props.SubNavOption);
     window.location.reload(true);
     
   };
@@ -201,7 +200,7 @@ const getData= async () => {
                   onClick={(e) => handleApprove(e)}
                   className=" bg-Navbar_bg p-2 text-white hover:border-2"
                 >
-                  {Cookies.get("SubOption")||props.SubNavOption}
+                  {props.SubNavOption}
                 </button>
               </div>
             </div>
