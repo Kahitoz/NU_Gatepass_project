@@ -50,7 +50,7 @@ const O1_skeleton = () => {
   useEffect(() => {
     if (user && role) {
       if (role === 1) {
-        navigate("/student");
+        navigate("/student/home");
       } else if (role === 4) {
         navigate("/admin");
       } else if (role === 7) {
@@ -58,7 +58,7 @@ const O1_skeleton = () => {
       } else if (role === 5) {
         navigate("/guard");
       } else if (role ===2){
-        navigate("/warden")
+        navigate("/warden/home")
       }
     }
   }, [user, role]);
