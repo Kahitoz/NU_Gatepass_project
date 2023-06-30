@@ -12,6 +12,8 @@ const S1_LocalFixed = (props) =>{
       let currentDate = "";
       let lastMonday = "";
       let nextMonday = "";
+
+      
   
       const fetchData = async () => {
         await fetch("http://127.0.0.1:4000/gatepass/v2/student/get_dates", {
@@ -92,4 +94,6 @@ const S1_LocalFixed = (props) =>{
       }
     };
 }
+
+
 export default S1_LocalFixed;
