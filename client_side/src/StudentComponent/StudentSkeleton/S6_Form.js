@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import designs from "../StudentStyling/S5_ProfileCSS";
 import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-time-picker/dist/TimePicker.css";
+import { week } from "../StudentGatepassHandler/S1_ParameterConfig";
+import Cookies from "js-cookie";
 
 
 const S6_Form = () => {
@@ -18,6 +20,18 @@ const S6_Form = () => {
   const [destinationVisible, setDestinationVisible] = useState(false);
   const [reasonVisible, setReasonVisible] = useState(false);
   const [wardenVisible, setWardenVisible] = useState(false);
+
+  const accessToken = Cookies.get("ACCESS_TOKEN");
+ 
+
+  useEffect(() => {
+    const fetchData = async () => {
+      let config = await week(accessToken);
+      console.log("fdfsdfsd", config);
+    };
+  
+    fetchData();
+  });
 
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
