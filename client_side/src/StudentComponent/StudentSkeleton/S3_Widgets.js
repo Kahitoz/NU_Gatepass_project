@@ -1,17 +1,39 @@
 import React, { useEffect, useState } from "react";
 import designs from "../StudentStyling/S3_WidgetsCSS";
 import Cookies from "js-cookie";
-import jwt_decode from "jwt-decode";
+import { week } from "../StudentGatepassHandler/S1_ParameterConfig";
+import { checkBlacklist } from "../StudentGatepassHandler/S1_LocalFixed";
 
 const S3_Widgets = () => {
-  const [gatepassData, setGatepassData] = useState([]);
   const [gatepassStatus, setGatepassStatus] = useState("");
-  const [latestAppliedDate, setLatestAppliedDate] = useState("");
-  const [latestAppliedTime, setLatestAppliedTime] = useState("");
+  const [getWeekLimit, setWeekLimit] = useState("");
+  const [status, checkStatus] = useState(false);
+  const [statusMessage, setStatusMessage] = useState("");
+
+  const accessToken = Cookies.get("ACCESS_TOKEN");
 
   useEffect(() => {
     const userToken = Cookies.get("ACCESS_TOKEN");
-    const decoded = jwt_decode(userToken);
+
+    const fetchData = async () => {
+      let config = await week(accessToken);
+      var date = config.weekLimit;
+      setWeekLimit(date);
+    };
+    fetchData();
+
+    const statusCheck = async () => {
+      let g_Status = await checkBlacklist(accessToken);
+      checkStatus(g_Status);
+      if (status === false) {
+        setStatusMessage("Gatepass is Allowed");
+      } else if (status === true) {
+        setStatusMessage("Gatepass Blocked");
+      } else {
+        setStatusMessage("Server Error");
+      }
+    };
+    statusCheck();
 
     async function fetchGatepassData() {
       try {
@@ -26,13 +48,10 @@ const S3_Widgets = () => {
           { headers }
         );
         const data = await response.json();
-        setGatepassData(data);
 
         if (data.length > 0) {
           const latestGatepass = data[data.length - 1];
           setGatepassStatus(latestGatepass.status);
-          setLatestAppliedDate(latestGatepass.applied_date);
-          setLatestAppliedTime(latestGatepass.applied_time);
         }
       } catch (error) {
         console.error("Error fetching gatepass data:", error);
@@ -45,22 +64,25 @@ const S3_Widgets = () => {
   return (
     <div className={`${designs.d1}`}>
       <div className={`${designs.d2}`}>
-        <div className={`items-center justify-center text-center flex flex-col sm:flex-row`}>
+        <div
+          className={`items-center justify-center text-center flex flex-col sm:flex-row`}
+        >
           <h1 className={`font-bold me-2`}>Local Fixed Gatepass Available:</h1>
-          <p>3</p>
+          <p>{getWeekLimit}</p>
         </div>
       </div>
 
       <div className={`${designs.d2}`}>
-        <h1 className={`text-green-500 font-bold`}>Gatepass Allowed</h1>
+        <h1 className={`text-green-500 font-bold`}>{statusMessage}</h1>
       </div>
 
       <div className={`${designs.d2}`}>
-        <div className={`items-center justify-center text-center flex flex-col sm:flex-row`}>
+        <div
+          className={`items-center justify-center text-center flex flex-col sm:flex-row`}
+        >
           <h1 className={`font-bold me-2`}>Last Gatepass Status:</h1>
           <p className={`text-blue-700`}>{gatepassStatus}</p>
         </div>
-      
       </div>
     </div>
   );
