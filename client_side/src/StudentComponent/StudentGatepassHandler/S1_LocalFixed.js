@@ -1,99 +1,65 @@
-import { useEffect, useState } from "react";
-import Cookies from "js-cookie";
+//check black list starts here
 
-const S1_LocalFixed = (props) =>{
-    const accessToken = Cookies.get("ACCESS_TOKEN");
-    const [localFixedUsed, setLocalFixedUsed] = useState(0);
-    const [lastMondayDate, setLastMondayDate] = useState("0000-00-00");
-    const [nextMondayDate, setNextMondayDate] = useState("0000-00-00");
-    const [currentDate, setCurrentDate] = useState("");
-  
-    useEffect(() => {
-      let currentDate = "";
-      let lastMonday = "";
-      let nextMonday = "";
+var checkBlacklist = async function (accessToken) {
+  const response = await fetch(
+    "http://127.0.0.1:4000/gatepass/v2/student/blacklisted/",
+    {
+      headers: {
+        Authorization: accessToken,
+      },
+    }
+  );
+  const jsonResponse = await response.json();
+  return jsonResponse.blacklisted;
+};
 
-      
+export { checkBlacklist };
+
+// check black list ends here
+
+//Total Local Fixed starts here
+
+var fetchDate = async function (accessToken) {
+  let currentDate = null;
+  let lastMonday = null;
+  let nextMonday = null;
+  const response = await fetch("http://127.0.0.1:4000/gatepass/v2/student/get_dates", {
+    headers: { Authorization: accessToken },
+  });
   
-      const fetchData = async () => {
-        await fetch("http://127.0.0.1:4000/gatepass/v2/student/get_dates", {
-          headers: { Authorization: accessToken },
-        })
-          .then((Response) => Response.json())
-          .then((response) => {
-            currentDate = response.currentDate;
-            lastMonday = response.lastMonday;
-            nextMonday = response.nextMonday;
-            setCurrentDate(response.currentDate);
-            setLastMondayDate(response.lastMonday);
-            setNextMondayDate(response.nextMonday);
-          });
-        await fetch(
-          "http://127.0.0.1:4000/gatepass/v2/student/get_number_of_local_fixed_student/" +
-            `${lastMonday}/` +
-            `${nextMonday}`,
-          {
-            headers: {
-              Authorization: accessToken,
-            },
-          }
-        )
-          .then((Response) => Response.text())
-          .then((response) => {
-            setLocalFixedUsed(response);
-          })
-          .catch((err) => console.log("error:", err));
-      };
-      fetchData();
-    }, []);
-  
-    const getDates = () => {
-      fetch("http://localhost:4000/gatepass/v2/student/get_dates")
-        .then((Response) => Response.json())
-        .then((response) => {
-          setLastMondayDate(response.lastMonday);
-          setNextMondayDate(response.nextMonday);
-        });
-    };
-  
-    const checkBlacklist = async () => {
-      let res = {};
-      const fetchData = await fetch(
-        "http://127.0.0.1:4000/gatepass/v2/student/blacklisted/",
-        {
-          headers: {
-            Authorization: accessToken,
-          },
-        }
-      )
-        .then((Response) => Response.json())
-        .then((response) => {
-          res = response;
-          return response.blacklisted;
-        })
-        .catch((err) => console.log("error:", err));
-      return fetchData;
-    };
-  
-    const checkTime = () => {
-      let currentTime = "";
-      fetch("http://127.0.0.1:4000/gatepass/v2/student/get_dates", {
-        headers: { Authorization: accessToken },
-      })
-        .then((Response) => Response.json())
-        .then((response) => {
-          currentTime = response.currentTime;
-        });
-      if (
-        props.departureTime <= currentTime &&
-        currentTime <= props.arrivalTime
-      ) {
-        return true;
-      } else {
-        return false;
-      }
-    };
+
+};
+
+//Total local Fixed ends here
+
+
+//Apply Gatepass Starts here
+var ApplyLFGatepass = async function(accessToken ,departureDate ,departureTime ,arrivalDate ,arrivalTime){
+  let fetchData = fetch(
+    "http://127.0.0.1:4000/gatepass/v2/student/apply_local_fixed",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: accessToken,
+      },
+      body: JSON.stringify({
+        punch_id: null,
+        from_date: departureDate,
+        from_time: departureTime,
+        to_date: arrivalDate,
+        to_time: arrivalTime,
+      }),
+    }
+  )
+    .then((Response) => Response.json())
+    .then((response) => response)
+    .catch((error) => console.log("error: " + error));
+
+    alert("You have applied for the local fixed gatepass");
+
+  return fetchData;
 }
 
-
-export default S1_LocalFixed;
+export {ApplyLFGatepass}
+//Apply Gatepass Ends Herew
