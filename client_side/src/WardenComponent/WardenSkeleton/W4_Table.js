@@ -87,7 +87,7 @@ const W4_table = (props) => {
 
         <div className={`${designs.d3}`}>
           {TbData.map((item, idx) => (
-            <div className={`${designs.d4}`} key={idx}>
+            <div className={`${designs.d4} hover:bg-row_hover_bg`} key={idx}>
               <h1 className={`${designs.d5} `}>{item.name}</h1>
               <h1 className={`${designs.d5}`}>{item.user_id}</h1>
               <h1 className={`${designs.d5}`}>{item.gatepass_name}</h1>
