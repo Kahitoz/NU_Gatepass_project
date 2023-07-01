@@ -22,21 +22,19 @@ const S6_Form = () => {
   const [wardenVisible, setWardenVisible] = useState(false);
 
   const [departureTime, setDepartureTime] = useState("");
-  const [arrivalTime, setArrivalTime] = useState("");
-
+  const [arrivalTime, setArrivalTime] = useState(""); // change the condition here
   const accessToken = Cookies.get("ACCESS_TOKEN");
 
   useEffect(() => {
     const fetchData = async () => {
       let config = await week(accessToken);
-      setDepartureTime(moment(config.departureTime, "HH:mm:ss").format("mm:ss"));
-      setArrivalTime(moment(config.arrivalTime, "HH:mm:ss").format("mm:ss"));
+      setDepartureTime(moment(config.departureTime, "HH:mm:ss").format("HH:mm"));
+      setArrivalTime(moment(config.arrivalTime, "HH:mm:ss").format("HH:mm"));
     };
 
     fetchData();
   });
 
-  console.log(departureTime)
 
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
@@ -103,21 +101,22 @@ const S6_Form = () => {
               </>
             )}
 
-            {departureTimeVisible && (
+{departureTimeVisible && (
               <>
-                <p className="font-bold mb-2">Departure Time</p>
+                <p className="font-bold mb-2">d Time</p>
                 <div className={designs.d13}>
-                  <TimePicker
-                    value={
-                      selectedOption === "LocalFixed" ? "1:00" : departureTime
-                    }
+                  <input 
+                  type="time"
+                   value={selectedOption === "LocalFixed" ? "1:00": `${departureTime}`} // change the condition here for departure time
+                    className="disabled:bg-Items_bg bg-Items_bg border-2 border-gray-300 rounded-md p-2"
                     onChange={(time) => console.log(time)} // Handle the time change
                     placeholder="Time to be fetched from server"
-                    disabled={selectedOption === "LocalFixed"} // Disable the picker when LocalFixed is selected
+                    disabled={selectedOption === "Local Fixed"} // Disable the picker when Local Fixed is selected
                   />
                 </div>
               </>
             )}
+
 
             {arrivalDateVisible && (
               <>
@@ -138,10 +137,12 @@ const S6_Form = () => {
               <>
                 <p className="font-bold mb-2">Arrival Time</p>
                 <div className={designs.d13}>
-                  <TimePicker
+                  <input
+                  type="time"
                    value={
                       selectedOption === "LocalFixed" ? "1:00": arrivalTime
                     }
+                    className="disabled:bg-Items_bg bg-Items_bg border-2 border-gray-300 rounded-md p-2"
                     onChange={(time) => console.log(time)} // Handle the time change
                     placeholder="Time to be fetched from server"
                     disabled={selectedOption === "Local Fixed"} // Disable the picker when Local Fixed is selected
