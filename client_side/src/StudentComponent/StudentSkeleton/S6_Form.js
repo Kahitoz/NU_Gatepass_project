@@ -5,8 +5,8 @@ import TimePicker from "react-time-picker";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-time-picker/dist/TimePicker.css";
 import { week } from "../StudentGatepassHandler/S1_ParameterConfig";
+import moment from "moment";
 import Cookies from "js-cookie";
-
 
 const S6_Form = () => {
   const [selectedOption, setSelectedOption] = useState("");
@@ -21,17 +21,22 @@ const S6_Form = () => {
   const [reasonVisible, setReasonVisible] = useState(false);
   const [wardenVisible, setWardenVisible] = useState(false);
 
+  const [departureTime, setDepartureTime] = useState("");
+  const [arrivalTime, setArrivalTime] = useState("");
+
   const accessToken = Cookies.get("ACCESS_TOKEN");
- 
 
   useEffect(() => {
     const fetchData = async () => {
       let config = await week(accessToken);
-      console.log("fdfsdfsd", config);
+      setDepartureTime(moment(config.departureTime, "HH:mm:ss").format("mm:ss"));
+      setArrivalTime(moment(config.arrivalTime, "HH:mm:ss").format("mm:ss"));
     };
-  
+
     fetchData();
   });
+
+  console.log(departureTime)
 
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
@@ -84,69 +89,66 @@ const S6_Form = () => {
             </div>
 
             {departureDateVisible && (
-  <>
-    <p className="font-bold mb-2">Departure Date</p>
-    <div className={designs.d13}>
-         <DatePicker
-      selected={new Date()} // Provide the selected date value here
-      onChange={(date) => console.log(date)} // Handle the date change
-      className="bg-Items_bg"
-      placeholderText="Date to be fetched from server"
-      disabled={selectedOption === "Local Fixed"} // Disable the picker when Local Fixed is selected
-    />
-    </div>
- 
-  </>
-)}
+              <>
+                <p className="font-bold mb-2">Departure Date</p>
+                <div className={designs.d13}>
+                  <DatePicker
+                    selected={new Date()} // Provide the selected date value here
+                    onChange={(date) => console.log(date)} // Handle the date change
+                    className="bg-Items_bg"
+                    placeholderText="Date to be fetched from server"
+                    disabled={selectedOption === "Local Fixed"} // Disable the picker when Local Fixed is selected
+                  />
+                </div>
+              </>
+            )}
 
-{departureTimeVisible && (
-  <>
-    <p className="font-bold mb-2">Departure Time</p>
-    <div className={designs.d13}>
-       <TimePicker
-      value="12:00" // Provide the selected time value here
-      onChange={(time) => console.log(time)} // Handle the time change
+            {departureTimeVisible && (
+              <>
+                <p className="font-bold mb-2">Departure Time</p>
+                <div className={designs.d13}>
+                  <TimePicker
+                    value={
+                      selectedOption === "LocalFixed" ? "1:00" : departureTime
+                    }
+                    onChange={(time) => console.log(time)} // Handle the time change
+                    placeholder="Time to be fetched from server"
+                    disabled={selectedOption === "LocalFixed"} // Disable the picker when LocalFixed is selected
+                  />
+                </div>
+              </>
+            )}
 
-      placeholder="Time to be fetched from server"
-      disabled={selectedOption === "Local Fixed"} // Disable the picker when Local Fixed is selected
-    />
-    </div>
-   
-  </>
-)}
+            {arrivalDateVisible && (
+              <>
+                <p className="font-bold mb-2">Arrival Date</p>
+                <div className={designs.d13}>
+                  <DatePicker
+                    className="bg-Items_bg "
+                    selected={new Date()} // Provide the selected date value here
+                    onChange={(date) => console.log(date)} // Handle the date change
+                    placeholderText="Date to be fetched from server"
+                    disabled={selectedOption === "Local Fixed"} // Disable the picker when Local Fixed is selected
+                  />
+                </div>
+              </>
+            )}
 
-{arrivalDateVisible && (
-  <>
-    <p className="font-bold mb-2">Arrival Date</p>
-    <div className={designs.d13}>
-    <DatePicker
-    className="bg-Items_bg "
-      selected={new Date()} // Provide the selected date value here
-      onChange={(date) => console.log(date)} // Handle the date change
-      placeholderText="Date to be fetched from server"
-      disabled={selectedOption === "Local Fixed"} // Disable the picker when Local Fixed is selected
-    />
-    </div>
-   
-  </>
-)}
-
-{arrivalTimeVisible && (
-  <>
-    <p className="font-bold mb-2">Arrival Time</p>
-    <div className={designs.d13}>
-      <TimePicker
-      value="12:00" // Provide the selected time value here
-      onChange={(time) => console.log(time)} // Handle the time change
-      className="bg-Items_bg border border-collapse"
-      placeholder="Time to be fetched from server"
-      disabled={selectedOption === "Local Fixed"} // Disable the picker when Local Fixed is selected
-    />
-    </div>
-   
-  </>
-)}
-
+            {arrivalTimeVisible && (
+              <>
+                <p className="font-bold mb-2">Arrival Time</p>
+                <div className={designs.d13}>
+                  <TimePicker
+                   value={
+                      selectedOption === "LocalFixed" ? "1:00": arrivalTime
+                    }
+                    onChange={(time) => console.log(time)} // Handle the time change
+                    placeholder="Time to be fetched from server"
+                    disabled={selectedOption === "Local Fixed"} // Disable the picker when Local Fixed is selected
+                  />
+                </div>
+              </>
+            )}
 
             {destinationVisible && (
               <>
