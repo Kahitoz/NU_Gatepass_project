@@ -117,7 +117,7 @@ const applyLocalFixedGatepass = async (
   };
 
   const handleClick = async (event) => {
-    event.preventDefault();
+   
     const check = await checkLocalFixed(
       accessToken,
       departureTime,
@@ -134,6 +134,7 @@ const applyLocalFixedGatepass = async (
 
   handleClick();
 };
+
 
 const functions = {
   "applyLocalFixedGatepass":applyLocalFixedGatepass,

@@ -44,23 +44,35 @@ const S6_Form = () => {
     console.log("date  = ", departureDate);
   });
 
-  const handleClick=async (event) => {
-    let localFixedUsed = 0;
-    event.preventDefault();
-    const check = await LFfunctions.checkLocalFixed(
-      accessToken,
-      departureTime,
-      arrivalTime,
-      localFixedUsed,
-      weekLimit
-    );
+  const handleClick = async () => {
+    try {
+      let localFixedUsed = 0;
+      const check = await LFfunctions.checkLocalFixed(
+        accessToken,
+        departureTime,
+        arrivalTime,
+        localFixedUsed,
+        weekLimit
+      );
 
-    if (check === true) {
-      await LFfunctions.applyLocalFixedGatepassAPI();
-      alert("You have successfully applied for Local Fixed Gatepass!");
+      if (check === true) {
+        await LFfunctions.applyLocalFixedGatepass(
+          accessToken,
+          departureDate,
+          departureTime,
+          arrivalDate,
+          arrivalTime,
+          weekLimit
+        );
+        alert("You have successfully applied for Local Fixed Gatepass!");
+      }
+    } catch (error) {
+      console.error(error);
+      // Handle the error here
+      alert("An error occurred while applying for Local Fixed Gatepass!");
     }
   };
- 
+
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
     setDepartureDateVisible(true);
@@ -128,7 +140,7 @@ const S6_Form = () => {
 
             {departureTimeVisible && (
               <>
-                <p className="font-bold mb-2">d Time</p>
+                <p className="font-bold mb-2">Departure Time</p>
                 <div className={designs.d13}>
                   <input
                     type="time"
@@ -229,9 +241,7 @@ const S6_Form = () => {
             )}
             <button
               className="bg-text-2 p-3 rounded-lg mt-5 text-white"
-              onClick={(event) =>
-                handleClick(event)
-                }
+              onClick={(event) => handleClick(event)}
             >
               Apply Gatepass
             </button>
