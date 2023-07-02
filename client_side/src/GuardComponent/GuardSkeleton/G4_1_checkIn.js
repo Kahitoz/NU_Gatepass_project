@@ -1,8 +1,13 @@
 import React from 'react'
 import designs from '../GuardStyling/G3_TableCSS'
 import moment from 'moment'
+import {sortBy} from 'lodash'
 
 function G4_1_checkIn(props) {
+    const TbData=sortBy(props.TbData, [
+        (o) => moment(o.actual_out_date).unix(),
+        (o) => moment(o.actual_out_time).unix(),
+      ]);
   return (
     <div >
       <div>
@@ -20,7 +25,7 @@ function G4_1_checkIn(props) {
         </div>
 
         <div className={`${designs.d3}`}>
-          {props.TbData.map((item, idx) => (
+          {TbData.map((item, idx) => (
             <div className={`${designs.d4}`} key={idx}>
               <h1 className={`${designs.d5} `}>{item.name}</h1>
               <h1 className={`${designs.d5}`}>{item.user_id}</h1>

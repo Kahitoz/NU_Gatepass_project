@@ -46,13 +46,7 @@ const G3_table = (props) => {
           },
         });
         const jsonData = await response.json();
-        setData(sortBy(jsonData,
-          [
-            (o) => moment(o.from_date).unix(),
-            (o) => moment(o.from_time).unix(),
-          ]
-        )
-        ); // Data sorted by date and time
+        setData(jsonData); // Data sorted by date and time
       } catch (error) {
         console.error("Error fetching data:", error);
       }
