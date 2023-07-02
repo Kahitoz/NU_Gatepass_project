@@ -14,7 +14,7 @@ const G3_table = (props) => {
   const [user, setUser] = useState([]);
   const [checkin_checkout_api, setCheckin_checkout_api] = useState('http://localhost:4000/gatepass/v2/guard/checkout_student/')
   const [userStatusApi, setUserStatusApi] = useState([]);
-
+  const [filterData, setFilterData] = useState([]);
 
 
   let Tb_data_Api = '';
@@ -33,8 +33,18 @@ const G3_table = (props) => {
     }
 
   }, [props.SubNavOption])
-
-
+// search logic
+  useEffect(() => {
+    if (props.search.length > 0) {
+      const currentUsers = data.filter((obj) => {
+        return obj.user_id.toLowerCase().includes(props.search);
+      });
+      // console.log(currentUsers);
+      setFilterData(currentUsers);
+    } else {
+      setFilterData(data);
+    }
+  },[props.search,data])
 
 
   useEffect(() => {
@@ -155,12 +165,14 @@ const G3_table = (props) => {
     window.location.reload(true);
 
   };
+  
 
 
 
   return (
     <div className="bg-background">
-      {props.SubNavOption === "Check Out" ? <CheckOut TbData={TbData} handleApprove={handleApprove} SubNavOption={props.SubNavOption}/> : <Checkin TbData={TbData} handleApprove={handleApprove} SubNavOption={props.SubNavOption}/>}
+      {props.SubNavOption === "Check Out" ? <CheckOut search={props.search} filterData={filterData }TbData={TbData} handleApprove={handleApprove} SubNavOption={props.SubNavOption}/> 
+      : <Checkin  search={props.search} filterData={filterData} TbData={TbData} handleApprove={handleApprove} SubNavOption={props.SubNavOption}/>}
 
         <div className="flex justify-center mt-4">
           <button
