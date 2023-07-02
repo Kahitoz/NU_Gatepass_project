@@ -6,7 +6,7 @@ import "react-time-picker/dist/TimePicker.css";
 import { week } from "../StudentGatepassHandler/S1_ParameterConfig";
 import moment from "moment";
 import Cookies from "js-cookie";
-import { applyLocalFixedGatepass } from "../StudentGatepassHandler/S1_LocalFixed";
+import LFfunctions from "../StudentGatepassHandler/S1_LocalFixed";
 
 const S6_Form = () => {
   const [selectedOption, setSelectedOption] = useState("");
@@ -44,24 +44,23 @@ const S6_Form = () => {
     console.log("date  = ", departureDate);
   });
 
-  const handleClick = (
-    accessToken,
-    departureDate,
-    departureTime,
-    arrivalDate,
-    arrivalTime,
-    weekLimit
-  ) => {
-    applyLocalFixedGatepass(
+  const handleClick=async (event) => {
+    let localFixedUsed = 0;
+    event.preventDefault();
+    const check = await LFfunctions.checkLocalFixed(
       accessToken,
-      departureDate,
       departureTime,
-      arrivalDate,
       arrivalTime,
+      localFixedUsed,
       weekLimit
     );
-  };
 
+    if (check === true) {
+      await LFfunctions.applyLocalFixedGatepassAPI();
+      alert("You have successfully applied for Local Fixed Gatepass!");
+    }
+  };
+ 
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
     setDepartureDateVisible(true);
@@ -230,24 +229,9 @@ const S6_Form = () => {
             )}
             <button
               className="bg-text-2 p-3 rounded-lg mt-5 text-white"
-              onClick={() =>
-                (
-                  accessToken,
-                  departureDate,
-                  departureTime,
-                  arrivalDate,
-                  arrivalTime,
-                  weekLimit
-                ) => {
-                  applyLocalFixedGatepass(
-                    accessToken,
-                    departureDate,
-                    departureTime,
-                    arrivalDate,
-                    arrivalTime,
-                    weekLimit
-                  );
-                }}
+              onClick={(event) =>
+                handleClick(event)
+                }
             >
               Apply Gatepass
             </button>

@@ -91,7 +91,6 @@ const applyLocalFixedGatepass = async (
   arrivalTime,
   weekLimit
 ) => {
-  console.log("You clicked");
   let localFixedUsed = 0;
 
   const applyLocalFixedGatepassAPI = async () => {
@@ -114,7 +113,6 @@ const applyLocalFixedGatepass = async (
     )
       .then((response) => response.json())
       .catch((error) => console.log("error: " + error));
-
     return fetchData;
   };
 
