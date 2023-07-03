@@ -3,6 +3,7 @@ import designs from "../StudentStyling/S4_TableCSS";
 import Cookies from "js-cookie";
 import jwt_decode from "jwt-decode";
 import clsx from "clsx";
+import moment from "moment";
 
 const S4_table = () => {
   const [gatepassData, setGatepassData] = useState([]);
@@ -73,8 +74,8 @@ const S4_table = () => {
           {gatepassData.map((row, index) => (
             <div className={`${designs.d4}`} key={index}>
               <h1 className={`${designs.d5}`}>{row.gatepass_name}</h1>
-              <h1 className={`${designs.d5}`}>{row.applied_date}</h1>
-              <h1 className={`${designs.d5}`}>{row.from_date}</h1>
+              <h1 className={`${designs.d5}`}>{moment(row.applied_date).utc().format("YYYY-MM-DD")}<br/> {moment(row.applied_time).format("hh:mm")}</h1>
+              <h1 className={`${designs.d5}`}>{moment(row.from_date).utc().format("YYYY-MM-DD")}<br/> {moment(row.from_time).format("hh:mm")}</h1>
               <h1
                 className={clsx(
                   `${designs.d5}`,
