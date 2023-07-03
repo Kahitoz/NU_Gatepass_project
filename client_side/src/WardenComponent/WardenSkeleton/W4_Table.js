@@ -11,18 +11,15 @@ const W4_table = (props) => {
   const [showModal, setShowModal] = useState(false);
   const [userData, setUserData] = useState([]);
   const [TbData, setTbData] = useState([]);
-  let Tb_data_Api='';
-  useEffect(()=>{
-  
-      if(props.GpDropdown !== "MyGatepassRequest"){
-        Tb_data_Api="http://localhost:4000/gatepass/v2/warden/get_dashboard_others" 
-        
-  }
-      else{
-        Tb_data_Api="http://localhost:4000/gatepass/v2/warden/get_dashboard_my"
-          }
-
-},[props.subNavOption,props.GpDropdown])
+  let Tb_data_Api = "";
+  useEffect(() => {
+    if (props.GpDropdown !== "MyGatepassRequest") {
+      Tb_data_Api =
+        "http://localhost:4000/gatepass/v2/warden/get_dashboard_others";
+    } else {
+      Tb_data_Api = "http://localhost:4000/gatepass/v2/warden/get_dashboard_my";
+    }
+  }, [props.subNavOption, props.GpDropdown]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,11 +38,14 @@ const W4_table = (props) => {
 
     fetchData();
     setPgNo(1);
-  }, [Tb_data_Api, accessToken, props.subNavOption,props.GpDropdown]);
+  }, [Tb_data_Api, accessToken, props.subNavOption, props.GpDropdown]);
 
   useEffect(() => {
     const paginate = (array, page_size, page_number) => {
-      return array.slice((page_number - 1) * page_size, page_number * page_size);
+      return array.slice(
+        (page_number - 1) * page_size,
+        page_number * page_size
+      );
     };
 
     const paginatedData = paginate(data, 5, pgNo);
@@ -61,13 +61,7 @@ const W4_table = (props) => {
       setPgNo((prevPage) => prevPage - 1);
     }
   };
-// modal Logic
-  
-  
-  
-  
-
-
+  // modal Logic
 
   return (
     <div className="bg-background">
