@@ -14,7 +14,7 @@ const WardenDashboard = () => {
 
   },[subNavOption,GpDropdown])
   return (
-    <div>
+    <div className="w-screen h-screen bg-background">
       <div>
         <Navbar  />
       </div>
