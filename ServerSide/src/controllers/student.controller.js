@@ -16,6 +16,18 @@ export const gatepassCancel = async (req, res) => {
     res.send(error.message);
   }
 };
+export const getImage= async function (req, res) {
+  console.log(req.body);
+  console.log("req in process");
+  try{
+  res.sendFile('IMG_46151.png', { root: "./src/images" });
+  console.log("req served");
+  }
+  catch(err){
+    console.log(err);
+    console.log("req not served");
+  }
+}
 
 export const gatepassExpire = async (req, res) => {
   try {
