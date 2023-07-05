@@ -17,7 +17,7 @@ const StudentDashboard = () => {
       <div>
         <Widgets />
       </div>
-      <div className="bg-background flex justify-between px-4 py-4 flex-col sm:flex-row sm:items-center">
+      <div className="bg-background flex justify-between px-4 py-4 flex-col sm:flex-row sm:items-start">
         <div className="flex-1">
           <Table />
         </div>

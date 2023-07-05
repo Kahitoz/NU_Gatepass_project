@@ -7,6 +7,12 @@ const GuardDashboard = () => {
   
   const [Suboption, setSubOption] = useState("Check Out")
   const [option, setOption] = useState("Students")
+  const [search,setSearch] = useState("")
+  
+  const handleChange = (e) => {
+    setSearch(e.target.value)
+    
+  }
   
   useEffect(() => {setSubOption('Check Out')},[option])
   return (
@@ -15,10 +21,10 @@ const GuardDashboard = () => {
         <GuardNavbar setOption={setOption}/>
       </div>
       <div>
-        <GuardSubNavbar setSubOption={setSubOption}/>
+        <GuardSubNavbar setSubOption={setSubOption} handleChange={handleChange}/>
       </div>
       <div>
-        <GuardTable NavOption={option} SubNavOption={Suboption} />
+        <GuardTable NavOption={option} SubNavOption={Suboption} search={search} />
       </div>
     </div>
   );

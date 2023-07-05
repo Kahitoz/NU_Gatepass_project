@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import designs from "../StudentStyling/S5_ProfileCSS";
 import DatePicker from "react-datepicker";
-import TimePicker from "react-time-picker";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-time-picker/dist/TimePicker.css";
-
+import { week } from "../StudentGatepassHandler/S1_ParameterConfig";
+import moment from "moment";
+import Cookies from "js-cookie";
+import LFfunctions from "../StudentGatepassHandler/S1_LocalFixed";
 
 const S6_Form = () => {
   const [selectedOption, setSelectedOption] = useState("");
@@ -18,6 +20,58 @@ const S6_Form = () => {
   const [destinationVisible, setDestinationVisible] = useState(false);
   const [reasonVisible, setReasonVisible] = useState(false);
   const [wardenVisible, setWardenVisible] = useState(false);
+
+  const [departureTime, setDepartureTime] = useState("");
+  const [arrivalTime, setArrivalTime] = useState("");
+  const [departureDate, setDepartureDate] = useState("");
+  const [arrivalDate, setArrivalDate] = useState("");
+  const [weekLimit, setWeekLimit] = useState(0);
+  const accessToken = Cookies.get("ACCESS_TOKEN");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      let config = await week(accessToken);
+      setDepartureTime(
+        moment(config.departureTime, "HH:mm:ss").format("HH:mm")
+      );
+      setArrivalTime(moment(config.arrivalTime, "HH:mm:ss").format("HH:mm"));
+      setWeekLimit(config.weekLimit);
+    };
+    fetchData();
+
+    setDepartureDate(new Date().toLocaleDateString("en-GB"));
+    setArrivalDate(new Date().toLocaleDateString("en-GB"));
+    console.log("date  = ", departureDate);
+  });
+
+  const handleClick = async () => {
+    try {
+      let localFixedUsed = 0;
+      const check = await LFfunctions.checkLocalFixed(
+        accessToken,
+        departureTime,
+        arrivalTime,
+        localFixedUsed,
+        weekLimit
+      );
+
+      if (check === true) {
+        await LFfunctions.applyLocalFixedGatepass(
+          accessToken,
+          departureDate,
+          departureTime,
+          arrivalDate,
+          arrivalTime,
+          weekLimit
+        );
+        alert("You have successfully applied for Local Fixed Gatepass!");
+      }
+    } catch (error) {
+      console.error(error);
+      // Handle the error here
+      alert("An error occurred while applying for Local Fixed Gatepass!");
+    }
+  };
 
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
@@ -70,69 +124,72 @@ const S6_Form = () => {
             </div>
 
             {departureDateVisible && (
-  <>
-    <p className="font-bold mb-2">Departure Date</p>
-    <div className={designs.d13}>
-         <DatePicker
-      selected={new Date()} // Provide the selected date value here
-      onChange={(date) => console.log(date)} // Handle the date change
-      className="bg-Items_bg"
-      placeholderText="Date to be fetched from server"
-      disabled={selectedOption === "Local Fixed"} // Disable the picker when Local Fixed is selected
-    />
-    </div>
- 
-  </>
-)}
+              <>
+                <p className="font-bold mb-2">Departure Date</p>
+                <div className={designs.d13}>
+                  <DatePicker
+                    selected={new Date()} // Provide the selected date value here
+                    onChange={(date) => console.log(date)} // Handle the date change
+                    className="bg-Items_bg"
+                    placeholderText="Date to be fetched from server"
+                    disabled={selectedOption === "Local Fixed"} // Disable the picker when Local Fixed is selected
+                  />
+                </div>
+              </>
+            )}
 
-{departureTimeVisible && (
-  <>
-    <p className="font-bold mb-2">Departure Time</p>
-    <div className={designs.d13}>
-       <TimePicker
-      value="12:00" // Provide the selected time value here
-      onChange={(time) => console.log(time)} // Handle the time change
+            {departureTimeVisible && (
+              <>
+                <p className="font-bold mb-2">Departure Time</p>
+                <div className={designs.d13}>
+                  <input
+                    type="time"
+                    value={
+                      selectedOption === "LocalFixed"
+                        ? "1:00"
+                        : `${departureTime}`
+                    } // change the condition here for departure time
+                    className="disabled:bg-Items_bg bg-Items_bg border-2 border-gray-300 rounded-md p-2"
+                    onChange={(time) => console.log(time)} // Handle the time change
+                    placeholder="Time to be fetched from server"
+                    disabled={selectedOption === "Local Fixed"} // Disable the picker when Local Fixed is selected
+                  />
+                </div>
+              </>
+            )}
 
-      placeholder="Time to be fetched from server"
-      disabled={selectedOption === "Local Fixed"} // Disable the picker when Local Fixed is selected
-    />
-    </div>
-   
-  </>
-)}
+            {arrivalDateVisible && (
+              <>
+                <p className="font-bold mb-2">Arrival Date</p>
+                <div className={designs.d13}>
+                  <DatePicker
+                    className="bg-Items_bg "
+                    selected={new Date()} // Provide the selected date value here
+                    onChange={(date) => console.log(date)} // Handle the date change
+                    placeholderText="Date to be fetched from server"
+                    disabled={selectedOption === "Local Fixed"} // Disable the picker when Local Fixed is selected
+                  />
+                </div>
+              </>
+            )}
 
-{arrivalDateVisible && (
-  <>
-    <p className="font-bold mb-2">Arrival Date</p>
-    <div className={designs.d13}>
-    <DatePicker
-    className="bg-Items_bg "
-      selected={new Date()} // Provide the selected date value here
-      onChange={(date) => console.log(date)} // Handle the date change
-      placeholderText="Date to be fetched from server"
-      disabled={selectedOption === "Local Fixed"} // Disable the picker when Local Fixed is selected
-    />
-    </div>
-   
-  </>
-)}
-
-{arrivalTimeVisible && (
-  <>
-    <p className="font-bold mb-2">Arrival Time</p>
-    <div className={designs.d13}>
-      <TimePicker
-      value="12:00" // Provide the selected time value here
-      onChange={(time) => console.log(time)} // Handle the time change
-      className="bg-Items_bg border border-collapse"
-      placeholder="Time to be fetched from server"
-      disabled={selectedOption === "Local Fixed"} // Disable the picker when Local Fixed is selected
-    />
-    </div>
-   
-  </>
-)}
-
+            {arrivalTimeVisible && (
+              <>
+                <p className="font-bold mb-2">Arrival Time</p>
+                <div className={designs.d13}>
+                  <input
+                    type="time"
+                    value={
+                      selectedOption === "LocalFixed" ? "1:00" : arrivalTime
+                    }
+                    className="disabled:bg-Items_bg bg-Items_bg border-2 border-gray-300 rounded-md p-2"
+                    onChange={(time) => console.log(time)} // Handle the time change
+                    placeholder="Time to be fetched from server"
+                    disabled={selectedOption === "Local Fixed"} // Disable the picker when Local Fixed is selected
+                  />
+                </div>
+              </>
+            )}
 
             {destinationVisible && (
               <>
@@ -182,7 +239,10 @@ const S6_Form = () => {
                 </div>
               </>
             )}
-            <button className="bg-text-2 p-3 rounded-lg mt-5 text-white">
+            <button
+              className="bg-text-2 p-3 rounded-lg mt-5 text-white"
+              onClick={(event) => handleClick(event)}
+            >
               Apply Gatepass
             </button>
           </div>
