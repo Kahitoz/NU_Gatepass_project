@@ -8,11 +8,8 @@ import { useState } from "react";
 const WardenDashboard = () => {
   const [subNavOption,setSubNavOption]=useState("")
   const[GpDropdown,setGpDropdown]=useState("MyGatepassRequest") // MyGatepassRequest or OthersGatepassRequest 
-  const tabs=["Pending Requests","Approved","Cancelled","Visitor Requests","AutoApproved"]
-  useEffect(()=>{
-    
-
-  },[subNavOption,GpDropdown])
+  const tabs=["Pending Requests","Approved / Cancelled","AutoApproved","Visitor Requests"]
+  
   return (
     <div className="w-screen h-screen bg-background">
       <div>
@@ -22,7 +19,7 @@ const WardenDashboard = () => {
         <SubNavbar tabs={tabs} setSubNavOption={setSubNavOption}  />
       </div>
       <div>
-      <Widgets setGpDropdown={setGpDropdown}/>
+      <Widgets setGpDropdown={setGpDropdown} subNavOption={subNavOption}/>
       </div>
       <div>
         <Table subNavOption={subNavOption} GpDropdown={GpDropdown}/>

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 const WardenSubNavbar = ({tabs,setSubNavOption}) => {
   const navigate = useNavigate();
   const nav=(e)=>{
-    let dashboardTabs=["Pending Requests","Approved","Cancelled","Visitor Requests","AutoApproved"]  // this is for WardenDashboard SubNavbar
+    let dashboardTabs=["Pending Requests","Approved / Cancelled","Visitor Requests","AutoApproved"]  // this is for WardenDashboard SubNavbar
     let name=e.target.name
     if(name==="Apply Leave"){
       navigate("/Warden/ApplyLeave")
