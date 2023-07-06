@@ -1,109 +1,26 @@
-import { useEffect, useState } from "react";
 import designs from "../StudentStyling/S5_ProfileCSS";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import "react-time-picker/dist/TimePicker.css";
-import { week } from "../StudentGatepassHandler/S1_ParameterConfig";
-import moment from "moment";
-import Cookies from "js-cookie";
-import LFfunctions from "../StudentGatepassHandler/S1_LocalFixed";
 
-const S6_Form = () => {
-  const [selectedOption, setSelectedOption] = useState("");
-  const [wselec, setWselect] = useState("");
-  const [wOpen, setWopen] = useState(false);
-
-  const [departureDateVisible, setDepartureDateVisible] = useState(false);
-  const [departureTimeVisible, setDepartureTimeVisible] = useState(false);
-  const [arrivalDateVisible, setArrivalDateVisible] = useState(false);
-  const [arrivalTimeVisible, setArrivalTimeVisible] = useState(false);
-  const [destinationVisible, setDestinationVisible] = useState(false);
-  const [reasonVisible, setReasonVisible] = useState(false);
-  const [wardenVisible, setWardenVisible] = useState(false);
-
-  const [departureTime, setDepartureTime] = useState("");
-  const [arrivalTime, setArrivalTime] = useState("");
-  const [departureDate, setDepartureDate] = useState("");
-  const [arrivalDate, setArrivalDate] = useState("");
-  const [weekLimit, setWeekLimit] = useState(0);
-  const accessToken = Cookies.get("ACCESS_TOKEN");
-
-  useEffect(() => {
-    const fetchData = async () => {
-      let config = await week(accessToken);
-      setDepartureTime(
-        moment(config.departureTime, "HH:mm:ss").format("HH:mm")
-      );
-      setArrivalTime(moment(config.arrivalTime, "HH:mm:ss").format("HH:mm"));
-      setWeekLimit(config.weekLimit);
-    };
-    fetchData();
-
-    setDepartureDate(new Date().toLocaleDateString("en-GB"));
-    setArrivalDate(new Date().toLocaleDateString("en-GB"));
-    console.log("date  = ", departureDate);
-  });
-
-  const handleClick = async () => {
-    try {
-      let localFixedUsed = 0;
-      const check = await LFfunctions.checkLocalFixed(
-        accessToken,
-        departureTime,
-        arrivalTime,
-        localFixedUsed,
-        weekLimit
-      );
-
-      if (check === true) {
-        await LFfunctions.applyLocalFixedGatepass(
-          accessToken,
-          departureDate,
-          departureTime,
-          arrivalDate,
-          arrivalTime,
-          weekLimit
-        );
-        alert("You have successfully applied for Local Fixed Gatepass!");
-      }
-    } catch (error) {
-      console.error(error);
-      // Handle the error here
-      alert("An error occurred while applying for Local Fixed Gatepass!");
-    }
-  };
-
-  const handleOptionSelect = (option) => {
-    setSelectedOption(option);
-    setDepartureDateVisible(true);
-    setDepartureTimeVisible(true);
-    setArrivalDateVisible(true);
-    setArrivalTimeVisible(true);
-    setDestinationVisible(false);
-    setReasonVisible(false);
-    setWardenVisible(false);
-
-    if (option === "Local Flexible") {
-      setReasonVisible(true);
-      setWardenVisible(true);
-    } else if (option === "Outstation" || option === "Emergency") {
-      setDestinationVisible(true);
-      setReasonVisible(true);
-      setWardenVisible(true);
-    }
-  };
-
-  const handleWselect = (option) => {
-    setWselect(option);
-    setWopen(false);
-  };
-
-  const handlewDropDown = () => {
-    setWopen(!wOpen);
-  };
-
-  const Altwardens = ["Warden-1", "Warden-2", "Warden-3"];
-
+const S6_FormDesigns = ({
+  selectedOption,
+  departureDateVisible,
+  departureTimeVisible,
+  arrivalDateVisible,
+  arrivalTimeVisible,
+  destinationVisible,
+  reasonVisible,
+  wardenVisible,
+  departureTime,
+  arrivalTime,
+  handleOptionSelect,
+  handleWselect,
+  handlewDropDown,
+  wselec,
+  wOpen,
+  Altwardens,
+  handleClick,
+}) => {
   return (
     <div className="bg-background">
       <div className="p-2 flex justify-center">
@@ -252,4 +169,4 @@ const S6_Form = () => {
   );
 };
 
-export default S6_Form;
+export default S6_FormDesigns;
