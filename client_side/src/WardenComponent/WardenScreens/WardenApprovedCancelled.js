@@ -9,8 +9,8 @@ const WardenApprovedCancelled = () => {
   const accessToken = Cookies.get("ACCESS_TOKEN");
   // console.log(accessToken);
   const tabs = ["Pending Requests", "Approved / Cancelled", "AutoApproved", "Visitor Requests"]
-  const [GpDropdown, setGpDropdown] = useState("Approved")
-  const dropdownValues=["Approved", "Cancelled"]
+  const [GpDropdown, setGpDropdown] = useState("All")
+  const dropdownValues=["All","Approved", "Cancelled"]
   const [Tb_data_Api, setTb_data_Api] = useState("http://localhost:4000/gatepass/v2/warden/get_all_gatepass");
   const [data, setData] = useState([]);
  
