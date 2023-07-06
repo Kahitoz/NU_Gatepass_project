@@ -113,7 +113,7 @@ const S6_FormFunctionality = () => {
       wardenVisible={wardenVisible}
       departureTime={departureTime}
       arrivalTime={arrivalTime}
-      handleOptionSelect={handleOptionSelect} // Ensure this line is correct
+      handleOptionSelect={handleOptionSelect}
       handleWselect={handleWselect}
       handlewDropDown={handlewDropDown}
       wselec={wselec}
