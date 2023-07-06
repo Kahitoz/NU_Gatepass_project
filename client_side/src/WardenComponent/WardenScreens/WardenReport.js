@@ -2,7 +2,7 @@ import React from "react";
 import Navbar from "../WardenSkeleton/W1_Navbar";
 import SubNavbar from "../WardenSkeleton/W2_SubNavbar";
 import ReportField from "../WardenSkeleton/W6_ReportField";
-import Table from "../WardenSkeleton/W4_Table";
+import Table from "../WardenSkeleton/W4_tableComponents/W4_3_ReportsTable";
 const WardenReports = () => {
   const tabs = ["", ""];
   return (
