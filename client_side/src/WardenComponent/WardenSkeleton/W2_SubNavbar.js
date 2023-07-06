@@ -2,22 +2,24 @@ import React from "react";
 import designs from "../WardenStyling/W2_SubNavbarCSS"
 import { useNavigate } from "react-router-dom";
 
-const WardenSubNavbar = ({tabs,setSubNavOption}) => {
+const WardenSubNavbar = ({tabs}) => {
   const navigate = useNavigate();
   const nav=(e)=>{
-    let dashboardTabs=["Pending Requests","Approved / Cancelled","Visitor Requests","AutoApproved"]  // this is for WardenDashboard SubNavbar
+
     let name=e.target.name
-    if(name==="Apply Leave"){
-      navigate("/Warden/ApplyLeave")
+    if(name==="Pending Requests"){
+      navigate("/Warden/home")
     }
-    if(name==="Warden Leave Management"){
-      navigate("/Warden/WardenLeaveManagement")
+    if(name==="Approved / Cancelled"){
+      navigate("/Warden/home/ApprovedCancelled")
     }
-    if( dashboardTabs.includes(name) ){
-      setSubNavOption(name)
-      console.log(name); // update this area with populate Table Later
+    if(name==="Visitor Requests"){
+      navigate("/Warden/home/VisitorRequest")
     }
+    if(name==="AutoApproved"){
+      navigate("/Warden/home/AutoApproved")
   }
+}
   return (
     <div className={`${designs.subnav.d1}`}>
       <div className={`${designs.subnav.d2}`}>

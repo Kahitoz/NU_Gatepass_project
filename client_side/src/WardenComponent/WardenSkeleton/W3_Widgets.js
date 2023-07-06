@@ -1,17 +1,6 @@
-import { useEffect } from "react";
 import designs from "../WardenStyling/W3_WidgetsCSS"
-import { useState } from "react";
-const W3_Widgets = ({setGpDropdown,subNavOption}) => {
-  const[dropdownValues,setDropdownValues]=useState(["MyGatepassRequest","OthersGatepassRequest"]);
-  useEffect(()=>{
-    if (subNavOption==="Pending Requests"){
-      setDropdownValues(["MyGatepassRequest","OthersGatepassRequest"]);
-    }
-    else if(subNavOption==="Approved / Cancelled"){
-      setDropdownValues(["Approved","Cancelled","All "]);
-      
-    }
-  },[subNavOption])
+const W3_Widgets = ({setGpDropdown,dropdownValues}) => {
+ 
   return (
     <div className={`${designs.d1}`}>
       <div className={`${designs.d2 }`}>

@@ -1,12 +1,34 @@
-import React from 'react'
+import React,{ useState,useEffect } from 'react'
 import designs from '../../WardenStyling/W4_TableCSS';
 import moment from "moment";
-import Modal from "./ModalPending";
-import { useState } from 'react';
+import Modal from "./Modal/ModalPending";
 
- const W4_1_pendingTable = ({data,TbData}) => {
+ const W4_1_pendingTable = ({data}) => {
     const [userData, setUserData] = useState([]);
     const [showModal, setShowModal] = useState(false);
+    const [pgNo, setPgNo] = useState(1);
+  const [TbData, setTbData] = useState([]);
+  useEffect(() => {
+    const paginate = (array, page_size, page_number) => {
+      return array.slice(
+        (page_number - 1) * page_size,
+        page_number * page_size
+      );
+    };
+
+    const paginatedData = paginate(data, 5, pgNo);
+    setTbData(paginatedData);
+  }, [pgNo, data]);
+
+  const handleNextPage = () => {
+    setPgNo((prevPage) => prevPage + 1);
+  };
+
+  const handlePreviousPage = () => {
+    if (pgNo > 1) {
+      setPgNo((prevPage) => prevPage - 1);
+    }
+  };
     
     return (
           <div>
@@ -56,7 +78,23 @@ import { useState } from 'react';
               ))}
             </div>
           </div>
+          <div className="flex justify-center mt-4">
+          <button
+            className="px-4 py-2 mx-2 bg-blue-500 text-white rounded"
+            onClick={handlePreviousPage}
+            disabled={pgNo === 1}
+          >
+            Previous
+          </button>
+          <button
+            className="px-4 py-2 mx-2 bg-blue-500 text-white rounded"
+            onClick={handleNextPage}
+            disabled={TbData.length < 5}
+          >
+            Next
+          </button>
         </div>
+      </div>
       );
 }
 export default W4_1_pendingTable;
