@@ -41,7 +41,7 @@ const check_status = async function (accessToken) {
 
 export { check_status };
 
-const check_time = async function (accessToken, arrivalTime) {
+const check_time = async function (accessToken, departureTime) {
   let currentTime = "";
   const response = fetch(
     "http://localhost:4000/gatepass/v2/student/get_dates",
@@ -54,7 +54,7 @@ const check_time = async function (accessToken, arrivalTime) {
       currentTime = response.currentTime;
     });
   const startTime = "06:00:00";
-  const lastTime = arrivalTime;
+  const lastTime = departureTime ;
 
   const startTimeObject = new Date(`1970-01-01T${startTime}Z`);
   const lastTimeObject = new Date(`1970-01-01T${lastTime}Z`);
@@ -68,8 +68,8 @@ const check_time = async function (accessToken, arrivalTime) {
 };
 export { check_time };
 
-const check_local_flexible = async function (accessToken) {
-  const res0 = await check_time(accessToken);
+const check_local_flexible = async function (accessToken, departureTime) {
+  const res0 = await check_time(accessToken, departureTime);
   const res1 = await check_black_list(accessToken);
   const res2 = await check_status(accessToken);
 
@@ -149,7 +149,7 @@ const handle_submit = async function (
   purpose
 ) {
   console.log("Handle submit button - clicked");
-  const check = check_local_flexible(accessToken);
+  const check = check_local_flexible(accessToken, departureTime);
   if (check === true) {
     await apply_local_flexible(
       accessToken,
