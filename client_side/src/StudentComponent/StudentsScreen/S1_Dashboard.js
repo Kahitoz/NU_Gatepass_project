@@ -4,10 +4,11 @@ import StudentSubNavbar from "../StudentSkeleton/S2_SubNavbar";
 import Widgets from "../StudentSkeleton/S3_Widgets";
 import Table from "../StudentSkeleton/S4_Table";
 import Profile from "../StudentSkeleton/S5_Profile";
+import designs from "../StudentStyling/S0_ScreenCSS";
 
 const StudentDashboard = () => {
   return (
-    <div className="bg-background w-screen h-screen">
+    <div className={`${designs.d1}`}>
       <div>
         <StudentNavbar />
       </div>
@@ -17,11 +18,11 @@ const StudentDashboard = () => {
       <div>
         <Widgets />
       </div>
-      <div className="bg-background flex justify-between px-4 py-4 flex-col sm:flex-row sm:items-start">
-        <div className="flex-1">
+      <div className={`${designs.d2}`}>
+        <div className={`${designs.d3}`}>
           <Table />
         </div>
-        <div className="flex-1">
+        <div className={`${designs.d3}`}>
           <Profile />
         </div>
       </div>
