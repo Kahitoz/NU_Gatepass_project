@@ -137,6 +137,9 @@ const S6_FormDesigns = ({
                   type="text"
                   className={designs.d13}
                   placeholder="Write your reason here"
+                  value={reason}
+                  onChange={(e)=>setReason(e.target.value)}
+                  //reason not getting stored in setReason
                 />
               </>
             )}
