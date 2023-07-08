@@ -20,6 +20,8 @@ const S6_FormDesigns = ({
   wOpen,
   Altwardens,
   handleClick,
+  reason,
+  setReason
 }) => {
   const [depTime,setDepTime] = React.useState(departureTime);
   const [arriveTime,setArriveTime] = React.useState(arrivalTime);
