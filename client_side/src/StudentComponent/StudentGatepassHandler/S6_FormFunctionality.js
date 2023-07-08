@@ -148,6 +148,8 @@ const S6_FormFunctionality = () => {
       wOpen={wOpen}
       Altwardens={Altwardens}
       handleClick={handleButtonClick}
+      reason={reason}
+      setReason = {setReason}
     />
   );
 };
