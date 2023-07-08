@@ -10,9 +10,10 @@ const WardenApprovedCancelled = () => {
   // console.log(accessToken);
   const tabs = ["Pending Requests", "Approved / Cancelled", "AutoApproved", "Visitor Requests"]
   const [GpDropdown, setGpDropdown] = useState("All")
-  const dropdownValues=["All","Approved", "Cancelled"]
+  const dropdownValues=["All","Approved","Rejected", "Cancelled"]
   const [Tb_data_Api, setTb_data_Api] = useState("http://localhost:4000/gatepass/v2/warden/get_all_gatepass");
   const [data, setData] = useState([]);
+  const [filterData, setFilterData] = useState(data);
  
   useEffect( () => {
     // if (GpDropdown === "MyGatepassRequest") {
@@ -34,7 +35,20 @@ const WardenApprovedCancelled = () => {
       }
     };
     fetchData();
-  }, [GpDropdown, Tb_data_Api, accessToken])
+  }, [Tb_data_Api, accessToken])
+
+  useEffect(() => {
+    if (GpDropdown === "All") {
+      setFilterData(data);
+    } else if (GpDropdown === "Approved") {
+      setFilterData(data.filter((item) => item.status === "Approved"));
+    } else if (GpDropdown === "Rejected") {
+      setFilterData(data.filter((item) => item.status === "Rejected"));
+  }
+  else if (GpDropdown === "Cancelled") {
+    setFilterData(data.filter((item) => item.status === "cancelled"));
+  }
+}, [GpDropdown,data]);
 
   return (
     <div className="w-screen h-screen bg-background">
@@ -48,7 +62,7 @@ const WardenApprovedCancelled = () => {
         <Widgets setGpDropdown={setGpDropdown} dropdownValues={dropdownValues} />
       </div>
       <div>
-        <Table data={data}  />
+        <Table data={filterData} Gpdropdown={GpDropdown}  />
       </div>
     </div>
   );
