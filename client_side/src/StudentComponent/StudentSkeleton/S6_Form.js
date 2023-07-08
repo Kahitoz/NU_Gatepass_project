@@ -45,11 +45,11 @@ const S6_FormDesigns = ({
                 <p className="font-bold mb-2">Departure Date</p>
                 <div className={designs.d13}>
                   <DatePicker
-                    selected={new Date()} // Provide the selected date value here
-                    onChange={(date) => console.log(date)} // Handle the date change
+                    selected={new Date()} 
+                    onChange={(date) => console.log(date)} 
                     className="bg-Items_bg"
                     placeholderText="Date to be fetched from server"
-                    disabled={selectedOption === "Local Fixed"} // Disable the picker when Local Fixed is selected
+                    disabled={selectedOption === "Local Fixed"} 
                   />
                 </div>
               </>
@@ -65,11 +65,11 @@ const S6_FormDesigns = ({
                       selectedOption === "LocalFixed"
                         ? "1:00"
                         : `${departureTime}`
-                    } // change the condition here for departure time
+                    } 
                     className="disabled:bg-Items_bg bg-Items_bg border-2 border-gray-300 rounded-md p-2"
-                    onChange={(time) => console.log(time)} // Handle the time change
+                    onChange={(time) => console.log(time)} 
                     placeholder="Time to be fetched from server"
-                    disabled={selectedOption === "Local Fixed"} // Disable the picker when Local Fixed is selected
+                    disabled={selectedOption === "Local Fixed"}
                   />
                 </div>
               </>
@@ -84,7 +84,7 @@ const S6_FormDesigns = ({
                     selected={new Date()} // Provide the selected date value here
                     onChange={(date) => console.log(date)} // Handle the date change
                     placeholderText="Date to be fetched from server"
-                    disabled={selectedOption === "Local Fixed"} // Disable the picker when Local Fixed is selected
+                    disabled={selectedOption === "Local Fixed"} 
                   />
                 </div>
               </>
@@ -100,9 +100,9 @@ const S6_FormDesigns = ({
                       selectedOption === "LocalFixed" ? "1:00" : arrivalTime
                     }
                     className="disabled:bg-Items_bg bg-Items_bg border-2 border-gray-300 rounded-md p-2"
-                    onChange={(time) => console.log(time)} // Handle the time change
+                    onChange={(time) => console.log(time)} 
                     placeholder="Time to be fetched from server"
-                    disabled={selectedOption === "Local Fixed"} // Disable the picker when Local Fixed is selected
+                    disabled={selectedOption === "Local Fixed"}
                   />
                 </div>
               </>
