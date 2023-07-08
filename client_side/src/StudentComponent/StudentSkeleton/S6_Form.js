@@ -1,7 +1,7 @@
 import designs from "../StudentStyling/S5_ProfileCSS";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
+import React, { useEffect } from "react";
 const S6_FormDesigns = ({
   selectedOption,
   departureDateVisible,
@@ -21,6 +21,17 @@ const S6_FormDesigns = ({
   Altwardens,
   handleClick,
 }) => {
+  const [depTime,setDepTime] = React.useState(departureTime);
+  const [arriveTime,setArriveTime] = React.useState(arrivalTime);
+  useEffect(() => {
+    if (selectedOption === "Local Fixed") {
+      setDepTime(departureTime);
+      setArriveTime(arrivalTime);
+    }
+    else if (selectedOption === "Local Flexible") {
+      setArriveTime(arrivalTime);
+    }
+  }, [selectedOption,departureTime,arrivalTime]);
   return (
     <div className="bg-background">
       <div className="p-2 flex justify-center">
@@ -64,10 +75,10 @@ const S6_FormDesigns = ({
                     value={
                       selectedOption === "LocalFixed"
                         ? "1:00"
-                        : `${departureTime}`
+                        : depTime
                     } 
                     className="disabled:bg-Items_bg bg-Items_bg border-2 border-gray-300 rounded-md p-2"
-                    onChange={(time) => console.log(time)} 
+                    onChange={(e) => (setDepTime(e.target.value))}   
                     placeholder="Time to be fetched from server"
                     disabled={selectedOption === "Local Fixed"}
                   />
@@ -97,12 +108,12 @@ const S6_FormDesigns = ({
                   <input
                     type="time"
                     value={
-                      selectedOption === "LocalFixed" ? "1:00" : arrivalTime
+                      selectedOption === "LocalFixed" ? "1:00" : arriveTime
                     }
-                    className="disabled:bg-Items_bg bg-Items_bg border-2 border-gray-300 rounded-md p-2"
-                    onChange={(time) => console.log(time)} 
-                    placeholder="Time to be fetched from server"
-                    disabled={selectedOption === "Local Fixed"}
+                    className=" bg-Items_bg border-2 border-gray-300 rounded-md p-2"
+                    onChange={(e) => (setArriveTime(e.target.value))} 
+                    // placeholder="Time to be fetched from server"
+                    disabled={["Local Fixed", "Local Flexible"].includes(selectedOption)}
                   />
                 </div>
               </>
