@@ -119,7 +119,7 @@ const S6_FormFunctionality = () => {
     if (selectedOption === "Local Fixed") {
       handleClick();
     } else if (selectedOption === "Local Flexible") {
-      handle_submit(accessToken, departureDate, "12:00:00", arrivalDate, arrivalTime, "Going to places");
+      handle_submit(accessToken, departureDate, "12:00:00", arrivalDate, arrivalTime, reason);
     } else if (selectedOption === "Outstation") {
       alert("You have clicked on Outstation!");
     } else if (selectedOption === "Emergency") {
