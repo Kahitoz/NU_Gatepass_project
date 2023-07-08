@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import moment from "moment";
 import Cookies from "js-cookie";
 import LFfunctions from "./S1_LocalFixed";
 import { week } from "./S1_ParameterConfig";
 import S6_FormDesigns from "../StudentSkeleton/S6_Form";
+import { get_warden_details } from "./S1_LocalFlexible";
+import { handle_submit } from "./S1_LocalFlexible";
 
 const S6_FormFunctionality = () => {
   const [selectedOption, setSelectedOption] = useState("");
@@ -23,6 +25,8 @@ const S6_FormFunctionality = () => {
   const [departureDate, setDepartureDate] = useState("");
   const [arrivalDate, setArrivalDate] = useState("");
   const [weekLimit, setWeekLimit] = useState(0);
+  const [warden, setWarden] = useState("");
+  const [reason, setReason] = useState("");
   const accessToken = Cookies.get("ACCESS_TOKEN");
 
   useEffect(() => {
@@ -35,6 +39,14 @@ const S6_FormFunctionality = () => {
       setWeekLimit(config.weekLimit);
     };
     fetchData();
+
+    const get_warden = async () =>{
+      let warden = await get_warden_details(accessToken);
+      setWarden(warden.warden_name)
+    }
+    get_warden();
+
+    
 
     setDepartureDate(new Date().toLocaleDateString("en-GB"));
     setArrivalDate(new Date().toLocaleDateString("en-GB"));
@@ -83,7 +95,11 @@ const S6_FormFunctionality = () => {
     if (option === "Local Flexible") {
       setReasonVisible(true);
       setWardenVisible(true);
-    }else if (option === "Outstation" || option === "Emergency") {
+    } else if (option === "Outstation") {
+      setDestinationVisible(true);
+      setReasonVisible(true);
+      setWardenVisible(true);
+    } else if (option === "Emergency") {
       setDestinationVisible(true);
       setReasonVisible(true);
       setWardenVisible(true);
@@ -99,7 +115,19 @@ const S6_FormFunctionality = () => {
     setWopen(!wOpen);
   };
 
-  const Altwardens = ["Warden-1", "Warden-2", "Warden-3"];
+  const handleButtonClick = () => {
+    if (selectedOption === "Local Fixed") {
+      handleClick();
+    } else if (selectedOption === "Local Flexible") {
+      handle_submit(accessToken, departureDate, "12:00:00", arrivalDate, arrivalTime, "Going to places");
+    } else if (selectedOption === "Outstation") {
+      alert("You have clicked on Outstation!");
+    } else if (selectedOption === "Emergency") {
+      alert("You have clicked on Emergency!");
+    }
+  };
+
+  const Altwardens = [warden];
 
   return (
     <S6_FormDesigns
@@ -119,7 +147,7 @@ const S6_FormFunctionality = () => {
       wselec={wselec}
       wOpen={wOpen}
       Altwardens={Altwardens}
-      handleClick={handleClick}
+      handleClick={handleButtonClick}
     />
   );
 };
