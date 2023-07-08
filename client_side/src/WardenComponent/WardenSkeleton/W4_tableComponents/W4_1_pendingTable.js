@@ -3,7 +3,7 @@ import designs from '../../WardenStyling/W4_TableCSS';
 import moment from "moment";
 import Modal from "./Modal/ModalPending";
 
- const W4_1_pendingTable = ({data}) => {
+ const W4_1_pendingTable = ({data,setPendingRequests}) => {
     const [userData, setUserData] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [pgNo, setPgNo] = useState(1);

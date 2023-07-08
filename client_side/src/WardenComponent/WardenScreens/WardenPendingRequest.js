@@ -13,6 +13,7 @@ const WardenPendingRequest = () => {
   const dropdownValues=["MyGatepassRequest", "OthersGatepassRequest"]
   const [Tb_data_Api, setTb_data_Api] = useState("http://localhost:4000/gatepass/v2/warden/get_dashboard_my");
   const [data, setData] = useState([]);
+  const [pendingRequests, setPendingRequests] = useState(1);
  
   useEffect( () => {
     if (GpDropdown === "MyGatepassRequest") {
@@ -34,7 +35,10 @@ const WardenPendingRequest = () => {
       }
     };
     fetchData();
-  }, [GpDropdown, Tb_data_Api, accessToken])
+    if (GpDropdown === "MyGatepassRequest") {
+      setPendingRequests(data.length);
+    }
+  }, [GpDropdown, Tb_data_Api, accessToken,data.length])
 
   return (
     <div className="w-screen h-screen bg-background">
@@ -45,10 +49,10 @@ const WardenPendingRequest = () => {
         <SubNavbar tabs={tabs} />
       </div>
       <div>
-        <Widgets setGpDropdown={setGpDropdown} dropdownValues={dropdownValues} />
+        <Widgets setGpDropdown={setGpDropdown} dropdownValues={dropdownValues} pendingRequests={pendingRequests} />
       </div>
       <div>
-        <Table data={data}  />
+        <Table data={data} setPendingRequests={setPendingRequests}  />
       </div>
     </div>
   );

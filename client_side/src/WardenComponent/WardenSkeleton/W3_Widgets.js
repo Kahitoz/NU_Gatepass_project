@@ -1,5 +1,5 @@
 import designs from "../WardenStyling/W3_WidgetsCSS"
-const W3_Widgets = ({setGpDropdown,dropdownValues}) => {
+const W3_Widgets = ({setGpDropdown,dropdownValues,pendingRequests}) => {
  
   return (
     <div className={`${designs.d1}`}>
@@ -24,7 +24,7 @@ const W3_Widgets = ({setGpDropdown,dropdownValues}) => {
       <div className={`${designs.d2}`}>
       <div className={`items-center justify-center text-center flex flex-col sm:flex-row`}>
          <h1 className={`font-bold me-2`}>My Pending Requests:</h1>
-         <p >00</p>
+         <p >{pendingRequests}</p>
       </div>
        
       </div>
