@@ -62,7 +62,7 @@ const WardenApprovedCancelled = () => {
         <Widgets setGpDropdown={setGpDropdown} dropdownValues={dropdownValues} />
       </div>
       <div>
-        <Table data={filterData} Gpdropdown={GpDropdown}  />
+        <Table data={filterData}   />
       </div>
     </div>
   );

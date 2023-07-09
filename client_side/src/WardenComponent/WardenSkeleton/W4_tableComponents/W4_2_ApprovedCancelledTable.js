@@ -4,7 +4,7 @@ import moment from "moment";
 import ModalApproved from "./Modal/ModalApproved";
 import ModalRejected from "./Modal/ModalRejected";
 
- const W4_2_ApprovedCancelledTable = ({data,Gpdropdown}) => {
+ const W4_2_ApprovedCancelledTable = ({data}) => {
     const [userData, setUserData] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [pgNo, setPgNo] = useState(1);
