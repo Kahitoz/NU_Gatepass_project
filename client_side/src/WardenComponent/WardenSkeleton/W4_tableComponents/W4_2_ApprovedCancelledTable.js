@@ -1,13 +1,15 @@
 import React,{ useState,useEffect } from 'react'
 import designs from '../../WardenStyling/W4_TableCSS';
 import moment from "moment";
-import Modal from "./Modal/ModalApproved";
+import ModalApproved from "./Modal/ModalApproved";
+import ModalRejected from "./Modal/ModalRejected";
 
- const W4_1_ApprovedCancelledTable = ({data,Gpdropdown}) => {
+ const W4_2_ApprovedCancelledTable = ({data,Gpdropdown}) => {
     const [userData, setUserData] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [pgNo, setPgNo] = useState(1);
   const [TbData, setTbData] = useState([]);
+  const [Status, setStatus] = useState("");
   useEffect(() => {
     const paginate = (array, page_size, page_number) => {
       return array.slice(
@@ -32,7 +34,8 @@ import Modal from "./Modal/ModalApproved";
     
     return (
           <div>
-          {showModal && <Modal setOpenModal={setShowModal} data={userData} />}
+          {showModal && Status==="Approved"&&<ModalApproved setOpenModal={setShowModal} data={userData} />}
+          {showModal && ["Rejected","Cancelled"].includes(Status)&&<ModalRejected setOpenModal={setShowModal} data={userData} />}
           <div>
             <div className={`${designs.d1}`}>
               <div className={`${designs.d2}`}>
@@ -73,7 +76,8 @@ import Modal from "./Modal/ModalApproved";
                           data.filter((obj) => {
                             return obj.request_id == item.request_id;
                           })
-                        );
+                          );
+                          setStatus(item.status)
                       }}
                       className=" bg-Navbar_bg p-2 text-white hover:border-2"
                     >
@@ -103,4 +107,4 @@ import Modal from "./Modal/ModalApproved";
       </div>
       );
 }
-export default W4_1_ApprovedCancelledTable;
+export default W4_2_ApprovedCancelledTable;
