@@ -4,4 +4,4 @@ node_modules
 
 dist
 
-config.js
+../ServerSide/src/dbConfig.js

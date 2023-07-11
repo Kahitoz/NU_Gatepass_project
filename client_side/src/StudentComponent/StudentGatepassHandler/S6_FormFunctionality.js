@@ -29,6 +29,11 @@ const S6_FormFunctionality = () => {
   const [reason, setReason] = useState("");
   const accessToken = Cookies.get("ACCESS_TOKEN");
 
+  const [lf_departureTime, set_lf_departureTime] = useState("");
+
+  const date = moment();
+  const formatted_Date = date.format("YYYY-MM-DD");
+
   useEffect(() => {
     const fetchData = async () => {
       let config = await week(accessToken);
@@ -48,8 +53,8 @@ const S6_FormFunctionality = () => {
 
     
 
-    setDepartureDate(new Date().toLocaleDateString("en-GB"));
-    setArrivalDate(new Date().toLocaleDateString("en-GB"));
+    setDepartureDate(formatted_Date);
+    setArrivalDate(formatted_Date);
     console.log("date  = ", departureDate);
   }, []);
 
@@ -117,9 +122,10 @@ const S6_FormFunctionality = () => {
 
   const handleButtonClick = () => {
     if (selectedOption === "Local Fixed") {
-      handleClick();
+      handleClick()
     } else if (selectedOption === "Local Flexible") {
-      handle_submit(accessToken, departureDate, "12:00:00", arrivalDate, arrivalTime, reason);
+      handle_submit(accessToken, departureDate, lf_departureTime, arrivalDate, arrivalTime, reason)
+      console.log("The time is - ",lf_departureTime);
     } else if (selectedOption === "Outstation") {
       alert("You have clicked on Outstation!");
     } else if (selectedOption === "Emergency") {
@@ -128,6 +134,7 @@ const S6_FormFunctionality = () => {
   };
 
   const Altwardens = [warden];
+
 
   return (
     <S6_FormDesigns
@@ -150,6 +157,8 @@ const S6_FormFunctionality = () => {
       handleClick={handleButtonClick}
       reason={reason}
       setReason = {setReason}
+      lf_departureTime = {set_lf_departureTime}
+      d_Time = {lf_departureTime}
     />
   );
 };
