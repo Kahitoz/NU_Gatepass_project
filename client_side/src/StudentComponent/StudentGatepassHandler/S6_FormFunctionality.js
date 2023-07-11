@@ -122,10 +122,10 @@ const S6_FormFunctionality = () => {
 
   const handleButtonClick = () => {
     if (selectedOption === "Local Fixed") {
-      handleClick();
+      handleClick()
     } else if (selectedOption === "Local Flexible") {
-      handle_submit(accessToken, departureDate, departureTime, arrivalDate, arrivalTime, reason);
-      console.log("The time is - ",departureTime);
+      handle_submit(accessToken, departureDate, lf_departureTime, arrivalDate, arrivalTime, reason)
+      console.log("The time is - ",lf_departureTime);
     } else if (selectedOption === "Outstation") {
       alert("You have clicked on Outstation!");
     } else if (selectedOption === "Emergency") {
@@ -157,7 +157,7 @@ const S6_FormFunctionality = () => {
       handleClick={handleButtonClick}
       reason={reason}
       setReason = {setReason}
-      lf_departure_time = {lf_departureTime}
+      lf_departureTime = {set_lf_departureTime}
     />
   );
 };
