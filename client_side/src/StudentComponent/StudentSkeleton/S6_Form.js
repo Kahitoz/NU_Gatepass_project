@@ -21,6 +21,7 @@ const S6_FormDesigns = ({
   Altwardens,
   handleClick,
   reason,
+  lf_departure_time,
   setReason
 }) => {
   const [depTime,setDepTime] = React.useState(departureTime);
@@ -80,7 +81,7 @@ const S6_FormDesigns = ({
                         : depTime
                     } 
                     className="disabled:bg-Items_bg bg-Items_bg border-2 border-gray-300 rounded-md p-2"
-                    onChange={(e) => (setDepTime(e.target.value))}   
+                    onChange={(e) => (lf_departure_time(e.target.value))}
                     placeholder="Time to be fetched from server"
                     disabled={selectedOption === "Local Fixed"}
                   />
