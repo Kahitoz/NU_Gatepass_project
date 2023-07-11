@@ -85,6 +85,14 @@ export default function W7_Modal({ setOpenModal, data }) {
                   <div className="overflow-hidden">
                     <table className="table-auto min-w-full border text-left text-base font-light">
                       <tbody>
+                      <tr className="rounded-full border-b  dark:border-neutral-500">
+                          <td className="whitespace-nowrap px-6 py-2 bg-neutral-100 font-bold">
+                            Parent's Contact:
+                          </td>
+                          <td className="whitespace-nowrap px-6 py-2 font-medium">
+                            {data[0].p_number}
+                          </td>
+                        </tr>
                         <tr className="rounded-full border-b  dark:border-neutral-500">
                           <td className="whitespace-nowrap px-6 py-2 bg-neutral-100 font-bold">
                             Departure Date:

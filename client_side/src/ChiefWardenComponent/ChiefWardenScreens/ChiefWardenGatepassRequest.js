@@ -8,15 +8,16 @@ import moment from "moment";
 
 const CheifWardenGatepassRequest = () => {
   const accessToken = Cookies.get("ACCESS_TOKEN");
-  // console.log(accessToken);
+  const[totalPending,setTotalPending]=useState(0)
   const tabs = ["Gatepass Requests", "AutoApproved / Blocked", "Notifications", "Profile Requests"]
-  const [GpDropdown, setGpDropdown] = useState("Pending Requests")
-  const dropdownValues=["Pending Requests", `All Gatepass Requests for ${moment().format("DD-MM-YYYY")}`]
+  const [GpDropdown, setGpDropdown] = useState("All Pending Requests")
+  const dropdownValues=["All Pending Requests", `All Gatepass Requests for ${moment().format('MMMM Do YYYY')}`]
   const [Tb_data_Api, setTb_data_Api] = useState("http://localhost:4000/gatepass/v2/warden/get_dashboard_others");
   const [data, setData] = useState([]);
+  const [Filterdata, setFilterData] = useState(data);
  
   useEffect( () => {
-    if (GpDropdown === "PendingRequest") {
+    if (GpDropdown === "All Pending Requests") {
       setTb_data_Api("http://localhost:4000/gatepass/v2/warden/get_dashboard_others");
     } else {
       setTb_data_Api("http://localhost:4000/gatepass/v2/warden/get_all_gatepass");
@@ -35,15 +36,15 @@ const CheifWardenGatepassRequest = () => {
       }
     };
     fetchData();
+    if (GpDropdown === `All Gatepass Requests for ${moment().format('MMMM Do YYYY')}`) {
+      setFilterData(data.filter((item) => moment(item.from_date).format("YYYY-MM-DD") === moment().format("YYYY-MM-DD")))
+    }
+    else{
+      setFilterData(data)
+      setTotalPending(data.length)
+    }
 
-    // if (GpDropdown ===  `All Gatepass Requests for ${moment().format("DD-MM-YYYY")}`) {
-    //   setTb_data_Api(
-    //     data.filter((item) => {
-    //       return item.applied_date === moment().format("DD-MM-YYYY");
-    //     })
-    //   )
-    // }
-  }, [GpDropdown, Tb_data_Api, accessToken,data])
+  }, [GpDropdown, Tb_data_Api, accessToken,data.length])
 
   return (
     <div className="w-screen h-screen bg-background">
@@ -54,10 +55,10 @@ const CheifWardenGatepassRequest = () => {
         <SubNavbar tabs={tabs} />
       </div>
       <div>
-        <Widgets setGpDropdown={setGpDropdown} dropdownValues={dropdownValues} />
+        <Widgets setGpDropdown={setGpDropdown} dropdownValues={dropdownValues} totalPending={totalPending} />
       </div>
       <div>
-        <Table data={data}  />
+        <Table data={Filterdata}  />
       </div>
     </div>
   );
