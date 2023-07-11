@@ -77,10 +77,14 @@ const S6_FormDesigns = ({
                   <input
                     type="time"
                     value={
-                      selectedOption === "LocalFixed"
-                        ? "1:00"
-                        : d_Time
-                    } 
+                      selectedOption === "Local Fixed"
+                          ? departureTime
+                          : selectedOption === "Local Flexible"
+                              ? d_Time
+                              : departureTime
+                    }
+
+
                     className="disabled:bg-Items_bg bg-Items_bg border-2 border-gray-300 rounded-md p-2"
                     onChange={(e) => (lf_departureTime(e.target.value))}
                     placeholder="Time to be fetched from server"
