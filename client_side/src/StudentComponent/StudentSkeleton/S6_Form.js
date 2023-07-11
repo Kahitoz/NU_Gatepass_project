@@ -22,6 +22,7 @@ const S6_FormDesigns = ({
   handleClick,
   reason,
   lf_departureTime,
+  d_Time,
   setReason
 }) => {
   const [depTime,setDepTime] = React.useState(departureTime);
@@ -78,7 +79,7 @@ const S6_FormDesigns = ({
                     value={
                       selectedOption === "LocalFixed"
                         ? "1:00"
-                        : depTime
+                        : d_Time
                     } 
                     className="disabled:bg-Items_bg bg-Items_bg border-2 border-gray-300 rounded-md p-2"
                     onChange={(e) => (lf_departureTime(e.target.value))}
