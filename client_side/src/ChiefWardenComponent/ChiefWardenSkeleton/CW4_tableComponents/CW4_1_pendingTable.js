@@ -1,9 +1,9 @@
 import React,{ useState,useEffect } from 'react'
-import designs from '../../WardenStyling/W4_TableCSS';
+import designs from '../../ChiefWardenStyling/CW4_TableCSS';
 import moment from "moment";
 import Modal from "./Modal/ModalPending";
 
- const W4_3_ReportTable = ({data}) => {
+ const W4_1_pendingTable = ({data}) => {
     const [userData, setUserData] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [pgNo, setPgNo] = useState(1);
@@ -15,9 +15,9 @@ import Modal from "./Modal/ModalPending";
         page_number * page_size
       );
     };
-    if (data!==undefined){
+
     const paginatedData = paginate(data, 5, pgNo);
-    setTbData(paginatedData);}
+    setTbData(paginatedData);
   }, [pgNo, data]);
 
   const handleNextPage = () => {
@@ -45,7 +45,7 @@ import Modal from "./Modal/ModalPending";
               </div>
             </div>
     
-           {TbData && <div className={`${designs.d3}`}>
+            <div className={`${designs.d3}`}>
               {TbData.map((item, idx) => (
                 <div className={`${designs.d4} hover:bg-row_hover_bg`} key={idx}>
                   <h1 className={`${designs.d5} `}>{item.name}</h1>
@@ -76,7 +76,7 @@ import Modal from "./Modal/ModalPending";
                   </div>
                 </div>
               ))}
-            </div>} 
+            </div>
           </div>
           <div className="flex justify-center mt-4">
           <button
@@ -97,4 +97,4 @@ import Modal from "./Modal/ModalPending";
       </div>
       );
 }
-export default W4_3_ReportTable;
+export default W4_1_pendingTable;

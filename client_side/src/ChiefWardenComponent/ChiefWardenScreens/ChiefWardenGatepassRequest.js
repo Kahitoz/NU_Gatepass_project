@@ -1,24 +1,25 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../WardenSkeleton/W1_Navbar";
-import SubNavbar from "../WardenSkeleton/W2_SubNavbar";
-import Widgets from "../WardenSkeleton/W3_Widgets"
-import Table from "../WardenSkeleton/W4_tableComponents/W4_1_pendingTable"
+import Navbar from "../ChiefWardenSkeleton/CW1_Navbar";
+import SubNavbar from "../ChiefWardenSkeleton/CW2_SubNavbar";
+import Widgets from "../ChiefWardenSkeleton/CW3_Widgets"
+import Table from "../ChiefWardenSkeleton/CW4_tableComponents/CW4_1_pendingTable"
 import Cookies from "js-cookie";
+import moment from "moment";
 
-const WardenPendingRequest = () => {
+const CheifWardenGatepassRequest = () => {
   const accessToken = Cookies.get("ACCESS_TOKEN");
   // console.log(accessToken);
-  const tabs = ["Pending Requests", "Approved / Cancelled", "AutoApproved", "Visitor Requests"]
-  const [GpDropdown, setGpDropdown] = useState("MyGatepassRequest")
-  const dropdownValues=["MyGatepassRequest", "OthersGatepassRequest"]
-  const [Tb_data_Api, setTb_data_Api] = useState("http://localhost:4000/gatepass/v2/warden/get_dashboard_my");
+  const tabs = ["Gatepass Requests", "AutoApproved / Blocked", "Notifications", "Profile Requests"]
+  const [GpDropdown, setGpDropdown] = useState("Pending Requests")
+  const dropdownValues=["Pending Requests", `All Gatepass Requests for ${moment().format("DD-MM-YYYY")}`]
+  const [Tb_data_Api, setTb_data_Api] = useState("http://localhost:4000/gatepass/v2/warden/get_dashboard_others");
   const [data, setData] = useState([]);
  
   useEffect( () => {
-    if (GpDropdown === "MyGatepassRequest") {
-      setTb_data_Api("http://localhost:4000/gatepass/v2/warden/get_dashboard_my");
-    } else {
+    if (GpDropdown === "PendingRequest") {
       setTb_data_Api("http://localhost:4000/gatepass/v2/warden/get_dashboard_others");
+    } else {
+      setTb_data_Api("http://localhost:4000/gatepass/v2/warden/get_all_gatepass");
     }
     const fetchData = async () => {
       try {
@@ -34,7 +35,15 @@ const WardenPendingRequest = () => {
       }
     };
     fetchData();
-  }, [GpDropdown, Tb_data_Api, accessToken])
+
+    // if (GpDropdown ===  `All Gatepass Requests for ${moment().format("DD-MM-YYYY")}`) {
+    //   setTb_data_Api(
+    //     data.filter((item) => {
+    //       return item.applied_date === moment().format("DD-MM-YYYY");
+    //     })
+    //   )
+    // }
+  }, [GpDropdown, Tb_data_Api, accessToken,data])
 
   return (
     <div className="w-screen h-screen bg-background">
@@ -54,4 +63,4 @@ const WardenPendingRequest = () => {
   );
 };
 
-export default WardenPendingRequest;
+export default CheifWardenGatepassRequest;

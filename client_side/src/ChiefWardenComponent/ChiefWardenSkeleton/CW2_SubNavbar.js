@@ -1,5 +1,5 @@
 import React from "react";
-import designs from "../WardenStyling/W2_SubNavbarCSS"
+import designs from "../ChiefWardenStyling/CW2_SubNavbarCSS"
 import { useNavigate } from "react-router-dom";
 
 const WardenSubNavbar = ({tabs}) => {
@@ -7,17 +7,17 @@ const WardenSubNavbar = ({tabs}) => {
   const nav=(e)=>{
 
     let name=e.target.name
-    if(name==="Pending Requests"){
-      navigate("/Warden/home")
+    if(name==="Gatepass Requests"){
+      navigate("/ChiefWarden/home")
     }
-    if(name==="Approved / Cancelled"){
-      navigate("/Warden/home/ApprovedCancelled")
+    if(name==="AutoApproved / Blocked"){
+      navigate("/ChiefWarden/home/AutoApprovedBlocked")
     }
-    if(name==="Visitor Requests"){
-      navigate("/Warden/home/VisitorRequest")
+    if(name==="Notifications"){
+      navigate("/ChiefWarden/home/Notifications")
     }
-    if(name==="AutoApproved"){
-      navigate("/Warden/home/AutoApproved")
+    if(name==="Profile Requests"){
+      navigate("/CheifWarden/home/ProfileRequests")
   }
 }
   return (

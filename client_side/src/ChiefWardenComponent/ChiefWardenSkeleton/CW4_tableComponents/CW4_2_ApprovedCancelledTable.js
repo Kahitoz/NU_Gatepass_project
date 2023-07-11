@@ -1,5 +1,5 @@
 import React,{ useState,useEffect } from 'react'
-import designs from '../../WardenStyling/W4_TableCSS';
+import designs from '../../ChiefWardenStyling/CW4_TableCSS';
 import moment from "moment";
 import Modal from "./Modal/ModalApproved";
 

@@ -1,4 +1,4 @@
-const GuardSubNavbarCSS = {
+const ChiefWardenSubNavbarCSS = {
     "subnav":{
         "d1":"bg-Navbar_bg flex justify-between  pt-4 pl-4 pr-4 flex-col sm:flex-row sm:items-center",
         "d2":"flex-col sm:flex-row",
@@ -11,4 +11,4 @@ const GuardSubNavbarCSS = {
         "d9":"text-white text-sm sm:text-lg"
         }
 }
-export default GuardSubNavbarCSS
+export default ChiefWardenSubNavbarCSS

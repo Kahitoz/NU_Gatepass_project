@@ -1,5 +1,5 @@
 
-const S5_ProfileCSS = {
+const CW5_FormCSS = {
     "d1":"bg-Items_bg border border-black ms-2 me-2 rounded-lg p-4",
     "d2":"p-2 flex justify-center align-center ms-2 me-2 rounded-lg",
     "d3":"inline-block",
@@ -15,4 +15,4 @@ const S5_ProfileCSS = {
     "d13":"w-full bg-Items_bg justify-center  rounded-lg px-4 py-2 placeholder-black font-bold mb-4",
 
 }
-export default S5_ProfileCSS;
+export default CW5_FormCSS;

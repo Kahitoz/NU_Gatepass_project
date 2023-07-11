@@ -1,10 +1,10 @@
 import React from "react";
 import Niit_logo from "../icons/icon-niit.png"
 import Logout from "../icons/icon-logout.png";
-import Strings from "../WardenScreens/Strings.json";
-import designs from "../WardenStyling/W1_NavbarCSS";
+import Strings from "../ChiefWardenScreens/Strings.json";
+import designs from "../ChiefWardenStyling/CW1_NavbarCSS";
 import { Link } from "react-router-dom";
-const StudentNavbar = () => {
+const ChiefWardenNavbar = () => {
 
   return (
     <div>
@@ -47,4 +47,4 @@ const StudentNavbar = () => {
   );
 };
 
-export default StudentNavbar;
+export default ChiefWardenNavbar;
