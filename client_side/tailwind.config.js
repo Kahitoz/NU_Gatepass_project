@@ -21,7 +21,10 @@ module.exports = {
         "Items_bg":'#EEDFDF',
         "row_hover_bg":"#f7f3f3"
       },
+      fontSize: {
+        xxs: '9.5px',
+      },
     },
   },
-  plugins: [],
+  plugins: [],
 };
