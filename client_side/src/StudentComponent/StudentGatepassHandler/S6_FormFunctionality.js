@@ -158,6 +158,7 @@ const S6_FormFunctionality = () => {
       reason={reason}
       setReason = {setReason}
       lf_departureTime = {set_lf_departureTime}
+      d_Time = {lf_departureTime}
     />
   );
 };
