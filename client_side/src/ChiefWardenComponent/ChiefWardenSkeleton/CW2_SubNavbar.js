@@ -10,8 +10,11 @@ const WardenSubNavbar = ({tabs}) => {
     if(name==="Gatepass Requests"){
       navigate("/ChiefWarden/home")
     }
-    if(name==="AutoApproved / Blocked"){
-      navigate("/ChiefWarden/home/AutoApprovedBlocked")
+    if(name==="AutoApproved"){
+      navigate("/ChiefWarden/home/AutoApproved")
+    }
+    if(name==="Blocked"){
+      navigate("/ChiefWarden/home/Blocked")
     }
     if(name==="Notifications"){
       navigate("/ChiefWarden/home/Notifications")

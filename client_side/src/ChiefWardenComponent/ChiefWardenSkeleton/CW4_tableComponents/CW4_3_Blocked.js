@@ -1,10 +1,8 @@
 import React,{ useState,useEffect } from 'react'
 import designs from '../../ChiefWardenStyling/CW4_TableCSS';
 import moment from "moment";
-import ModalApproved from "./Modal/ModalApproved";
-import ModalRejected from "./Modal/ModalRejected";
 
- const W4_1_ApprovedCancelledTable = ({data}) => {
+ const CW4_3_BlockedTable = ({data,tbHeader}) => {
     const [userData, setUserData] = useState([]);
     const [Status, setStatus] = useState("");
     const [showModal, setShowModal] = useState(false);
@@ -34,39 +32,29 @@ import ModalRejected from "./Modal/ModalRejected";
     
   return (
     <div>
-    {showModal && Status==="Approved"&&<ModalApproved setOpenModal={setShowModal} data={userData} />}
-    {showModal && ["Rejected","Cancelled"].includes(Status)&&<ModalRejected setOpenModal={setShowModal} data={userData} />}
     <div>
       <div className={`${designs.d1}`}>
         <div className={`${designs.d2}`}>
-          <h1 className={`${designs.d5}`}>Name</h1>
-          <h1 className={`${designs.d5}`}>Enrollment</h1>
-          <h1 className={`${designs.d5}`}>Contact</h1>
-          <h1 className={`${designs.d5}`}>Gatepass Type</h1>
-          <h1 className={`${designs.d5}`}>Applied Date</h1>
-          <h1 className={`${designs.d5}`}>Applied Time</h1>
-          <h1 className={`${designs.d5}`}>Status</h1>
-          <h1 className={`${designs.d5}`}>Actions</h1>
+        {tbHeader.map((header) => (
+          <h1 className={`${designs.d5} `}> {header}</h1>
+        ))}
         </div>
       </div>
 
       <div className={`${designs.d3}`}>
-        {TbData.map((item, idx) => (
+        {tbHeader.includes("Enrollment")?TbData.map((item, idx) => (
           <div className={`${designs.d4} hover:bg-row_hover_bg`} key={idx}>
-            <h1 className={`${designs.d5} `}>{item.name}</h1>
+            <h1 className={`${designs.d5} `}>{item.blacklist_id}</h1>
+            <h1 className={`${designs.d5}`}>{item.name}</h1>
             <h1 className={`${designs.d5}`}>{item.user_id}</h1>
-            <h1 className={`${designs.d5}`}>{item.contact_number}</h1>
-            <h1 className={`${designs.d5}`}>{item.gatepass_name}</h1>
+            <h1 className={`${designs.d5}`}>{item.blacklisted_by}</h1>
             <h1 className={`${designs.d5}`}>
               {moment(item.from_date).format("YYYY-MM-DD")}
-            </h1>
-            <h1 className={`${designs.d5}`}>
+            <br/>
               {moment(item.from_time).format("HH:mm:ss")}
             </h1>
-            <h1 className={`${designs.d5}`}>
-              {item.status}
-            </h1>
-            {<div className={`${designs.d5}`}>
+           <h1 className={`${designs.d5}`}>{item.remarks}</h1>
+            {/* {<div className={`${designs.d5}`}>
               <button
                 id={`button ${idx}`}
                 name={item.request_id}
@@ -83,7 +71,37 @@ import ModalRejected from "./Modal/ModalRejected";
               >
                 Open
               </button>
-            </div>}
+            </div>} */}
+          </div>
+        )):TbData.map((item, idx) => (
+          <div className={`${designs.d4} hover:bg-row_hover_bg`} key={idx}>
+            <h1 className={`${designs.d5} `}>{item.blacklist_id}</h1>
+            <h1 className={`${designs.d5}`}>{item.groupName}</h1>
+            <h1 className={`${designs.d5}`}>{item.subgroup}</h1>
+            <h1 className={`${designs.d5}`}>{item.blacklisted_by}</h1>
+            <h1 className={`${designs.d5}`}>
+              {moment(item.from_date).format("YYYY-MM-DD")}
+            <br/>
+              {moment(item.from_time).format("HH:mm:ss")}
+            </h1>
+            {/* {<div className={`${designs.d5}`}>
+              <button
+                id={`button ${idx}`}
+                name={item.request_id}
+                onClick={() => {
+                  setShowModal(true);
+                  setUserData(
+                    data.filter((obj) => {
+                      return obj.request_id == item.request_id;
+                    })
+                    );
+                    setStatus(item.status)
+                }}
+                className=" bg-Navbar_bg p-2 text-white hover:border-2"
+              >
+                Open
+              </button>
+            </div>} */}
           </div>
         ))}
       </div>
@@ -107,4 +125,4 @@ import ModalRejected from "./Modal/ModalRejected";
 </div>
 );
 }
-export default W4_1_ApprovedCancelledTable;
+export default CW4_3_BlockedTable;

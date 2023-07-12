@@ -8,6 +8,8 @@ import Login from "./OAuthComponent/O1_Login"
 import WardenApplyLeave from "./WardenComponent/WardenScreens/WardenApplyLeave";
 import WardenReport from "./WardenComponent/WardenScreens/WardenReport";
 import ChiefWardenHome from "./ChiefWardenComponent/ChiefWardenScreens/ChiefWardenGatepassRequest";
+import ChiefWardenAutoApproved from "./ChiefWardenComponent/ChiefWardenScreens/ChiefWardenAutoApproved";
+import ChiefWardenBlocked from "./ChiefWardenComponent/ChiefWardenScreens/ChiefWardenBlocked ";
 
 function App() {
   return (
@@ -22,7 +24,7 @@ function App() {
 
           <Route exact path="/Warden/home" element={<WardenPendingRequests />}></Route>
           <Route exact path="/Warden/home/ApprovedCancelled" element={<WardenApprovedCancelled />}></Route>
-          {/* <Route exact path="/Warden/home/AutoApproved" element={<WardenReport />}></Route> */}
+          <Route exact path="/Warden/home/AutoApproved" element={<WardenReport />}></Route>
           <Route exact path="/Warden/home/VisitorRequests" element={<WardenReport />}></Route>
           <Route exact path="/Warden/reports" element={<WardenReport />}></Route>
           <Route exact path="/Warden/ApplyLeave" element={<WardenApplyLeave />}></Route>
@@ -34,6 +36,8 @@ function App() {
 
 
           <Route exact path="/ChiefWarden/home" element={<ChiefWardenHome/>}></Route>
+          <Route exact path="/ChiefWarden/home/AutoApproved" element={<ChiefWardenAutoApproved/>}></Route>
+          <Route exact path="/ChiefWarden/home/Blocked" element={<ChiefWardenBlocked/>}></Route>
 
         </Routes>
       </Router>

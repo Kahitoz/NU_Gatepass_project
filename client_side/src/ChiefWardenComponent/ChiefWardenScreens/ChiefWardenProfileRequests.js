@@ -8,7 +8,7 @@ import Cookies from "js-cookie";
 const WardenPendingRequest = () => {
   const accessToken = Cookies.get("ACCESS_TOKEN");
   // console.log(accessToken);
-  const tabs = ["Pending Requests", "Approved / Cancelled", "AutoApproved", "Visitor Requests"]
+  const tabs = ["Gatepass Requests", "AutoApproved","Blocked", "Notifications", "Profile Requests"]
   const [GpDropdown, setGpDropdown] = useState("MyGatepassRequest")
   const dropdownValues=["MyGatepassRequest", "OthersGatepassRequest"]
   const [Tb_data_Api, setTb_data_Api] = useState("http://localhost:4000/gatepass/v2/warden/get_dashboard_my");

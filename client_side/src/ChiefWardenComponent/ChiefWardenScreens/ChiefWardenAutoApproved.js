@@ -2,24 +2,24 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../ChiefWardenSkeleton/CW1_Navbar";
 import SubNavbar from "../ChiefWardenSkeleton/CW2_SubNavbar";
 import Widgets from "../ChiefWardenSkeleton/CW3_Widgets"
-import Table from "../ChiefWardenSkeleton/CW4_tableComponents/CW4_2_ApprovedCancelledTable"
+import Table from "../ChiefWardenSkeleton/CW4_tableComponents/CW4_3_Blocked"
 import Cookies from "js-cookie";
 
-const ChiefWardenApprovedBlocked = () => {
+const ChiefWardenAutoApproved = () => {
   const accessToken = Cookies.get("ACCESS_TOKEN");
   // console.log(accessToken);
-  const tabs = ["Pending Requests", "Approved / Cancelled", "AutoApproved", "Visitor Requests"]
-  const [GpDropdown, setGpDropdown] = useState("Approved")
-  const dropdownValues=["Approved", "Cancelled"]
-  const [Tb_data_Api, setTb_data_Api] = useState("http://localhost:4000/gatepass/v2/warden/get_all_gatepass");
+  const tabs = ["Gatepass Requests", "AutoApproved","Blocked", "Notifications", "Profile Requests"]
+  const [GpDropdown, setGpDropdown] = useState("Currently AutoApproved")
+  const dropdownValues=["Currently AutoApproved", "All AutoApproved"]
+  const [Tb_data_Api, setTb_data_Api] = useState("http://localhost:4000/gatepass/v2/warden/auto_approved_batches");
   const [data, setData] = useState([]);
  
   useEffect( () => {
-    // if (GpDropdown === "MyGatepassRequest") {
-    //   setTb_data_Api("http://localhost:4000/gatepass/v2/warden/get_all_gatepass");
-    // } else {
-    //   setTb_data_Api("http://localhost:4000/gatepass/v2/warden/get_all_gatepass");
-    // }
+    if (GpDropdown === "Currently AutoApproved") {
+      setTb_data_Api("http://localhost:4000/gatepass/v2/warden/get_all_gatepass");
+    } else {
+      setTb_data_Api("http://localhost:4000/gatepass/v2/ChiefWarden/autoApprovedAll");
+    }
     const fetchData = async () => {
       try {
         const response = await fetch(Tb_data_Api, {
@@ -54,4 +54,4 @@ const ChiefWardenApprovedBlocked = () => {
   );
 };
 
-export default ChiefWardenApprovedBlocked;
+export default ChiefWardenAutoApproved;

@@ -9,7 +9,7 @@ import moment from "moment";
 const CheifWardenGatepassRequest = () => {
   const accessToken = Cookies.get("ACCESS_TOKEN");
   const[totalPending,setTotalPending]=useState(0)
-  const tabs = ["Gatepass Requests", "AutoApproved / Blocked", "Notifications", "Profile Requests"]
+  const tabs = ["Gatepass Requests", "AutoApproved","Blocked", "Notifications", "Profile Requests"]
   const [GpDropdown, setGpDropdown] = useState("All Pending Requests")
   const dropdownValues=["All Pending Requests", `All Gatepass Requests for ${moment().format('MMMM Do YYYY')}`]
   const [Tb_data_Api, setTb_data_Api] = useState("http://localhost:4000/gatepass/v2/warden/get_dashboard_others");
