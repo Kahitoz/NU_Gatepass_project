@@ -1,5 +1,7 @@
-//check black list starts here
+import {week} from "./S1_ParameterConfig";
+import {useState} from "react";
 
+//check black list starts here
 const checkBlacklist = async function (accessToken) {
   const response = await fetch(
       "http://127.0.0.1:4000/gatepass/v2/student/blacklisted/",
@@ -52,45 +54,46 @@ const checkApprovedOrCheckedout = async (accessToken) => {
 export {checkApprovedOrCheckedout}
 
 
-const checkLocalFixed = async (
-    accessToken,
-    departureTime,
-    arrivalTime,
-    weekLimit
-) => {
-  const res1 = await checkTime(accessToken, departureTime, arrivalTime);
-  const res3 = await checkBlacklist(accessToken);
-  const res4 = await checkApprovedOrCheckedout(accessToken);
-  const localFixedUsedPromise = fetchData(accessToken);
+const checkLocalFixed = async (accessToken, departureTime, arrivalTime) => {
+    try {
+        const res1 = await checkTime(accessToken, departureTime, arrivalTime);
+        const res3 = await checkBlacklist(accessToken);
+        const res4 = await checkApprovedOrCheckedout(accessToken);
 
-  let localFixedUsed = null;
-  localFixedUsedPromise.then((result) => {
-    localFixedUsed = result;
-    console.log("Total local Fixed Used =", localFixedUsed);
-  }).catch((error) => {
-    console.error("Error fetching local fixed data:", error);
-  });
+        const json = await week(accessToken);
+        const weekLimit = json.weekLimit;
+        console.log("This is the week limit - ", weekLimit);
 
+        let localFixedUsed;
+        const localFixedUsedPromise = fetchData_GP_used(accessToken);
+        console.log(localFixedUsedPromise);
+        const result = await localFixedUsedPromise;
+        localFixedUsed = result;
 
-  if (res3 === true) {
-    alert("Cannot Apply: You are blacklisted, you cannot apply for Gatepass");
-    return false;
-  } else if (localFixedUsed >= weekLimit) {
-    alert(
-        "Cannot Apply: You have exhausted all your weekly Local Fixed Gatepass "
-    );
-    return false;
-  } else if (res4 !== 0) {
-    alert("Cannot Apply: You have already applied for a Local Fixed Gatepass");
-    return false;
-  } else if (res1 === false) {
-    alert("Cannot Apply: You cannot apply a gatepass in the outside hours");
-    return false;
-  } else {
-    return true;
-  }
+        if (res3 === true) {
+            alert("Cannot Apply: You are blacklisted, you cannot apply for Gatepass");
+            return false;
+        } else if (localFixedUsed >= weekLimit) {
+            alert("Cannot Apply: You have exhausted all your weekly Local Fixed Gatepass");
+            console.log("total lf-used = ", localFixedUsed, weekLimit);
+            return false;
+        } else if (res4 !== 0) {
+            alert("Cannot Apply: You have already applied for a Local Fixed Gatepass");
+            return false;
+        } else if (res1 === false) {
+            alert("Cannot Apply: You cannot apply a gatepass in the outside hours");
+            return false;
+        } else {
+            return true;
+        }
+    } catch (error) {
+        console.error("Error fetching local fixed data:", error);
+        throw error;
+    }
 };
-export {checkLocalFixed}
+
+export { checkLocalFixed };
+
 
 const applyLocalFixedGatepass = async (
     accessToken,
@@ -137,7 +140,6 @@ const applyLocalFixedGatepass = async (
 
     if (check === true) {
       await applyLocalFixedGatepassAPI();
-      alert("You have successfully applied for Local Fixed Gatepass!");
     }
   };
 
@@ -155,7 +157,7 @@ const functions = {
 export default functions;
 
 
-const fetchData = async (accessToken) => {
+const fetchData_GP_used = async (accessToken) => {
   let currentDate = null;
   let lastMonday = null;
   let nextMonday = null;
@@ -189,6 +191,6 @@ const fetchData = async (accessToken) => {
   return lf_used;
 };
 
-export {fetchData};
+export {fetchData_GP_used};
 
 
