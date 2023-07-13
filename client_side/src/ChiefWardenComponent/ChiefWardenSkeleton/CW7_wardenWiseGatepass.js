@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 import jwt_decode from "jwt-decode";
 import React, { useEffect, useState } from "react";
 
-const CW5_AutoApprovedBlockedForm = () => {
+const CW7_wardenWiseGatepass = () => {
   const [userName, setUserName] = useState("");
   const [studentName, setStudentName] = useState("");
   const [studentHostel, setStudentHostel] = useState("");
@@ -85,4 +85,4 @@ const CW5_AutoApprovedBlockedForm = () => {
   );
 };
 
-export default CW5_AutoApprovedBlockedForm;
+export default CW7_wardenWiseGatepass;

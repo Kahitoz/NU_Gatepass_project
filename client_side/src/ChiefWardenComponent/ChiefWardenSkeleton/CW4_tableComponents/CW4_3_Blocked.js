@@ -2,11 +2,12 @@ import React,{ useState,useEffect } from 'react'
 import designs from '../../ChiefWardenStyling/CW4_TableCSS';
 import moment from "moment";
 
- const CW4_3_BlockedTable = ({data,tbHeader}) => {
+ const CW4_3_BlockedTable = ({data,tbHeader,showStudentWise,showGroupWise}) => {
     const [userData, setUserData] = useState([]);
     const [Status, setStatus] = useState("");
     const [showModal, setShowModal] = useState(false);
     const [pgNo, setPgNo] = useState(1);
+
   const [TbData, setTbData] = useState([]);
   useEffect(() => {
     const paginate = (array, page_size, page_number) => {
@@ -36,13 +37,13 @@ import moment from "moment";
       <div className={`${designs.d1}`}>
         <div className={`${designs.d2}`}>
         {tbHeader.map((header) => (
-          <h1 className={`${designs.d5} `}> {header}</h1>
+          <h1 className={`${designs.d5} `} key={header}> {header}</h1>
         ))}
         </div>
       </div>
 
       <div className={`${designs.d3}`}>
-        {tbHeader.includes("Enrollment")?TbData.map((item, idx) => (
+        {showStudentWise && TbData.map((item, idx) => (
           <div className={`${designs.d4} hover:bg-row_hover_bg`} key={idx}>
             <h1 className={`${designs.d5} `}>{item.blacklist_id}</h1>
             <h1 className={`${designs.d5}`}>{item.name}</h1>
@@ -52,6 +53,11 @@ import moment from "moment";
               {moment(item.from_date).format("YYYY-MM-DD")}
             <br/>
               {moment(item.from_time).format("HH:mm:ss")}
+            </h1>
+            <h1 className={`${designs.d5}`}>
+              {moment(item.to_date).format("YYYY-MM-DD")}
+            <br/>
+              {moment(item.to_time).format("HH:mm:ss")}
             </h1>
            <h1 className={`${designs.d5}`}>{item.remarks}</h1>
             {/* {<div className={`${designs.d5}`}>
@@ -73,7 +79,8 @@ import moment from "moment";
               </button>
             </div>} */}
           </div>
-        )):TbData.map((item, idx) => (
+        ))}
+        {showGroupWise && TbData.map((item, idx) => (
           <div className={`${designs.d4} hover:bg-row_hover_bg`} key={idx}>
             <h1 className={`${designs.d5} `}>{item.blacklist_id}</h1>
             <h1 className={`${designs.d5}`}>{item.groupName}</h1>
@@ -83,6 +90,11 @@ import moment from "moment";
               {moment(item.from_date).format("YYYY-MM-DD")}
             <br/>
               {moment(item.from_time).format("HH:mm:ss")}
+            </h1>
+            <h1 className={`${designs.d5}`}>
+              {moment(item.to_date).format("YYYY-MM-DD")}
+            <br/>
+              {moment(item.to_time).format("HH:mm:ss")}
             </h1>
             {/* {<div className={`${designs.d5}`}>
               <button
@@ -106,7 +118,7 @@ import moment from "moment";
         ))}
       </div>
     </div>
-    <div className="flex justify-center mt-4">
+    {TbData.length>1 && <div className="flex justify-center mt-4">
     <button
       className="px-4 py-2 mx-2 bg-blue-500 text-white rounded"
       onClick={handlePreviousPage}
@@ -121,7 +133,7 @@ import moment from "moment";
     >
       Next
     </button>
-  </div>
+  </div>}
 </div>
 );
 }

@@ -23,10 +23,10 @@ const ChiefWardenNavbar = () => {
           </div>
           <div className={`${designs.Navbar["d-5"]}`}>
             <ul className={`${designs.Navbar["d-6"]}`}>
-              <Link to="/Warden/home">
+              <Link to="/ChiefWarden/home">
               <li className={`${designs.Navbar["d-7"]}`}>{Strings.list_1}</li>
               </Link>
-              <Link to="/Warden/reports">
+              <Link to="/ChiefWarden/reports">
               <li className={`${designs.Navbar["d-7"]}`}>{Strings.list_2}</li>
               </Link>
               <Link to="/Warden/ApplyLeave">

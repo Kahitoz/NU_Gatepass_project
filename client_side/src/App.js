@@ -10,6 +10,7 @@ import WardenReport from "./WardenComponent/WardenScreens/WardenReport";
 import ChiefWardenHome from "./ChiefWardenComponent/ChiefWardenScreens/ChiefWardenGatepassRequest";
 import ChiefWardenAutoApproved from "./ChiefWardenComponent/ChiefWardenScreens/ChiefWardenAutoApproved";
 import ChiefWardenBlocked from "./ChiefWardenComponent/ChiefWardenScreens/ChiefWardenBlocked ";
+import ChiefWardenReport from "./ChiefWardenComponent/ChiefWardenScreens/ChiefWardenReport";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
           <Route exact path="/ChiefWarden/home" element={<ChiefWardenHome/>}></Route>
           <Route exact path="/ChiefWarden/home/AutoApproved" element={<ChiefWardenAutoApproved/>}></Route>
           <Route exact path="/ChiefWarden/home/Blocked" element={<ChiefWardenBlocked/>}></Route>
+          <Route exact path="/ChiefWarden/reports" element={<ChiefWardenReport />}></Route>
 
         </Routes>
       </Router>
