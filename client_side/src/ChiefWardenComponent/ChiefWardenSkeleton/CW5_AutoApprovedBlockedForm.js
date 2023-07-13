@@ -1,37 +1,19 @@
-import profile from "../icons/icon-profile.png";
 import designs from "../ChiefWardenStyling/CW6_wardenWiseGatepassCSS";
-import Cookies from "js-cookie";
-import jwt_decode from "jwt-decode";
 import React, { useEffect, useState } from "react";
-
+import { useLocation } from "react-router-dom";
 const CW5_AutoApprovedBlockedForm = () => {
-  const [userName, setUserName] = useState("");
-  const [studentName, setStudentName] = useState("");
-  const [studentHostel, setStudentHostel] = useState("");
-  const [studentEnrollment, setStudentEnrollment] = useState("");
-  const [studentContact, setStudentContact] = useState("");
-
+ const [api, setApi] = useState('');
+ const[masterGroup,setMasterGroup]=useState('');
+ const current=useLocation().pathname;
   useEffect(() => {
-    const userToken = Cookies.get("ACCESS_TOKEN");
-    const decoded = jwt_decode(userToken);
-    const email = decoded.data.email_id;
-
-    async function fetchUserDetails() {
-      const response = await fetch(`http://127.0.0.1:4000/gatepass/v2/user_details/${email}`, {
-        headers: {
-          Authorization: userToken,
-        },
-      });
-      const data = await response.json();
-      setUserName(data.name);
-      setStudentName(data.name);
-      setStudentHostel(data.hostel);
-      setStudentEnrollment(data.user_id);
-      setStudentContact(data.contact_number);
+    if (current==='/ChiefWarden/home/AutoApproved') {
+      setApi('set AutoApproved api here')
+    }
+    else{
+      setApi('set Blocked api here')
     }
 
-    fetchUserDetails();
-  }, []);
+  }, [current]);
 
   return (
     <div className={`${designs.d1}`}>
@@ -48,37 +30,110 @@ const CW5_AutoApprovedBlockedForm = () => {
       </div> */}
 
       <div className={`${designs.d10}`}>
-        <div className={`${designs.d11}`}>
-          <div className={`${designs.d12}`}>
+        <div  className={`${designs.d12}`}>
+          <form name='setAutoApproval/BlockedForm' className="p-5" >
+           <label htmlFor="masterGroup"> Master Group</label> 
+           <select
+           id='masterGroup'
+              className={`${designs.d13} `}
+              onClick={async (e)=>setMasterGroup(e.target.value)}
+            >
+              <option value='Master Group 1' > Master Group 1</option>
+              <option value='Master Group 2' > Master Group 2</option>
+              <option value='Master Group 3' > Master Group 3</option>
+            </select>
+            <label className={`${designs.d14}`}>Group </label>
+            <div className="flex rounded-sm border p-2 bg-Items_bg ">
+            <div >
             <input
-              type="text"
-              className={`${designs.d13}`}
-              placeholder="Student Name"
-              value={studentName}
-              disabled
-            />
+              type="checkbox"
+              id='groupCheckbox'
+              className={`m-1`}
+              value='group1'
+            /><label> group 1</label>
+            </div>
+            <div>
             <input
-              type="text"
-              className={`${designs.d13}`}
-              placeholder="Student Hostel"
-              value={studentHostel}
-              disabled
-            />
+              type="checkbox"
+              id='groupCheckbox'
+              className={`m-1`}
+              value='group1'
+            /> <label> group 2</label>
+            </div>
+            <div>
             <input
-              type="text"
-              className={`${designs.d13}`}
-              placeholder="Student Enrolment"
-              value={studentEnrollment}
-              disabled
-            />
+              type="checkbox"
+              id='groupCheckbox'
+              className={`m-1`}
+              value='group1'
+            /><label> group 3</label>
+            </div>
+            <div>
             <input
-              type="text"
-              className={`${designs.d13}`}
-              placeholder="Student Contact Number"
-              value={studentContact}
-              disabled
-            />
-          </div>
+              type="checkbox"
+              id='groupCheckbox'
+              className={`m-1`}
+              value='group4'
+            /><label> group 4</label>
+            </div>
+            </div>
+
+
+            <label className={`${designs.d14}`}> Sub Group </label>
+            <div className="flex rounded-sm border p-2 bg-Items_bg ">
+            <div >
+            <input
+              type="checkbox"
+              id='SubgroupCheckbox'
+              className={`m-1`}
+              value='group1'
+            />Subgroup 1
+            </div>
+            <div>
+            <input
+              type="checkbox"
+              id='SubgroupCheckbox'
+              className={`m-1`}
+              value='group1'
+            /> Subgroup 2
+            </div>
+            <div>
+            <input
+              type="checkbox"
+              id='SubgroupCheckbox'
+              className={`m-1`}
+              value='group1'
+            /> Subgroup 3
+            </div>
+            <div>
+            <input
+              type="checkbox"
+              id='SubgroupCheckbox'
+              className={`m-1`}
+              value='group4'
+            />Subgroup 4
+            </div>
+            </div>
+
+              <label className={`${designs.d14}`}>From Date Time</label>
+            <div className="flex rounded-sm border p-2 bg-Items_bg" >
+               <input
+               type='datetime-local'
+               id='fromDateTime'
+               className="w-full bg-transparent"
+               />
+            </div>
+
+            <label className={`${designs.d14}`}>To Date Time</label>
+            <div className="flex rounded-sm border p-2 bg-Items_bg" >
+               <input
+               type='datetime-local'
+               id='fromDateTime'
+               className="w-full bg-transparent"
+               />
+            </div>
+          </form>
+        <button className={`bg-Navbar_bg text-background m-2 ml-4 p-2 rounded-md`}>Confirm Done</button>
         </div>
       </div>
     </div>
