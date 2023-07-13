@@ -11,6 +11,7 @@ import ChiefWardenHome from "./ChiefWardenComponent/ChiefWardenScreens/ChiefWard
 import ChiefWardenAutoApproved from "./ChiefWardenComponent/ChiefWardenScreens/ChiefWardenAutoApproved";
 import ChiefWardenBlocked from "./ChiefWardenComponent/ChiefWardenScreens/ChiefWardenBlocked ";
 import ChiefWardenReport from "./ChiefWardenComponent/ChiefWardenScreens/ChiefWardenReport";
+import ChiefWardenTowerAllot from "./ChiefWardenComponent/ChiefWardenScreens/ChiefWardenTowerAllot";
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
           <Route exact path="/ChiefWarden/home/AutoApproved" element={<ChiefWardenAutoApproved/>}></Route>
           <Route exact path="/ChiefWarden/home/Blocked" element={<ChiefWardenBlocked/>}></Route>
           <Route exact path="/ChiefWarden/reports" element={<ChiefWardenReport />}></Route>
+          <Route exact path="/ChiefWarden/TowerAllot" element={<ChiefWardenTowerAllot />}></Route>
 
         </Routes>
       </Router>

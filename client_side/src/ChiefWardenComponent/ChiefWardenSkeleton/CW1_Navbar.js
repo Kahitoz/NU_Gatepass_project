@@ -29,7 +29,7 @@ const ChiefWardenNavbar = () => {
               <Link to="/ChiefWarden/reports">
               <li className={`${designs.Navbar["d-7"]}`}>{Strings.list_2}</li>
               </Link>
-              <Link to="/Warden/ApplyLeave">
+              <Link to="/ChiefWarden/TowerAllot">
               <li className={`${designs.Navbar["d-7"]}`}>{Strings.list_3}</li>
               </Link>
             </ul>
