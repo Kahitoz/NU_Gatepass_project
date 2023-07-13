@@ -77,33 +77,27 @@ const check_local_flexible = async function (accessToken, startTime, lastTime, d
     alert("Sorry, the gate-pass is blocked");
     return false;
   } else if (res0 === false) {
-    console.log("Cannot apply for gatepass outside of permitted hours");
     alert("You cannot apply for the gatepass outside of the permitted hours");
     return false;
   } else if (res2.rowsAffected[0] === 0) {
-    console.log("Condition: rowsAffected[0] === 0");
-    console.log("Overall Result: true");
     return true;
   } else if (
       res2.recordset[0].count > 0 &&
       res2.recordset[0].status === "Approved"
   ) {
-    console.log("Condition: recordset[0].status === 'Approved'");
     alert("One gate-pass is already approved");
     return false;
   } else if (
       res2.recordset[0].count > 0 &&
       res2.recordset[0].status === "CHECKEDOUT"
   ) {
-    console.log("Condition: recordset[0].status === 'CHECKEDOUT'");
     alert("You are already checked out");
     return false;
   } else if (
       res2.recordset[0].count > 0 &&
-      res2.recordset[0].status === "PENDING"
+      res2.recordset[0].status === "Pending"
   ) {
-    console.log("Condition: recordset[0].status === 'PENDING'");
-    alert("You have one pending gatepass");
+    alert("You have one pending gate-pass");
     return false;
   } else {
     console.log("Time is valid");
@@ -126,7 +120,7 @@ const apply_local_flexible = async function (
 
   const warden_details = await get_warden_details(accessToken);
   const allowed_warden = warden_details.alloted_warden;
-  console.log("The warden is  ", allowed_warden);
+
 
   let sending_data = fetch(
     "http://127.0.0.1:4000/gatepass/v2/student/apply_local_flexible",
@@ -168,18 +162,17 @@ const handle_submit = async function (
   console.log("Handle submit button - clicked");
   const check = await check_local_flexible(accessToken, startTime, endTime, departureTime);
   if (check === true) {
-    console.log("The overall check is true");
+   alert("You have Successfully applied for local flexible Gate-pass");
     await apply_local_flexible(
       accessToken,
-      startTime,
-      endTime,
+      departureDate,
       departureTime,
       arrivalDate,
-      departureDate,
+      endTime,
       purpose
     );
   }else{
-    console.log("The overall check is false");
+    alert("Something Wrong");
   }
 };
 
