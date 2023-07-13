@@ -124,8 +124,8 @@ const S6_FormFunctionality = () => {
     if (selectedOption === "Local Fixed") {
       handleClick()
     } else if (selectedOption === "Local Flexible") {
-      handle_submit(accessToken, departureDate, lf_departureTime, arrivalDate, arrivalTime, reason)
-      console.log("The time is - ",lf_departureTime);
+      handle_submit(accessToken,departureTime, arrivalTime, lf_departureTime, arrivalDate, departureDate, reason);
+      console.log(departureTime, arrivalTime, lf_departureTime, arrivalDate, departureDate, reason);
     } else if (selectedOption === "Outstation") {
       alert("You have clicked on Outstation!");
     } else if (selectedOption === "Emergency") {
