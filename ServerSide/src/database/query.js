@@ -54,7 +54,7 @@ export const queries = {
   /////////////////////////////Param Config//////////////////////////////
   settingsParameterConfig: "SELECT * FROM [gps_db].[gps_db].[gps_configmaster]",
   updateParameterConfig: "UPDATE [gps_db].[gps_db].[gps_configmaster] SET value=@value WHERE param_id=@param_id;",
-  addUser: "INSERT INTO [gps_db].[gps_db].[gps_usersmaster] (user_id,ad_user_name,email_id,contact_number,group_id,role_id,subgroup_id,name,room_no,address,p_number,punch_id,change_flag,hostel,hostel_tower,status,photo) VALUES (@user_id,@ad_user_name,@email_id,@contact_number,@group_id,@role_id,@subgroup_id,@name,@room_no,@address,@p_number,@punch_id,@change_flag,@hostel,@hostel_tower,@status,@photo);",
+  // addUser: "INSERT INTO [gps_db].[gps_db].[gps_usersmaster] (user_id,ad_user_name,email_id,contact_number,group_id,role_id,subgroup_id,name,room_no,address,p_number,punch_id,change_flag,hostel,hostel_tower,status,photo) VALUES (@user_id,@ad_user_name,@email_id,@contact_number,@group_id,@role_id,@subgroup_id,@name,@room_no,@address,@p_number,@punch_id,@change_flag,@hostel,@hostel_tower,@status,@photo);",
   // updateUser: "UPDATE [gps_db].[gps_db].[gps_usersmaster] SET ad_user_name=@ad_user_name,email_id=@email_id,contact_number=@contact_number,group_id=@group_id,role_id=@role_id,subgroup_id=@subgroup_id,name=@name,room_no=@room_no,address=@address,p_number=@p_number,punch_id=@punch_id,change_flag=@change_flag,hostel=@hostel,hostel_tower=@hostel_tower,status=@status,photo=@photo WHERE user_id=@user_id;",
 
 
@@ -84,17 +84,17 @@ export const queries = {
 
   cancelGatepass: "UPDATE [gps_db].[gps_db].[gps_gatepassmaster] SET status='Cancelled' WHERE request_id=@id;",
   expireGatepass: "UPDATE [gps_db].[gps_db].[gps_gatepassmaster] SET status='Expire' WHERE request_id=@id;",
-  recentGatepass: "SELECT TOP 3 status , GP.comments , GP.applied_date , GP.applied_time , GT.gatepass_name , GP.from_date , GP.from_time FROM [gps_db].[gps_db].[gps_gatepassmaster] AS GP INNER JOIN [gps_db].[gps_db].[gps_gatepass_type] AS GT ON GP.gatepass_type = GT.gatepass_type  WHERE user_id=@id ORDER BY applied_date DESC , applied_time DESC;",
+  recentGatepass: "SELECT TOP 5 status , GP.comments , GP.applied_date , GP.applied_time , GT.gatepass_name , GP.from_date , GP.from_time FROM [gps_db].[gps_db].[gps_gatepassmaster] AS GP INNER JOIN [gps_db].[gps_db].[gps_gatepass_type] AS GT ON GP.gatepass_type = GT.gatepass_type  WHERE user_id=@id ORDER BY applied_date DESC , applied_time DESC;",
   getDashboardDetails: "SELECT * FROM [gps_db].[gps_db].[gps_usersmaster] WHERE email_id = @email",
   getAllStudentGatepasses: "SELECT GM.request_id, GT.gatepass_name, GM.from_time, GM.from_date, GM.to_time, GM.to_date, UM.name as requested_to, GM.purpose, GM.status, GM.visit_to, GM.destination, GM.destination_contact, GM.applied_date, GM.applied_time, UM2.name as approved_by, GM.approved_or_rejected_date, GM.approved_or_rejected_time, GM.actual_in_date, GM.actual_in_time, GM.actual_out_date, GM.actual_out_time, GM.comments, GM.defaulter_flag FROM [gps_db].[gps_db].[gps_gatepassmaster] AS GM INNER JOIN [gps_db].[gps_db].[gps_gatepass_type] AS GT ON GM.gatepass_type=GT.gatepass_type FULL OUTER JOIN [gps_db].[gps_db].[gps_usersmaster] AS UM ON GM.send_approval_to=UM.user_id FULL OUTER JOIN [gps_db].[gps_db].[gps_usersmaster] AS UM2 ON GM.approved_or_rejected_by=UM2.user_id WHERE GM.user_id=@user_id;",
-  
+
   /* __________________________________________________LocalFlexible QUERIES__________________________________________________ */
   getWardenDetails: "SELECT HG.alloted_warden, UM2.contact_number, UM2.name AS warden_name FROM [gps_db].[gps_db].[gps_hostalgroups] AS HG INNER JOIN [gps_db].[gps_db].[gps_usersmaster] AS UM1 ON (HG.masterhostal_name = UM1.hostel AND REPLACE(REPLACE(HG.mastertowername,char(10),''),char(13),'') = UM1.hostel_tower) INNER JOIN gps_db.gps_usersmaster AS UM2 ON (HG.alloted_warden = UM2.user_id) WHERE UM1.user_id=@user_id;",
   checkGatepassStatus: "SELECT COUNT(*) as count, status FROM [gps_db].[gps_db].[gps_gatepassmaster] where user_id=@user_id and (status='CHECKEDOUT' OR (status in ('Approved', 'Pending') AND gatepass_type=2)) GROUP BY status;",
   applyLocalFlexibleGatepass:"INSERT INTO [gps_db].[gps_db].[gps_gatepassmaster] (user_id,punch_id,gatepass_type,from_date,from_time,to_date,to_time, purpose, destination, visit_to, send_approval_to, applied_date, applied_time, status, approved_or_rejected_date, approved_or_rejected_time, comments, actual_out_date, actual_out_time, actual_in_date, actual_in_time, defaulter_flag, defaulter_warden) VALUES (@user_id, @punch_id, 2, @from_date, @from_time, @to_date, @to_time, @purpose, 'NEEMRANA', 'NEEMRANA', @approval_to, @applied_date, @applied_time, 'Pending', '0000-00-00', '00:00:00', 'NA', '0000-00-00', '00:00:00', '0000-00-00', '00:00:00', 0, 0 );",
-  
+
   /* __________________________________________________Warden QUERIES__________________________________________________ */
-  
+
   approveGatepass: "UPDATE [gps_db].[gps_db].[gps_gatepassmaster] SET status='Approved', approved_or_rejected_by=@approved_or_rejected_by, approved_or_rejected_date=@approved_or_rejected_date, approved_or_rejected_time=@approved_or_rejected_time, comments=@comments where request_id=@request_id;",
   getAllGatepasses:"SELECT GM.request_id, UM.contact_number, UM.p_number, UM.name, UM.user_id, GT.gatepass_name, GM.from_date, GM.from_time, GM.to_date, GM.to_time, GM.status, GM.approved_or_rejected_date, GM.approved_or_rejected_time, GM.destination, GM.visit_to, GM.purpose, GM.destination_contact, GG.gps_groupname, GM.comments from [gps_db].[gps_db].[gps_gatepassmaster] AS GM INNER JOIN [gps_db].[gps_db].[gps_usersmaster] AS UM ON GM.user_id=UM.user_id INNER JOIN [gps_db].[gps_db].[gps_gatepass_type] AS GT ON GM.gatepass_type=GT.gatepass_type INNER JOIN [gps_db].[gps_db].[gps_groups] AS GG ON UM.group_id=GG.gps_groupid WHERE GM.status IN ('REJECTED','CANCELLED','Approved') AND GM.approved_or_rejected_by=@approved_or_rejected_by;",
   acceptGatepass: "UPDATE [gps_db].[gps_db].[gps_gatepassmaster] SET status='Approved' WHERE request_id=@id;",
@@ -106,6 +106,7 @@ export const queries = {
   getBlacklistedStudentWise: "SELECT GBS.blacklist_id, UM1.name,GBS.user_id ,GBS.from_date, GBS.from_time, GBS.to_date, GBS.to_time, UM2.name as blacklisted_by, GBS.remark from [gps_db].[gps_db].[gps_blacklist_students] AS GBS INNER JOIN [gps_db].[gps_db].[gps_usersmaster] AS UM1 ON GBS.user_id=UM1.user_id INNER JOIN [gps_db].[gps_db].[gps_usersmaster] AS UM2 ON GBS.blacklisted_by=UM2.user_id  where CONVERT(DATETIME, CONVERT(CHAR(8), GBS.to_date, 112) + ' ' + CONVERT(CHAR(8), GBS.to_time, 108))>=GETDATE();",
   getBlacklistedGroupWise: "SELECT GB.transactionid as blacklist_id,GG.gps_groupname as groupName, GS.subgroup_name as subgroup, GB.from_date, GB.from_time, GB.to_date, GB.to_time, UM.name from [gps_db].[gps_db].[gps_blacklistgroup] AS GB INNER JOIN [gps_db].[gps_db].[gps_groups] AS GG ON GB.group_id=GG.gps_groupid INNER JOIN [gps_db].[gps_db].[gps_usersmaster] AS UM ON GB.blacklisted_by=UM.user_id INNER JOIN [gps_db].[gps_db].[gps_subgroup] AS GS ON GS.subgroup_id=GB.subgroup_id where CONVERT(DATETIME, CONVERT(CHAR(8), GB.to_date, 112) + ' ' + CONVERT(CHAR(8), GB.to_time, 108))>=GETDATE();",
   getAutoApprovedAll:"SELECT GG.gps_groupname, GS.subgroup_name, GA.from_date, GA.from_time, GA.to_date, GA.to_time, UM.name from [gps_db].[gps_db].[gps_autoapprove] AS GA INNER JOIN [gps_db].[gps_db].[gps_groups] AS GG ON GA.group_id=GG.gps_groupid INNER JOIN [gps_db].[gps_db].[gps_usersmaster] AS UM ON GA.approved_by=UM.user_id INNER JOIN [gps_db].[gps_db].[gps_subgroup] AS GS ON GS.subgroup_id=GA.subgroup_id WHERE GA.visibility=1 ",
+
   /* __________________________________________________Local Fixed QUERIES__________________________________________________ */
   applyLocalFixedGatepass: "INSERT INTO [gps_db].[gps_db].[gps_gatepassmaster] (user_id,punch_id,gatepass_type,from_date,from_time,to_date,to_time, purpose, destination, visit_to, applied_date, applied_time, status, approved_or_rejected_date, approved_or_rejected_time, comments, actual_out_date, actual_out_time, actual_in_date, actual_in_time, defaulter_flag, defaulter_warden) VALUES (@user_id, @punch_id, 1, @from_date, @from_time, @to_date, @to_time, 'Local Visit', 'NEEMRANA', 'NEEMRANA',@applied_date, @applied_time,'AutoApproved', '0000-00-00', '00:00:00', 'NA', '0000-00-00', '00:00:00', '0000-00-00', '00:00:00', 0, 0 );",
   getNumberOfLocalFixedConfig: "SELECT value from [gps_db].[gps_db].[gps_configmaster] WHERE parameter='Week Limit'",
@@ -131,7 +132,7 @@ export const queries = {
   /* __________________________________________________AUTH QUERIES__________________________________________________ */
   getUserInformation: "SELECT * FROM [gps_db].[gps_db].[gps_usersmaster] WHERE email_id=@email_id",
 
-    /* __________________________________________________LOGOUT QUERY__________________________________________________ */
+  /* __________________________________________________LOGOUT QUERY__________________________________________________ */
 
   insertLoggedOutJWT: "INSERT INTO [gps_db].[gps_db].[gps_logged_out_jwts] (jwt) VALUES (@jwt);",
   getBlacklistedJwt: "SELECT COUNT(*) as TOTAL FROM [gps_db].[gps_db].[gps_logged_out_jwts] WHERE jwt=@jwt"
