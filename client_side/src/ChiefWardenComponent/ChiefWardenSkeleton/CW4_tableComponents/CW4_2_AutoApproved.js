@@ -50,7 +50,7 @@ import moment from "moment";
 
       <div className={`${designs.d3}`}>
         {TbData.map((item, idx) => (
-          <div className={`${designs.d4} hover:bg-row_hover_bg`} key={idx}>
+          <div className={`${designs.d4} hover:bg-row_hover_bg hover:-translate-y-1 hover:duration-75`} key={idx}>
             <h1 className={`${designs.d5} `}>{item.name}</h1>
             <h1 className={`${designs.d5}`}>{item.user_id}</h1>
             <h1 className={`${designs.d5}`}>{item.contact_number}</h1>
