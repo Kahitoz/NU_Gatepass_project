@@ -17,7 +17,7 @@ const ChiefWardenAutoApproved = () => {
  
   useEffect( () => {
     if (GpDropdown === "Currently AutoApproved") {
-      setTb_data_Api("http://localhost:4000/gatepass/v2/warden/get_all_gatepass");
+      setTb_data_Api("http://localhost:4000/gatepass/v2/warden/auto_approved_batches");
     } else {
       setTb_data_Api("http://localhost:4000/gatepass/v2/ChiefWarden/autoApprovedAll");
     }
