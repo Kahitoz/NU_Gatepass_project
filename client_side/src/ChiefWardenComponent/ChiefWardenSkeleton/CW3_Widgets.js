@@ -60,7 +60,7 @@ const W3_Widgets = ({setGpDropdown,dropdownValues,totalPending}) => {
       {current==='/ChiefWarden/home/Blocked' && <div className={`${designs.d2}`}>
       <div className={`items-center justify-center text-center flex flex-col sm:flex-row`}>
          <h1 className={`font-bold me-2`}>Currently Blocked Students:</h1>
-         <p >{totalPending}</p>
+         <p >00</p>
       </div>
       </div>}
     </div>

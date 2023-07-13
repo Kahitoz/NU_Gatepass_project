@@ -84,7 +84,7 @@ import moment from "moment";
         ))}
       </div>
     </div>
-    <div className="flex justify-center mt-4">
+   {TbData.length>1 && <div className="flex justify-center mt-4">
     <button
       className="px-4 py-2 mx-2 bg-blue-500 text-white rounded"
       onClick={handlePreviousPage}
@@ -99,7 +99,7 @@ import moment from "moment";
     >
       Next
     </button>
-  </div>
+  </div>}
 </div>
 );
 }

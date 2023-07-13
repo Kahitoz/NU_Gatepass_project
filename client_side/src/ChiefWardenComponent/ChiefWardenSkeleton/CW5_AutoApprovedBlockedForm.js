@@ -4,13 +4,16 @@ import { useLocation } from "react-router-dom";
 const CW5_AutoApprovedBlockedForm = () => {
  const [api, setApi] = useState('');
  const[masterGroup,setMasterGroup]=useState('');
+ const [text,setText]=useState('');
  const current=useLocation().pathname;
   useEffect(() => {
     if (current==='/ChiefWarden/home/AutoApproved') {
       setApi('set AutoApproved api here')
+      setText('Auto Approved')
     }
     else{
       setApi('set Blocked api here')
+      setText('Blocked')
     }
 
   }, [current]);
@@ -31,6 +34,7 @@ const CW5_AutoApprovedBlockedForm = () => {
 
       <div className={`${designs.d10}`}>
         <div  className={`${designs.d12}`}>
+        <p className={`m-2 text-center font-bold border-b-2 border-black`}>{`Create New ${text} Request`}</p>
           <form name='setAutoApproval/BlockedForm' className="p-5" >
            <label htmlFor="masterGroup"> Master Group</label> 
            <select
