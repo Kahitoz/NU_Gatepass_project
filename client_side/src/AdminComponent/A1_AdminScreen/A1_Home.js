@@ -6,6 +6,8 @@ import A4_Widgets from "../A2_AdminSkeletion/A4_Widgets";
 import A5_GroupSubgroupTable from "../A2_AdminSkeletion/A5_GroupSubgroupTable";
 import A6_StartEndHandler from "../A2_AdminSkeletion/A6_StartEndHandler";
 import A7_Notification from "../A2_AdminSkeletion/A7_Notification";
+import A8_ExcelWidget from "../A2_AdminSkeletion/A8_ExcelWidget";
+import A9_GroupSubGroupWidget from "../A2_AdminSkeletion/A9-GroupSubgroupWidget";
 import add from "../../StudentComponent/icons/icon-add.png"
 const A1_Home = () =>{
    return(
@@ -45,6 +47,7 @@ const A1_Home = () =>{
                               <img src={`${add}`} />
                           </div>
                           <A6_StartEndHandler/>
+                          <A8_ExcelWidget/>
                       </div>
                       <div className={`flex-1`}>
                           <p className={`font-bold text-center`}>Restricted</p>
@@ -55,14 +58,14 @@ const A1_Home = () =>{
                           <div>
                               <A7_Notification/>
                           </div>
+                          <div>
+                              <A9_GroupSubGroupWidget/>
+                          </div>
                       </div>
                   </div>
 
               </div>
           </div>
-
-
-
       </div>
    );
 }
