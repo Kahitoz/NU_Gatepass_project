@@ -103,4 +103,4 @@ import moment from "moment";
 </div>
 );
 }
-export default CW4_2_ApprovedTable;
+export default CW4_2_ApprovedCancelledTable;
