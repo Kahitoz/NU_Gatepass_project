@@ -22,9 +22,6 @@ const A1_Navbar = () =>{
                             <Link to="/admin/reports">
                                 <li className={`${designs.d7} hover:cursor-pointer hover:text-Navbar_bg`}>Reports</li>
                             </Link>
-                            <Link to="/admin/settings">
-                                <li className={`${designs.d7} hover:cursor-pointer hover:text-Navbar_bg`}>Settings</li>
-                            </Link>
                         </ul>
                         <Link to="/">
                             <img src={Logout} alt="NIIT University" className={`${designs.d8} hover: cursor-pointer`} />
