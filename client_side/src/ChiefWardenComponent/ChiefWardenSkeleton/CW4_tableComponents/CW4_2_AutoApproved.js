@@ -4,7 +4,7 @@ import moment from "moment";
 // import ModalApproved from "./Modal/ModalApproved";
 // import ModalRejected from "./Modal/ModalRejected";
 
- const CW4_2_ApprovedCancelledTable = ({data}) => {
+ const CW4_2_ApprovedTable = ({data}) => {
     const [userData, setUserData] = useState([]);
     const [Status, setStatus] = useState("");
     // const [showModal, setShowModal] = useState(false);
@@ -103,4 +103,4 @@ import moment from "moment";
 </div>
 );
 }
-export default CW4_2_ApprovedCancelledTable;
+export default CW4_2_ApprovedTable;
