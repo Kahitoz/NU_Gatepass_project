@@ -1,15 +1,13 @@
 import React,{ useState,useEffect } from 'react'
-import designs from '../../WardenStyling/W4_TableCSS';
+import designs from '../../ChiefWardenStyling/CW4_TableCSS';
 import moment from "moment";
-import ModalApproved from "./Modal/ModalApproved";
-import ModalRejected from "./Modal/ModalRejected";
+import Modal from "./Modal/ModalPending";
 
- const W4_2_ApprovedCancelledTable = ({data,Gpdropdown}) => {
+ const W4_3_ReportTable = ({data}) => {
     const [userData, setUserData] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [pgNo, setPgNo] = useState(1);
   const [TbData, setTbData] = useState([]);
-  const [Status, setStatus] = useState("");
   useEffect(() => {
     const paginate = (array, page_size, page_number) => {
       return array.slice(
@@ -17,9 +15,9 @@ import ModalRejected from "./Modal/ModalRejected";
         page_number * page_size
       );
     };
-
+    if (data!==undefined){
     const paginatedData = paginate(data, 5, pgNo);
-    setTbData(paginatedData);
+    setTbData(paginatedData);}
   }, [pgNo, data]);
 
   const handleNextPage = () => {
@@ -34,28 +32,24 @@ import ModalRejected from "./Modal/ModalRejected";
     
     return (
           <div>
-          {showModal && Status==="Approved"&&<ModalApproved setOpenModal={setShowModal} data={userData} />}
-          {showModal && ["Rejected","Cancelled"].includes(Status)&&<ModalRejected setOpenModal={setShowModal} data={userData} />}
+          {showModal && <Modal setOpenModal={setShowModal} data={userData} />}
           <div>
             <div className={`${designs.d1}`}>
               <div className={`${designs.d2}`}>
                 <h1 className={`${designs.d5}`}>Name</h1>
                 <h1 className={`${designs.d5}`}>Enrollment</h1>
-                <h1 className={`${designs.d5}`}>Contact</h1>
                 <h1 className={`${designs.d5}`}>Gatepass Type</h1>
                 <h1 className={`${designs.d5}`}>Applied Date</h1>
                 <h1 className={`${designs.d5}`}>Applied Time</h1>
-                <h1 className={`${designs.d5}`}>Status</h1>
                 <h1 className={`${designs.d5}`}>Actions</h1>
               </div>
             </div>
     
-            <div className={`${designs.d3}`}>
+           {TbData && <div className={`${designs.d3}`}>
               {TbData.map((item, idx) => (
                 <div className={`${designs.d4} hover:bg-row_hover_bg hover:-translate-y-1 hover:duration-75`} key={idx}>
                   <h1 className={`${designs.d5} `}>{item.name}</h1>
                   <h1 className={`${designs.d5}`}>{item.user_id}</h1>
-                  <h1 className={`${designs.d5}`}>{item.contact_number}</h1>
                   <h1 className={`${designs.d5}`}>{item.gatepass_name}</h1>
                   <h1 className={`${designs.d5}`}>
                     {moment(item.from_date).format("YYYY-MM-DD")}
@@ -63,10 +57,7 @@ import ModalRejected from "./Modal/ModalRejected";
                   <h1 className={`${designs.d5}`}>
                     {moment(item.from_time).format("HH:mm:ss")}
                   </h1>
-                  <h1 className={`${designs.d5}`}>
-                    {item.status}
-                  </h1>
-                  {<div className={`${designs.d5}`}>
+                  <div className={`${designs.d5}`}>
                     <button
                       id={`button ${idx}`}
                       name={item.request_id}
@@ -76,19 +67,18 @@ import ModalRejected from "./Modal/ModalRejected";
                           data.filter((obj) => {
                             return obj.request_id == item.request_id;
                           })
-                          );
-                          setStatus(item.status)
+                        );
                       }}
                       className=" bg-Navbar_bg p-2 text-white hover:border-2"
                     >
                       Open
                     </button>
-                  </div>}
+                  </div>
                 </div>
               ))}
-            </div>
+            </div>} 
           </div>
-          <div className="flex justify-center mt-4">
+          {TbData.length>1 && <div className="flex justify-center mt-4">
           <button
             className="px-4 py-2 mx-2 bg-blue-500 text-white rounded"
             onClick={handlePreviousPage}
@@ -103,8 +93,8 @@ import ModalRejected from "./Modal/ModalRejected";
           >
             Next
           </button>
-        </div>
+        </div>}
       </div>
       );
 }
-export default W4_2_ApprovedCancelledTable;
+export default W4_3_ReportTable;
