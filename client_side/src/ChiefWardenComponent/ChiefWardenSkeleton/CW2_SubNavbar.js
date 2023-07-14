@@ -22,7 +22,7 @@ const WardenSubNavbar = ({ tabs }) => {
       navigate("/ChiefWarden/home/Notifications")
     }
     if (name === "Profile Requests") {
-      navigate("/CheifWarden/home/ProfileRequests")
+      navigate("/ChiefWarden/home/ProfileRequests")
     }
   }
   useEffect(() => {
