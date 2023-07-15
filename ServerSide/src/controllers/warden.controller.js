@@ -124,10 +124,10 @@ export const getDashboardMy = async (req, res) => {
 
 }
 
-export const getAutoApprovedBatches = async (req, res) => {
+export const getCurrentAutoApprovedBatches = async (req, res) => {
   try {
     const pool = await getConnection();
-    const result = await pool.request().query(queries.getAutoApprovedBatches);
+    const result = await pool.request().query(queries.getCurrentAutoApprovedBatches);
     return res.send(result.recordset);
   } catch (error) {
     res.status(500);

@@ -44,15 +44,15 @@ const S4_table = () => {
   function getActionColor(status) {
     switch (status) {
       case "CHECKEDIN":
-        return "bg-purple-500";
+        return "text-purple-500";
       case "CHECKEDOUT":
-        return "bg-yellow-500";
+        return "text-yellow-500";
       case "Pending":
-        return "bg-green-500";
+        return "text-green-500";
       case "cancelled":
-        return "bg-red-500";
+        return "text-red-500";
       default:
-        return "bg-blue-500";
+        return "text-blue-500";
     }
   }
 

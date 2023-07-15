@@ -7,6 +7,7 @@ import wardenRoutes from "./routes/warden.routes";
 import guardRoutes from "./routes/guard.routes";
 import authRoutes from "./routes/auth.routes";
 import logoutRoutes from "./routes/logout.routes";
+import chiefWardenRoutes from "./routes/chiefWarden.routes";
 import morgan from "morgan";
 import cors from "cors";
 import { authenticate } from "./middleware/authenticate";
@@ -34,5 +35,6 @@ app.use("/gatepass/v2", studentRoutes);
 app.use("/gatepass/v2", wardenRoutes);
 app.use("/gatepass/v2", guardRoutes);
 app.use("/gatepass/v2", logoutRoutes);
+app.use("/gatepass/v2", chiefWardenRoutes);
 
 export default app;

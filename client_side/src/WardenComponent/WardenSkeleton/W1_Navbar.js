@@ -33,13 +33,13 @@ const StudentNavbar = () => {
               <li className={`${designs.Navbar["d-7"]}`}>{Strings.list_3}</li>
               </Link>
             </ul>
-            <button onClick={()=>{alert('clicked')}}> 
+            <Link to="/">
             <img
               src={Logout}
               alt={`${Strings["alt-1"]}`}
               className={`${designs.Navbar["d-8"]}`}
             />
-            </button>
+            </Link>
           </div>
         </nav>
       </div>

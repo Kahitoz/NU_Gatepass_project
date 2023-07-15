@@ -18,7 +18,8 @@ module.exports = {
         Card: '#FFFFFF',
         "Navbar_bg": '#85151C',
         "Table_bg":'#D9D9D9',
-        "Items_bg":'#EEDFDF'
+        "Items_bg":'#EEDFDF',
+        "row_hover_bg":"#f7f3f3"
       },
     },
   },
