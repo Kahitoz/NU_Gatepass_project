@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { 
-    getPendingGatepass,gatepassApproveOrReject, rejectGatepass, getApprovedGatepass, approveGatepass, getDashboardOthers, getAutoApprovedBatches, getDashboardMy, getAllGatepasses } from "../controllers/warden.controller"
+    getPendingGatepass,gatepassApproveOrReject, rejectGatepass, getApprovedGatepass, approveGatepass, getDashboardOthers, getCurrentAutoApprovedBatches, getDashboardMy, getAllGatepasses } from "../controllers/warden.controller"
 
 
 
@@ -12,6 +12,6 @@ router.put('/warden/reject_Gatepass', rejectGatepass) // requires gatepass req_i
 router.get('/warden/get_all_gatepass', getAllGatepasses);
 router.get("/warden/get_dashboard_my", getDashboardMy);
 router.get("/warden/get_dashboard_others", getDashboardOthers);
-router.get("/warden/auto_approved_batches",getAutoApprovedBatches);
+router.get("/warden/auto_approved_batches",getCurrentAutoApprovedBatches);
 
 export default router;

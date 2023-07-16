@@ -171,8 +171,6 @@ const handle_submit = async function (
       endTime,
       purpose
     );
-  }else{
-    alert("Something Wrong");
   }
 };
 
