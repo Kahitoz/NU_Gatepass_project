@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../WardenSkeleton/W1_Navbar";
 import SubNavbar from "../WardenSkeleton/W2_SubNavbar";
 import Widgets from "../WardenSkeleton/W3_Widgets"
-import Table from "../WardenSkeleton/W4_tableComponents/W4_1_pendingTable"
+import Table from "../WardenSkeleton/W4_tableComponents/W4_4_VisitorTable"
 import Cookies from "js-cookie";
 
 const WardenVisitorRequest = () => {
