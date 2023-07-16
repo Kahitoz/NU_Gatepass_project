@@ -7,6 +7,9 @@ import StudentGatepass from "./StudentComponent/StudentsScreen/S2_Gatepasses"
 import Login from "./OAuthComponent/O1_Login"
 import WardenApplyLeave from "./WardenComponent/WardenScreens/WardenApplyLeave";
 import WardenReport from "./WardenComponent/WardenScreens/WardenReport";
+import WardenVisitorRequest from "./WardenComponent/WardenScreens/WardenVisitorRequest";
+import WardenAutoApproved from "./WardenComponent/WardenScreens/WardenAutoApproved";
+import WardenLeaveManagement from "./WardenComponent/WardenScreens/WardenLeaveManagement";
 import A1_Home from "./AdminComponent/A1_AdminScreen/A1_Home"
 import A2_Reports from "./AdminComponent/A1_AdminScreen/A2_Reports";
 import ChiefWardenHome from "./ChiefWardenComponent/ChiefWardenScreens/ChiefWardenGatepassRequest";
@@ -30,10 +33,13 @@ function App() {
 
           <Route exact path="/Warden/home" element={<WardenPendingRequests />}></Route>
           <Route exact path="/Warden/home/ApprovedCancelled" element={<WardenApprovedCancelled />}></Route>
-          <Route exact path="/Warden/home/AutoApproved" element={<WardenReport />}></Route>
+          <Route exact path="/Warden/home/AutoApproved" element={<WardenAutoApproved />}></Route>
+          <Route exact path="/Warden/home/VisitorRequest" element={<WardenVisitorRequest />}></Route>
           <Route exact path="/Warden/home/VisitorRequests" element={<WardenReport />}></Route>
           <Route exact path="/Warden/reports" element={<WardenReport />}></Route>
-          <Route exact path="/Warden/ApplyLeave" element={<WardenApplyLeave />}></Route>
+          <Route exact path="/Warden/Leave/ApplyLeave" element={<WardenApplyLeave />}></Route>
+          <Route exact path="/Warden/Leave/LeaveManagement" element={<WardenLeaveManagement />}></Route>
+
 
 
 

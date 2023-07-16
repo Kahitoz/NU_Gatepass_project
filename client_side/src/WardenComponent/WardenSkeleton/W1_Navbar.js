@@ -29,7 +29,7 @@ const StudentNavbar = () => {
               <Link to="/Warden/reports">
               <li className={`${designs.Navbar["d-7"]}`}>{Strings.list_2}</li>
               </Link>
-              <Link to="/Warden/ApplyLeave">
+              <Link to="/Warden/Leave/ApplyLeave">
               <li className={`${designs.Navbar["d-7"]}`}>{Strings.list_3}</li>
               </Link>
             </ul>
