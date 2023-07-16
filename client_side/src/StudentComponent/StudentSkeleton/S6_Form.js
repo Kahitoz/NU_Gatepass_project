@@ -1,109 +1,41 @@
-import { useEffect, useState } from "react";
 import designs from "../StudentStyling/S5_ProfileCSS";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import "react-time-picker/dist/TimePicker.css";
-import { week } from "../StudentGatepassHandler/S1_ParameterConfig";
-import moment from "moment";
-import Cookies from "js-cookie";
-import LFfunctions from "../StudentGatepassHandler/S1_LocalFixed";
-
-const S6_Form = () => {
-  const [selectedOption, setSelectedOption] = useState("");
-  const [wselec, setWselect] = useState("");
-  const [wOpen, setWopen] = useState(false);
-
-  const [departureDateVisible, setDepartureDateVisible] = useState(false);
-  const [departureTimeVisible, setDepartureTimeVisible] = useState(false);
-  const [arrivalDateVisible, setArrivalDateVisible] = useState(false);
-  const [arrivalTimeVisible, setArrivalTimeVisible] = useState(false);
-  const [destinationVisible, setDestinationVisible] = useState(false);
-  const [reasonVisible, setReasonVisible] = useState(false);
-  const [wardenVisible, setWardenVisible] = useState(false);
-
-  const [departureTime, setDepartureTime] = useState("");
-  const [arrivalTime, setArrivalTime] = useState("");
-  const [departureDate, setDepartureDate] = useState("");
-  const [arrivalDate, setArrivalDate] = useState("");
-  const [weekLimit, setWeekLimit] = useState(0);
-  const accessToken = Cookies.get("ACCESS_TOKEN");
-
+import React, { useEffect } from "react";
+const S6_FormDesigns = ({
+  selectedOption,
+  departureDateVisible,
+  departureTimeVisible,
+  arrivalDateVisible,
+  arrivalTimeVisible,
+  destinationVisible,
+  reasonVisible,
+  wardenVisible,
+  departureTime,
+  arrivalTime,
+  handleOptionSelect,
+  handleWselect,
+  handlewDropDown,
+  wselec,
+  wOpen,
+  Altwardens,
+  handleClick,
+  reason,
+  lf_departureTime,
+  d_Time,
+  setReason
+}) => {
+  const [depTime,setDepTime] = React.useState(departureTime);
+  const [arriveTime,setArriveTime] = React.useState(arrivalTime);
   useEffect(() => {
-    const fetchData = async () => {
-      let config = await week(accessToken);
-      setDepartureTime(
-        moment(config.departureTime, "HH:mm:ss").format("HH:mm")
-      );
-      setArrivalTime(moment(config.arrivalTime, "HH:mm:ss").format("HH:mm"));
-      setWeekLimit(config.weekLimit);
-    };
-    fetchData();
-
-    setDepartureDate(new Date().toLocaleDateString("en-GB"));
-    setArrivalDate(new Date().toLocaleDateString("en-GB"));
-    console.log("date  = ", departureDate);
-  });
-
-  const handleClick = async () => {
-    try {
-      let localFixedUsed = 0;
-      const check = await LFfunctions.checkLocalFixed(
-        accessToken,
-        departureTime,
-        arrivalTime,
-        localFixedUsed,
-        weekLimit
-      );
-
-      if (check === true) {
-        await LFfunctions.applyLocalFixedGatepass(
-          accessToken,
-          departureDate,
-          departureTime,
-          arrivalDate,
-          arrivalTime,
-          weekLimit
-        );
-        alert("You have successfully applied for Local Fixed Gatepass!");
-      }
-    } catch (error) {
-      console.error(error);
-      // Handle the error here
-      alert("An error occurred while applying for Local Fixed Gatepass!");
+    if (selectedOption === "Local Fixed") {
+      setDepTime(departureTime);
+      setArriveTime(arrivalTime);
     }
-  };
-
-  const handleOptionSelect = (option) => {
-    setSelectedOption(option);
-    setDepartureDateVisible(true);
-    setDepartureTimeVisible(true);
-    setArrivalDateVisible(true);
-    setArrivalTimeVisible(true);
-    setDestinationVisible(false);
-    setReasonVisible(false);
-    setWardenVisible(false);
-
-    if (option === "Local Flexible") {
-      setReasonVisible(true);
-      setWardenVisible(true);
-    } else if (option === "Outstation" || option === "Emergency") {
-      setDestinationVisible(true);
-      setReasonVisible(true);
-      setWardenVisible(true);
+    else if (selectedOption === "Local Flexible") {
+      setArriveTime(arrivalTime);
     }
-  };
-
-  const handleWselect = (option) => {
-    setWselect(option);
-    setWopen(false);
-  };
-
-  const handlewDropDown = () => {
-    setWopen(!wOpen);
-  };
-
-  const Altwardens = ["Warden-1", "Warden-2", "Warden-3"];
-
+  }, [selectedOption,departureTime,arrivalTime]);
   return (
     <div className="bg-background">
       <div className="p-2 flex justify-center">
@@ -128,11 +60,11 @@ const S6_Form = () => {
                 <p className="font-bold mb-2">Departure Date</p>
                 <div className={designs.d13}>
                   <DatePicker
-                    selected={new Date()} // Provide the selected date value here
-                    onChange={(date) => console.log(date)} // Handle the date change
+                    selected={new Date()} 
+                    onChange={(date) => console.log(date)} 
                     className="bg-Items_bg"
                     placeholderText="Date to be fetched from server"
-                    disabled={selectedOption === "Local Fixed"} // Disable the picker when Local Fixed is selected
+                    disabled={selectedOption === "Local Fixed"} 
                   />
                 </div>
               </>
@@ -145,14 +77,18 @@ const S6_Form = () => {
                   <input
                     type="time"
                     value={
-                      selectedOption === "LocalFixed"
-                        ? "1:00"
-                        : `${departureTime}`
-                    } // change the condition here for departure time
+                      selectedOption === "Local Fixed"
+                          ? departureTime
+                          : selectedOption === "Local Flexible"
+                              ? d_Time
+                              : departureTime
+                    }
+
+
                     className="disabled:bg-Items_bg bg-Items_bg border-2 border-gray-300 rounded-md p-2"
-                    onChange={(time) => console.log(time)} // Handle the time change
+                    onChange={(e) => (lf_departureTime(e.target.value))}
                     placeholder="Time to be fetched from server"
-                    disabled={selectedOption === "Local Fixed"} // Disable the picker when Local Fixed is selected
+                    disabled={selectedOption === "Local Fixed"}
                   />
                 </div>
               </>
@@ -167,7 +103,7 @@ const S6_Form = () => {
                     selected={new Date()} // Provide the selected date value here
                     onChange={(date) => console.log(date)} // Handle the date change
                     placeholderText="Date to be fetched from server"
-                    disabled={selectedOption === "Local Fixed"} // Disable the picker when Local Fixed is selected
+                    disabled={selectedOption === "Local Fixed"} 
                   />
                 </div>
               </>
@@ -180,12 +116,12 @@ const S6_Form = () => {
                   <input
                     type="time"
                     value={
-                      selectedOption === "LocalFixed" ? "1:00" : arrivalTime
+                      selectedOption === "LocalFixed" ? "1:00" : arriveTime
                     }
-                    className="disabled:bg-Items_bg bg-Items_bg border-2 border-gray-300 rounded-md p-2"
-                    onChange={(time) => console.log(time)} // Handle the time change
-                    placeholder="Time to be fetched from server"
-                    disabled={selectedOption === "Local Fixed"} // Disable the picker when Local Fixed is selected
+                    className=" bg-Items_bg border-2 border-gray-300 rounded-md p-2"
+                    onChange={(e) => (setArriveTime(e.target.value))} 
+                    // placeholder="Time to be fetched from server"
+                    disabled={["Local Fixed", "Local Flexible"].includes(selectedOption)}
                   />
                 </div>
               </>
@@ -209,6 +145,9 @@ const S6_Form = () => {
                   type="text"
                   className={designs.d13}
                   placeholder="Write your reason here"
+                  value={reason}
+                  onChange={(e)=>setReason(e.target.value)}
+                  //reason not getting stored in setReason
                 />
               </>
             )}
@@ -252,4 +191,4 @@ const S6_Form = () => {
   );
 };
 
-export default S6_Form;
+export default S6_FormDesigns;

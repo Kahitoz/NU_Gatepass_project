@@ -1,9 +1,11 @@
 import { useEffect,useState } from "react";
 import designs from "../WardenStyling/W3_WidgetsCSS"
 import Cookies from "js-cookie";
+import { useLocation } from "react-router-dom";
 const W3_Widgets = ({setGpDropdown,dropdownValues,pendingRequests}) => {
   const userToken = Cookies.get("ACCESS_TOKEN");
   const [totalStudents, setTotalStudents] = useState(0);
+  const current= useLocation().pathname;
   useEffect(() => {
          fetch(
         `http://127.0.1:4000/gatepass/v2/admin/student_in_campus`,
@@ -42,7 +44,7 @@ const W3_Widgets = ({setGpDropdown,dropdownValues,pendingRequests}) => {
       </div>
       </div>
 
-      {pendingRequests && <div className={`${designs.d2}`}>
+      {current==='/Warden/home' && <div className={`${designs.d2}`}>
       <div className={`items-center justify-center text-center flex flex-col sm:flex-row`}>
          <h1 className={`font-bold me-2`}>My Pending Requests:</h1>
          <p >{pendingRequests}</p>
