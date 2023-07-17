@@ -14,10 +14,6 @@ const S5_Profile = () => {
   const [profilePath , setProfilePath] = useState('');
   const [profileImage, setProfileImage] = useState('');
 
-  const userToken = Cookies.get("ACCESS_TOKEN");
-
-
-
   useEffect(() => {
     const userToken = Cookies.get("ACCESS_TOKEN");
     const decoded = jwt_decode(userToken);
@@ -51,7 +47,6 @@ const S5_Profile = () => {
             Authorization: userToken,
           },
         });
-
         if (response.ok) {
           const imageBlob = await response.blob();
           const imageURL = URL.createObjectURL(imageBlob);
