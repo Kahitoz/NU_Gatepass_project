@@ -1,5 +1,7 @@
-import { DateTime } from "mssql";
 import { getConnection, sql, queries } from "../database";
+
+
+
 const date = require("date-and-time");
 
 export const gatepassCancel = async (req, res) => {
@@ -14,6 +16,22 @@ export const gatepassCancel = async (req, res) => {
   } catch (error) {
     res.status(500);
     res.send(error.message);
+  }
+};
+import path from 'path';
+
+export const getImage = async function (req, res) {
+  const { filename } = req.params;
+  console.log(filename);
+  console.log("req in process");
+  try {
+    const imagePath = path.join(__dirname, '..', 'uploads', filename);
+    res.sendFile(imagePath);
+    console.log("req served");
+  } catch (err) {
+    console.log(err);
+    console.log("req not served");
+    res.status(500).send("Internal Server Error");
   }
 };
 
