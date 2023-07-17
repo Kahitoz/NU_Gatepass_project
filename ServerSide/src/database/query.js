@@ -4,7 +4,7 @@ export const queries = {
   getAllUser: "SELECT * FROM [gps_db].[gps_db].[gps_usersmaster]",
   addUser: "INSERT INTO [gps_db].[gps_db].[gps_usersmaster] (user_id,ad_user_name,email_id,contact_number,group_id,role_id,subgroup_id,name,room_no,address,p_number,punch_id,change_flag,hostel,hostel_tower,status,photo) VALUES (@user_id,@ad_user_name,@email_id,@contact_number,@group_id,@role_id,@subgroup_id,@name,@room_no,@address,@p_number,@punch_id,@change_flag,@hostel,@hostel_tower,@status,@photo)",
   getUserById: "SELECT * FROM [gps_db].[gps_db].[gps_usersmaster] WHERE user_id=@user_id",
-  getUserByEmail: "SELECT * FROM [gps_db].[gps_db].[gps_usersmaster] WHERE email_id=@email_id",
+  getUserByEmail: "SELECT UM.*, PU.* FROM [gps_db].[gps_db].[gps_usersmaster] AS UM LEFT JOIN [gps_db].[gps_db].[gps_profileupdate] AS PU ON UM.user_id = PU.user_id WHERE UM.email_id = @email_id ;",
   deleteUser: "DELETE FROM [gps_db].[gps_db].[gps_usersmaster] WHERE user_id=@user_id",
   getTotalUser: "SELECT COUNT(*) FROM [gps_db].[gps_db].[gps_usersmaster]",
   updateUserById: "UPDATE [gps_db].[gps_db].[gps_usersmaster] SET ad_user_name=@ad_user_name,email_id=@email_id,contact_number=@contact_number,group_id=@group_id,role_id=@role_id,subgroup_id=@subgroup_id,name=@name,room_no=@room_no,address=@address,p_number=@p_number,punch_id=@punch_id,change_flag=@change_flag,hostel=@hostel,hostel_tower=@hostel_tower,status=@status,photo=@photo WHERE user_id=@user_id",
@@ -85,7 +85,7 @@ export const queries = {
   cancelGatepass: "UPDATE [gps_db].[gps_db].[gps_gatepassmaster] SET status='Cancelled' WHERE request_id=@id;",
   expireGatepass: "UPDATE [gps_db].[gps_db].[gps_gatepassmaster] SET status='Expire' WHERE request_id=@id;",
   recentGatepass: "SELECT TOP 5 status , GP.comments , GP.applied_date , GP.applied_time , GT.gatepass_name , GP.from_date , GP.from_time FROM [gps_db].[gps_db].[gps_gatepassmaster] AS GP INNER JOIN [gps_db].[gps_db].[gps_gatepass_type] AS GT ON GP.gatepass_type = GT.gatepass_type  WHERE user_id=@id ORDER BY applied_date DESC , applied_time DESC;",
-  getDashboardDetails: "SELECT * FROM [gps_db].[gps_db].[gps_usersmaster] WHERE email_id = @email",
+  getDashboardDetails: "SELECT * FROM [gps_db].[gps_db].[gps_usersmaster] AS UM LEFT JOIN [gps_db].[gps_db].[gps_profileupdate] AS PU ON UM.user_id = PU.user_id WHERE UM.email_id = @email;",
   getAllStudentGatepasses: "SELECT GM.request_id, GT.gatepass_name, GM.from_time, GM.from_date, GM.to_time, GM.to_date, UM.name as requested_to, GM.purpose, GM.status, GM.visit_to, GM.destination, GM.destination_contact, GM.applied_date, GM.applied_time, UM2.name as approved_by, GM.approved_or_rejected_date, GM.approved_or_rejected_time, GM.actual_in_date, GM.actual_in_time, GM.actual_out_date, GM.actual_out_time, GM.comments, GM.defaulter_flag FROM [gps_db].[gps_db].[gps_gatepassmaster] AS GM INNER JOIN [gps_db].[gps_db].[gps_gatepass_type] AS GT ON GM.gatepass_type=GT.gatepass_type FULL OUTER JOIN [gps_db].[gps_db].[gps_usersmaster] AS UM ON GM.send_approval_to=UM.user_id FULL OUTER JOIN [gps_db].[gps_db].[gps_usersmaster] AS UM2 ON GM.approved_or_rejected_by=UM2.user_id WHERE GM.user_id=@user_id;",
 
   /* __________________________________________________LocalFlexible QUERIES__________________________________________________ */
