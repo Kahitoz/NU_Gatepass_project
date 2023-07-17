@@ -3,6 +3,7 @@ import designs from "../StudentStyling/S5_ProfileCSS";
 import Cookies from "js-cookie";
 import jwt_decode from "jwt-decode";
 import React, { useEffect, useState } from "react";
+import profilePhoto from "../icons/icon-profile.png"
 
 const S5_Profile = () => {
   const [userName, setUserName] = useState("");
@@ -10,6 +11,12 @@ const S5_Profile = () => {
   const [studentHostel, setStudentHostel] = useState("");
   const [studentEnrollment, setStudentEnrollment] = useState("");
   const [studentContact, setStudentContact] = useState("");
+  const [profilePath , setProfilePath] = useState('');
+  const [profileImage, setProfileImage] = useState('');
+
+  const userToken = Cookies.get("ACCESS_TOKEN");
+
+
 
   useEffect(() => {
     const userToken = Cookies.get("ACCESS_TOKEN");
@@ -28,10 +35,40 @@ const S5_Profile = () => {
       setStudentHostel(data.hostel);
       setStudentEnrollment(data.user_id);
       setStudentContact(data.contact_number);
+      setProfilePath(data.image);
+    }
+    fetchUserDetails();
+
+    async function fetchUserImage(image) {
+      if (!image) {
+        setProfileImage(profilePhoto);
+        return;
+      }
+
+      try {
+        const response = await fetch(`http://localhost:4000/gatepass/v2/student/image/${image}`, {
+          headers: {
+            Authorization: userToken,
+          },
+        });
+
+        if (response.ok) {
+          const imageBlob = await response.blob();
+          const imageURL = URL.createObjectURL(imageBlob);
+          setProfileImage(imageURL);
+        } else {
+          setProfileImage(profilePhoto);
+        }
+      } catch (error) {
+        console.error('Error fetching user image:', error);
+        setProfileImage(profilePhoto);
+      }
     }
 
-    fetchUserDetails();
-  }, []);
+    fetchUserImage(profilePath);
+
+  }, [profilePath]);
+
 
   return (
     <div className={`${designs.d1}`}>
@@ -39,7 +76,12 @@ const S5_Profile = () => {
         <div className={`${designs.d3}`}>
           <div className={`${designs.d4}`}>
             <div className={`${designs.d6}`}>
-              <img src={profile} alt="profile" />
+              <img
+                  src={profileImage || profilePhoto}
+                  alt="User"
+                  className={`w-24 h-24 rounded-full`}
+                  onLoad={() =>  profileImage}
+              />
             </div>
             <div className={`${designs.d7}`}>
               <div className={`${designs.d8}`}>
