@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import moment from "moment";
-import { sortBy } from "lodash";
 import Cookies from "js-cookie";
 import Checkin from "./G4_1_checkIn"; 
 import CheckOut from "./G4_2_checkOut";
@@ -71,7 +69,7 @@ const G3_table = (props) => {
       return array.slice((page_number - 1) * page_size, page_number * page_size);
     };
 
-    const paginatedData = paginate(data, 5, pgNo);
+    const paginatedData = paginate(data, 10, pgNo);
     setTbData(paginatedData);
   }, [pgNo, data]);
 
