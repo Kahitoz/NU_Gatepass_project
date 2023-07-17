@@ -62,7 +62,7 @@ function G4_1_checkIn(props) {
                       <img
                           src={profileImage || profilePhoto}
                           alt="User"
-                          className={`${designs.d5}, w-12 h-12 rounded-3xl `}
+                          className={`${designs.d5},w-24 h-24 rounded-full `}
                           onLoad={() => fetchUserImage(item.image)}
                       />
                       <h1 className={`${designs.d5} `}>{item.name}</h1>
