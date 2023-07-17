@@ -40,6 +40,12 @@ const WardenSubNavbar = ({tabs}) => {
     if(name==="AutoApproved"){
       navigate("/Warden/home/AutoApproved")
   }
+  if (name==="Warden Leave Management"){
+    navigate("/Warden/Leave/LeaveManagement")
+  }
+  if (name==="Apply Leave"){
+    navigate("/Warden/Leave/ApplyLeave")
+  }
 }
   return (
     <div className={`${designs.subnav.d1}`}>
