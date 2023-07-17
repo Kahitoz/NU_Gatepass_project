@@ -33,9 +33,9 @@ import Modal from "./Modal/ModalPending";
     return (
           <div>
           {showModal && <Modal setOpenModal={setShowModal} data={userData} />}
-          <div>
+          <div >
             <div className={`${designs.d1}`}>
-              <div className={`${designs.d2}`}>
+              <div className={`${designs.d2} `} >
                 <h1 className={`${designs.d5}`}>Name</h1>
                 <h1 className={`${designs.d5}`}>Enrollment</h1>
                 <h1 className={`${designs.d5}`}>Contact</h1>
@@ -47,9 +47,9 @@ import Modal from "./Modal/ModalPending";
               </div>
             </div>
     
-            <div className={`${designs.d3}`}>
+            <div className={`${designs.d3} `}>
               {TbData.map((item, idx) => (
-                <div className={`${designs.d4} hover:bg-row_hover_bg hover:-translate-y-1 hover:duration-75`} key={idx}>
+                <div className={`${designs.d4} `} key={idx}>
                   <h1 className={`${designs.d5} `}>{item.name}</h1>
                   <h1 className={`${designs.d5}`}>{item.user_id}</h1>
                   <h1 className={`${designs.d5}`}>{item.contact_number}</h1>
