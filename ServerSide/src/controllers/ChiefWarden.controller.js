@@ -12,6 +12,18 @@ const date = require("date-and-time");
       res.status(500).send(error.message);
     }
   };
+
+  export const getAllGatePassesToday = async (req, res) => {
+    try {
+      const pool = await getConnection();
+      const result = await pool
+        .request()
+        .query(queries.getAllGatepassesToday);
+      return res.json(result.recordset);
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+  };
   
   export const wardenGatepassDetails=async (req, res) => {
     try {
