@@ -68,12 +68,19 @@ export const approveGatepass = async (req, res) => {
 export const rejectGatepass = async (req, res) => {
   try {
     const currentDate = new Date();
-    let applied_date =
+    let approved_or_rejected_date =
       currentDate.getFullYear() +
       "-" +
-      String(currentDate.getMonth() + 1).padStart(2, "0") +
+      String(currentDate.getMonth()+1).padStart(2, "0") +
       "-" +
-      String(currentDate.getDate() + 1).padStart(2, "0");
+      String(currentDate.getDate()).padStart(2, "0");
+
+    let approved_or_rejected_time =
+      currentDate.getHours() +
+      ":" +
+      currentDate.getMinutes() +
+      ":" +
+      currentDate.getSeconds();
     const id = req.user.data.user_id;
     const { request_id, comments } = req.body;
     const pool = await getConnection();
@@ -82,8 +89,8 @@ export const rejectGatepass = async (req, res) => {
       .input("user_id", sql.VarChar, id)
       .input("request_id", sql.Int, request_id)
       .input("comments", sql.VarChar, comments)
-      .input("date", sql.VarChar, applied_date)
-      .input("time", sql.Time, currentDate)
+      .input("date", sql.VarChar, approved_or_rejected_date)
+      .input("time", sql.Time, approved_or_rejected_time)
       .query(queries.rejectGatepass);
     return res.send("Gatepass rejected!");
   } catch (error) {
