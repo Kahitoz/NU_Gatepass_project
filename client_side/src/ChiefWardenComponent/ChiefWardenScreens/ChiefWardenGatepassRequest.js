@@ -14,13 +14,12 @@ const CheifWardenGatepassRequest = () => {
   const dropdownValues=["All Pending Requests", `All Gatepass Requests for ${moment().format('MMMM Do YYYY')}`]
   const [Tb_data_Api, setTb_data_Api] = useState("http://localhost:4000/gatepass/v2/warden/get_dashboard_others");
   const [data, setData] = useState([]);
-  const [Filterdata, setFilterData] = useState(data);
  
   useEffect( () => {
     if (GpDropdown === "All Pending Requests") {
       setTb_data_Api("http://localhost:4000/gatepass/v2/warden/get_dashboard_others");
     } else {
-      setTb_data_Api("http://localhost:4000/gatepass/v2/warden/get_all_gatepass");
+      setTb_data_Api("http://localhost:4000/gatepass/v2/ChiefWarden/getAllGatePassesToday");
     }
     const fetchData = async () => {
       try {
@@ -36,14 +35,9 @@ const CheifWardenGatepassRequest = () => {
       }
     };
     fetchData();
-    if (GpDropdown === `All Gatepass Requests for ${moment().format('MMMM Do YYYY')}`) {
-      setFilterData(data.filter((item) => moment(item.from_date).format("YYYY-MM-DD") === moment().format("YYYY-MM-DD")))
-    }
-    else{
-      setFilterData(data)
+    if (GpDropdown !== `All Gatepass Requests for ${moment().format('MMMM Do YYYY')}`) {
       setTotalPending(data.length)
     }
-
   }, [GpDropdown, Tb_data_Api, accessToken,data.length])
 
   return (
@@ -59,7 +53,7 @@ const CheifWardenGatepassRequest = () => {
       </div>
       <div className="bg-background flex justify-between px-4 py-4 flex-col sm:flex-row sm:items-start">
       <div className="flex-1 ">
-        <Table data={Filterdata}  />
+        <Table data={data}  />
         </div>
         <div className="flex-1">
         <WardenWiseGatepass/>
