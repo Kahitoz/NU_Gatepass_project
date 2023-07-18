@@ -22,8 +22,9 @@ const CW7_wardenWiseGatepass = () => {
     }
     fetchWardenGpDetails();
     console.log('done');
+    let notincluded=['Chief Warden Girls','AutoApprove'];
     const timer=setInterval(fetchWardenGpDetails, 6000); 
-    setFilterData(data.filter((item) => item.name !== 'Chief Warden Girls'));
+    setFilterData(data.filter((item) => !notincluded.includes(item.name)));
     return () => clearInterval(timer);
   }, [refresh]);
 
