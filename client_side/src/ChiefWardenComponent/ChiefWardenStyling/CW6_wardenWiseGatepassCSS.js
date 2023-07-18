@@ -4,7 +4,7 @@ const CW6_wardenWiseGatepassCSS = {
     "d2":"p-2 flex justify-center align-center ms-2 me-2 rounded-lg",
     "d3":"inline-block",
     "d4":"flex bg-background p-2 rounded-lg flex-col sm:flex-row mb-1.5",
-    "d5":"mr-8 w-20",
+    "d5":"mr-8 w-20 text-sm",
     "d6":"profile",
     "d7":"flex justify-center items-center ms-0 mt-4 sm:m-8 sm:mt-0",
     "d8":"bg-text-2 inline-block p-4 rounded-lg",
