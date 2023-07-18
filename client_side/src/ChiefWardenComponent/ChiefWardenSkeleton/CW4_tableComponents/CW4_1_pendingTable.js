@@ -1,12 +1,16 @@
 import React,{ useState,useEffect } from 'react'
 import designs from '../../ChiefWardenStyling/CW4_TableCSS';
 import moment from "moment";
-import Modal from "./Modal/ModalPending";
+import ModalPending from "./Modal/ModalPending";
+import ModalReject from "./Modal/ModalRejected";
+import ModalAccept from "./Modal/ModalApproved";
 
  const CW4_1_pendingTable = ({data}) => {
     const [userData, setUserData] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [pgNo, setPgNo] = useState(1);
+    const [status, setStatus] = useState("Pending");
+    const buttonIncluded=['Pending','Approved','Rejected'];
   const [TbData, setTbData] = useState([]);
   useEffect(() => {
     const paginate = (array, page_size, page_number) => {
@@ -32,7 +36,10 @@ import Modal from "./Modal/ModalPending";
     
     return (
         <div>
-        {showModal && <Modal setOpenModal={setShowModal} data={userData} />}
+        {/* {showModal && <Modal setOpenModal={setShowModal} data={userData} />} */}
+        {status === "Pending" && showModal && <ModalPending setOpenModal={setShowModal} data={userData} />}
+        {status === "Approved" && showModal && <ModalAccept setOpenModal={setShowModal} data={userData} />}
+        {status === "Rejected" && showModal && <ModalReject setOpenModal={setShowModal} data={userData} />}
         <div>
           <div className={`${designs.d1}`}>
             <div className={`${designs.d2}`}>
@@ -43,6 +50,7 @@ import Modal from "./Modal/ModalPending";
               <h1 className={`${designs.d5}`}>Applied Date</h1>
               <h1 className={`${designs.d5}`}>Applied Time</h1>
               <h1 className={`${designs.d5}`}>Requested to</h1>
+              <h1 className={`${designs.d5}`}>Status</h1>
               <h1 className={`${designs.d5}`}>Actions</h1>
             </div>
           </div>
@@ -60,7 +68,9 @@ import Modal from "./Modal/ModalPending";
                 <h1 className={`${designs.d5}`}>
                   {moment(item.from_time).format("HH:mm:ss")}
                 </h1>
-                <h1 className={`${designs.d5}`}>{item.requested_to}</h1>
+                <h1 className={`${designs.d5}`}>{item.Requested_to}</h1>
+                <h1 className={`${designs.d5}`}>{item.status}</h1>
+                {buttonIncluded.includes(item.status) ? 
                 <div className={`${designs.d5}`}>
                   <button
                     id={`button ${idx}`}
@@ -78,9 +88,9 @@ import Modal from "./Modal/ModalPending";
                     Open
                   </button>
                 </div>
-              </div>
-            ))}
+                : <div className={`${designs.d5}`}>N/A</div>} 
           </div>
+          ))}
         </div>
         <div className="flex justify-center mt-4">
         <button
@@ -98,6 +108,7 @@ import Modal from "./Modal/ModalPending";
           Next
         </button>
       </div>
+    </div>
     </div>
     );
       
