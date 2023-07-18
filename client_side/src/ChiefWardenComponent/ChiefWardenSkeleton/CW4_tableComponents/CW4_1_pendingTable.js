@@ -60,7 +60,7 @@ import Modal from "./Modal/ModalPending";
                 <h1 className={`${designs.d5}`}>
                   {moment(item.from_time).format("HH:mm:ss")}
                 </h1>
-                <h1 className={`${designs.d5}`}>{item.Requested_to}</h1>
+                <h1 className={`${designs.d5}`}>{item.status==='AutoApproved'? 'AutoApproved':item.Requested_to}</h1>
                 <div className={`${designs.d5}`}>
                   <button
                     id={`button ${idx}`}
