@@ -209,7 +209,7 @@ export const getStudentCheckedoutOrApproved = async (req, res) => {
 };
 
 export const applyLocalFlexibleGatepass = async (req, res) => {
-  const { from_date, from_time, to_date, to_time, purpose, approval_to } =
+  const {gatepass_type, from_date, from_time, to_date, to_time, purpose, destination, approval_to } =
     req.body;
   const user_id = req.user.data.user_id;
   const punch_id = req.user.data.punch_id;
@@ -230,13 +230,15 @@ export const applyLocalFlexibleGatepass = async (req, res) => {
 
   // validating
   if (
-    user_id == null ||
-    from_date == null ||
-    from_time == null ||
-    to_date == null ||
-    to_time == null ||
-    purpose == null ||
-    approval_to == null
+      user_id == null ||
+      gatepass_type == null||
+      from_date == null ||
+      from_time == null ||
+      to_date == null ||
+      to_time == null ||
+      purpose == null ||
+      destination == null||
+      approval_to == null
   ) {
     return res.status(400).json({ msg: "Bad Request. Please fill all fields" });
   }
@@ -245,17 +247,19 @@ export const applyLocalFlexibleGatepass = async (req, res) => {
     const pool = await getConnection();
     const result = await pool
       .request()
-      .input("user_id", sql.VarChar, user_id)
-      .input("punch_id", sql.Int, punch_id)
-      .input("from_date", sql.VarChar, from_date)
-      .input("from_time", sql.VarChar, from_time)
-      .input("to_date", sql.VarChar, to_date)
-      .input("to_time", sql.VarChar, to_time)
-      .input("purpose", sql.VarChar, purpose)
-      .input("approval_to", sql.VarChar, approval_to)
-      .input("applied_date", sql.VarChar, applied_date)
-      .input("applied_time", sql.VarChar, applied_time)
-      .query(queries.applyLocalFlexibleGatepass);
+        .input("user_id", sql.VarChar, user_id)
+        .input("punch_id", sql.Int, punch_id)
+        .input("gatepass_type", sql.Int, gatepass_type)
+        .input("from_date", sql.VarChar, from_date)
+        .input("from_time", sql.VarChar, from_time)
+        .input("to_date", sql.VarChar, to_date)
+        .input("to_time", sql.VarChar, to_time)
+        .input("purpose", sql.VarChar, purpose)
+        .input("destination", sql.VarChar, destination)
+        .input("approval_to", sql.VarChar, approval_to)
+        .input("applied_date", sql.VarChar, applied_date)
+        .input("applied_time", sql.VarChar, applied_time)
+        .query(queries.applyLocalFlexibleGatepass);
 
     return res.status(200).json({ msg: "Local Flexible Gatepass Requested!" });
   } catch (error) {

@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import moment from "moment";
 import Cookies from "js-cookie";
 import LFfunctions from "./S1_LocalFixed";
 import { week } from "./S1_ParameterConfig";
 import S6_FormDesigns from "../StudentSkeleton/S6_Form";
-import { get_warden_details } from "./S1_LocalFlexible";
-import { handle_submit } from "./S1_LocalFlexible";
-
+import { get_warden_details } from "./S2_OtherGatePassHandler";
+import { handle_submit_local_flexible } from "./S2_OtherGatePassHandler";
+import {handle_submit_outstation} from "./S2_OtherGatePassHandler";
+import {handle_Emergency} from "./S2_OtherGatePassHandler";
+import moment from 'moment'
 const S6_FormFunctionality = () => {
   const [selectedOption, setSelectedOption] = useState("");
   const [wselec, setWselect] = useState("");
@@ -28,8 +29,11 @@ const S6_FormFunctionality = () => {
   const [warden, setWarden] = useState("");
   const [reason, setReason] = useState("");
   const accessToken = Cookies.get("ACCESS_TOKEN");
-
   const [lf_departureTime, set_lf_departureTime] = useState("");
+  const [og_departureDate, set_og_departureDate] = useState("");
+  const [og_arrivalDate, set_og_arrivalDate] = useState("");
+  const [destination, setDestination] = useState("");
+  const [og_arrivalTime, set_og_arrivalTime] = useState("");
 
   const date = moment();
   const formatted_Date = date.format("YYYY-MM-DD");
@@ -124,12 +128,11 @@ const S6_FormFunctionality = () => {
     if (selectedOption === "Local Fixed") {
       handleClick()
     } else if (selectedOption === "Local Flexible") {
-      handle_submit(accessToken,departureTime, arrivalTime, lf_departureTime, arrivalDate, departureDate, reason);
-      console.log(departureTime, arrivalTime, lf_departureTime, arrivalDate, departureDate, reason);
+      handle_submit_local_flexible(accessToken,departureTime, arrivalTime, lf_departureTime, arrivalDate, departureDate, reason);
     } else if (selectedOption === "Outstation") {
-      alert("You have clicked on Outstation!");
+      handle_submit_outstation(accessToken,departureTime, og_arrivalTime, lf_departureTime, og_arrivalDate, og_departureDate, reason, destination);
     } else if (selectedOption === "Emergency") {
-      alert("You have clicked on Emergency!");
+      handle_Emergency(accessToken,departureTime, og_arrivalTime, lf_departureTime, og_arrivalDate, og_departureDate, reason, destination)
     }
   };
 
@@ -159,6 +162,12 @@ const S6_FormFunctionality = () => {
       setReason = {setReason}
       lf_departureTime = {set_lf_departureTime}
       d_Time = {lf_departureTime}
+      og_arrivalDate = {set_og_arrivalDate}
+      og_departureDate = {set_og_departureDate}
+      destination = {destination}
+      set_destination = {setDestination}
+      set_og_arrivalTime = {set_og_arrivalTime}
+      og_arrivalTime = {og_arrivalTime}
     />
   );
 };
