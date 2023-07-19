@@ -2,6 +2,7 @@ import designs from "../StudentStyling/S5_ProfileCSS";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import React, { useEffect } from "react";
+import moment from "moment";
 const S6_FormDesigns = ({
   selectedOption,
   departureDateVisible,
@@ -23,10 +24,40 @@ const S6_FormDesigns = ({
   reason,
   lf_departureTime,
   d_Time,
-  setReason
+  setReason,
+  og_arrivalDate,
+  og_departureDate, destination, set_destination,set_og_arrivalTime,og_arrivalTime,
+
 }) => {
   const [depTime,setDepTime] = React.useState(departureTime);
   const [arriveTime,setArriveTime] = React.useState(arrivalTime);
+  const [selectedDate, setSelectedDate] = React.useState(new Date());
+  const [selectedArrival, setSelectedArrival] = React.useState(new Date())
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+    console.log("Departure Date is ", date);
+    const formattedDepartureDate = moment(date).format("YYYY-MM-DD");
+    og_departureDate(formattedDepartureDate);
+  };
+
+  let dateValue = selectedDate;
+  if (["Local Fixed", "Local Flexible"].includes(selectedOption)) {
+    dateValue = new Date();
+  }
+
+  const handleArrivalDateChange = (date) =>{
+    setSelectedArrival(date)
+    console.log("Arrival Date")
+    const formattedArrivalDate = moment(date).format("YYYY-MM-DD");
+    og_arrivalDate(formattedArrivalDate);
+  }
+
+  let arrivalDateValue = selectedArrival;
+  if (["Local Fixed", "Local Flexible"].includes(selectedOption)) {
+    arrivalDateValue = new Date();
+  }
+
   useEffect(() => {
     if (selectedOption === "Local Fixed") {
       setDepTime(departureTime);
@@ -35,7 +66,7 @@ const S6_FormDesigns = ({
     else if (selectedOption === "Local Flexible") {
       setArriveTime(arrivalTime);
     }
-  }, [selectedOption,departureTime,arrivalTime]);
+  }, [selectedOption,depTime,arrivalTime]);
   return (
     <div className="bg-background">
       <div className="p-2 flex justify-center">
@@ -56,18 +87,20 @@ const S6_FormDesigns = ({
             </div>
 
             {departureDateVisible && (
-              <>
-                <p className="font-bold mb-2">Departure Date</p>
-                <div className={designs.d13}>
-                  <DatePicker
-                    selected={new Date()} 
-                    onChange={(date) => console.log(date)} 
-                    className="bg-Items_bg"
-                    placeholderText="Date to be fetched from server"
-                    disabled={selectedOption === "Local Fixed"} 
-                  />
-                </div>
-              </>
+                <>
+                  <p className="font-bold mb-2">Departure Date</p>
+                  <div className={designs.d13}>
+                    <DatePicker
+                        selected={dateValue}
+                        value={dateValue}
+                        onChange={handleDateChange}
+                        className="bg-Items_bg"
+                        placeholderText="Date to be fetched from server"
+                        disabled={selectedOption === "Local Fixed"}
+                    />
+                  </div>
+                </>
+
             )}
 
             {departureTimeVisible && (
@@ -75,38 +108,38 @@ const S6_FormDesigns = ({
                 <p className="font-bold mb-2">Departure Time</p>
                 <div className={designs.d13}>
                   <input
-                    type="time"
-                    value={
-                      selectedOption === "Local Fixed"
-                          ? departureTime
-                          : selectedOption === "Local Flexible"
-                              ? d_Time
-                              : departureTime
-                    }
-
-
-                    className="disabled:bg-Items_bg bg-Items_bg border-2 border-gray-300 rounded-md p-2"
-                    onChange={(e) => (lf_departureTime(e.target.value))}
-                    placeholder="Time to be fetched from server"
-                    disabled={selectedOption === "Local Fixed"}
+                      type="time"
+                      value={
+                        selectedOption === "Local Fixed"
+                            ? departureTime
+                            : (selectedOption === "Local Flexible" || selectedOption === "Outstation" || selectedOption === "Emergency")
+                                ? d_Time
+                                : departureTime
+                      }
+                      className="disabled:bg-Items_bg bg-Items_bg border-2 border-gray-300 rounded-md p-2"
+                      onChange={(e) => (lf_departureTime(e.target.value))}
+                      placeholder="Time to be fetched from server"
+                      disabled={selectedOption === "Local Fixed"}
                   />
+
                 </div>
               </>
             )}
 
             {arrivalDateVisible && (
-              <>
-                <p className="font-bold mb-2">Arrival Date</p>
-                <div className={designs.d13}>
-                  <DatePicker
-                    className="bg-Items_bg "
-                    selected={new Date()} // Provide the selected date value here
-                    onChange={(date) => console.log(date)} // Handle the date change
-                    placeholderText="Date to be fetched from server"
-                    disabled={selectedOption === "Local Fixed"} 
-                  />
-                </div>
-              </>
+                <>
+                  <p className="font-bold mb-2">Arrival Date</p>
+                  <div className={designs.d13}>
+                    <DatePicker
+                        selected={arrivalDateValue}
+                        value={arrivalDateValue}
+                        onChange={handleArrivalDateChange}
+                        className="bg-Items_bg"
+                        placeholderText="Date to be fetched from server"
+                        disabled={selectedOption === "Local Fixed"}
+                    />
+                  </div>
+                </>
             )}
 
             {arrivalTimeVisible && (
@@ -114,14 +147,18 @@ const S6_FormDesigns = ({
                 <p className="font-bold mb-2">Arrival Time</p>
                 <div className={designs.d13}>
                   <input
-                    type="time"
-                    value={
-                      selectedOption === "LocalFixed" ? "1:00" : arriveTime
-                    }
-                    className=" bg-Items_bg border-2 border-gray-300 rounded-md p-2"
-                    onChange={(e) => (setArriveTime(e.target.value))} 
-                    // placeholder="Time to be fetched from server"
-                    disabled={["Local Fixed", "Local Flexible"].includes(selectedOption)}
+                      type="time"
+                      value={
+                        selectedOption === "Local Fixed"
+                            ? arriveTime
+                            : (selectedOption === "Local Flexible" || selectedOption === "Outstation" || selectedOption === "Emergency")
+                                ? og_arrivalTime
+                                : arriveTime
+                      }
+                      className="disabled:bg-Items_bg bg-Items_bg border-2 border-gray-300 rounded-md p-2"
+                      onChange={(e) => (set_og_arrivalTime(e.target.value))}
+                      placeholder="Time to be fetched from server"
+                      disabled={selectedOption === "Local Fixed"}
                   />
                 </div>
               </>
@@ -134,6 +171,8 @@ const S6_FormDesigns = ({
                   type="text"
                   className={designs.d13}
                   placeholder="Enter Destination"
+                  value={destination}
+                  onChange={(e)=>set_destination(e.target.value)}
                 />
               </>
             )}
