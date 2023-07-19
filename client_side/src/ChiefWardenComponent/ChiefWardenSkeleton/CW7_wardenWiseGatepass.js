@@ -22,8 +22,9 @@ const CW7_wardenWiseGatepass = () => {
     }
     fetchWardenGpDetails();
     console.log('done');
+    let notincluded=['Chief Warden Girls','AutoApprove'];
     const timer=setInterval(fetchWardenGpDetails, 6000); 
-    setFilterData(data.filter((item) => item.name !== 'Chief Warden Girls'));
+    setFilterData(data.filter((item) => !notincluded.includes(item.name)));
     return () => clearInterval(timer);
   }, [refresh]);
 
@@ -33,7 +34,7 @@ const CW7_wardenWiseGatepass = () => {
         
       <div >
       <div>
-        <p className={`text-center text-bold text-xl border-b-2 border-black `}>
+        <p className={`text-center text-bold text-l font-bold border-b-2 border-black `}>
           {`Warden Wise Gatepass Summary for ${moment().format('MMMM Do YYYY')}`}
           <button className="p-2 ml-2" onClick={async (e)=>{setRefresh(!refresh)}}> 
           <img className='hover:rotate-180 hover:duration-200 h-5 active:translate-y-0.5 'src="https://img.icons8.com/ios-glyphs/30/000000/refresh--v1.png" alt="refresh"/>
