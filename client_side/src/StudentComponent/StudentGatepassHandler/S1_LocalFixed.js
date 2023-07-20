@@ -1,4 +1,4 @@
-import {week} from "./S1_ParameterConfig";
+import {week} from "./S7_ParameterConfig";
 import {useState} from "react";
 
 //check black list starts here
