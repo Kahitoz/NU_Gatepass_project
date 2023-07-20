@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import LFfunctions from "./S1_LocalFixed";
-import { week } from "./S1_ParameterConfig";
+import { week } from "./S7_ParameterConfig";
 import S6_FormDesigns from "../StudentSkeleton/S6_Form";
-import { get_warden_details } from "./S2_OtherGatePassHandler";
-import { handle_submit_local_flexible } from "./S2_OtherGatePassHandler";
-import {handle_submit_outstation} from "./S2_OtherGatePassHandler";
-import {handle_Emergency} from "./S2_OtherGatePassHandler";
+import { get_warden_details } from "./S0_CommonChecks";
+import { handle_submit_local_flexible } from "./S2_LocalFelxible";
+import {handle_Outstation} from "./S3_Outstation";
+import {handle_Emergency} from "./S4_Emergency";
 import moment from 'moment'
 const S6_FormFunctionality = () => {
   const [selectedOption, setSelectedOption] = useState("");
@@ -54,9 +54,6 @@ const S6_FormFunctionality = () => {
       setWarden(warden.warden_name)
     }
     get_warden();
-
-    
-
     setDepartureDate(formatted_Date);
     setArrivalDate(formatted_Date);
     console.log("date  = ", departureDate);
@@ -130,7 +127,7 @@ const S6_FormFunctionality = () => {
     } else if (selectedOption === "Local Flexible") {
       handle_submit_local_flexible(accessToken,departureTime, arrivalTime, lf_departureTime, arrivalDate, departureDate, reason);
     } else if (selectedOption === "Outstation") {
-      handle_submit_outstation(accessToken,departureTime, og_arrivalTime, lf_departureTime, og_arrivalDate, og_departureDate, reason, destination);
+      handle_Outstation(accessToken,departureTime, og_arrivalTime, lf_departureTime, og_arrivalDate, og_departureDate, reason, destination);
     } else if (selectedOption === "Emergency") {
       handle_Emergency(accessToken,departureTime, og_arrivalTime, lf_departureTime, og_arrivalDate, og_departureDate, reason, destination)
     }

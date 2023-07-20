@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import designs from "../StudentStyling/S3_WidgetsCSS";
 import Cookies from "js-cookie";
-import { week } from "../StudentGatepassHandler/S1_ParameterConfig";
+import { week } from "../StudentGatepassHandler/S7_ParameterConfig";
 import { checkBlacklist } from "../StudentGatepassHandler/S1_LocalFixed";
 import { fetchData_GP_used } from "../StudentGatepassHandler/S1_LocalFixed";
 
