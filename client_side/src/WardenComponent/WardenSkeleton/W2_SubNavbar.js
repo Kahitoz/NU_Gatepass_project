@@ -25,6 +25,7 @@ const WardenSubNavbar = ({ tabs }) => {
       const data = await response.json();
       setUserName(data.name);
     }
+    fetchUserDetails();
   }, []);
 
   const nav = (e) => {
