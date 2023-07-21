@@ -46,18 +46,21 @@ import moment from "moment";
             <div className={`${designs.d3}`}>
               {TbData.map((item, idx) => (
                 <div className={`${designs.d4} hover:bg-row_hover_bg hover:-translate-y-1 hover:duration-75`} key={idx}>
-                  <h1 className={`${designs.d5} `}>{item.name}</h1>
-                  <h1 className={`${designs.d5}`}>{item.user_id}</h1>
-                  <h1 className={`${designs.d5}`}>{item.contact_number}</h1>
-                  <h1 className={`${designs.d5}`}>{item.gatepass_name}</h1>
+                  <h1 className={`${designs.d5} `}>{idx+1}</h1>
+                  <h1 className={`${designs.d5} `}>{item.groupName}</h1>
+                  <h1 className={`${designs.d5}`}>{item.subGroup}</h1>
                   <h1 className={`${designs.d5}`}>
                     {moment(item.from_date).format("YYYY-MM-DD")}
-                  </h1>
-                  <h1 className={`${designs.d5}`}>
+                  <br/>
                     {moment(item.from_time).format("HH:mm:ss")}
                   </h1>
-                  <h1 className={`${designs.d5}`}>{item.Requested_to}</h1>
-                  <div className={`${designs.d5}`}>
+                  <h1 className={`${designs.d5}`}>
+                    {moment(item.to_date).format("YYYY-MM-DD")}
+                  <br/>
+                    {moment(item.to_time).format("HH:mm:ss")}
+                  </h1>
+                  <h1 className={`${designs.d5}`}>{item.name}</h1>
+                  {/* <div className={`${designs.d5}`}>
                     <button
                       id={`button ${idx}`}
                       name={item.request_id}
@@ -73,7 +76,7 @@ import moment from "moment";
                     >
                       Open
                     </button>
-                  </div>
+                  </div> */}
                 </div>
               ))}
             </div>
