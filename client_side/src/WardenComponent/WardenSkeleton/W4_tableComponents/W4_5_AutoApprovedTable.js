@@ -1,6 +1,7 @@
 import React,{ useState,useEffect } from 'react'
 import designs from '../../WardenStyling/W4_TableCSS';
 import moment from "moment";
+import orderBy from "lodash/orderBy";
 
  const W4_5_AutoApprovedTable = ({data,setPendingRequests}) => {
     const [userData, setUserData] = useState([]);
@@ -15,7 +16,7 @@ import moment from "moment";
       );
     };
 
-    const paginatedData = paginate(data, 5, pgNo);
+    const paginatedData = paginate(orderBy(data,["from_date",'from_time'],['desc']), 5, pgNo);
     setTbData(paginatedData);
   }, [pgNo, data]);
 
