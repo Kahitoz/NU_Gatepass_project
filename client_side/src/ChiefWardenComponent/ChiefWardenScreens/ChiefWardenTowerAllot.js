@@ -8,7 +8,7 @@ import TowerAllotForm from "../ChiefWardenSkeleton/CW5_TowerAllotForm"
 const ChiefWardenTowerAllot = () => {
   const accessToken = Cookies.get("ACCESS_TOKEN");
   const tabs=[];
-  const [Tb_data_Api, setTb_data_Api] = useState("http://localhost:4000/gatepass/v2/ChiefWarden/getAllottedTowersReport");
+  const Tb_data_Api = useState("http://localhost:4000/gatepass/v2/ChiefWarden/getAllottedTowersReport");
   const [data, setData] = useState([]);
   const [refresh, setRefresh] = useState(false);
  
