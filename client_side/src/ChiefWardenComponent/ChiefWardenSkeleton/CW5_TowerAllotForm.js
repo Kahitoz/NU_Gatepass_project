@@ -41,6 +41,7 @@ useEffect(() => {
     const data=await response.json();
     setWardens(data);
   }
+  fetchWardens();
 },[]);
 
   return (
