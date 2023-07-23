@@ -22,7 +22,8 @@ const CW9_TowerAllotForm = () => {
     }
     );
     const data=await response.json();
-    setHostelTowers(data);
+    
+    setHostelTowers(data)
   }
   fetchTowers();
 }, [selectedhostel]);
@@ -39,7 +40,8 @@ useEffect(() => {
     }
     );
     const data=await response.json();
-    setWardens(data);
+    let notincluded=['Chief Warden Girls','AutoApprove'];
+    setWardens(data.filter((item) => !notincluded.includes(item.warden_name)));
   }
   fetchWardens();
 },[]);
