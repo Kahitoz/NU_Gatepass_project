@@ -1,6 +1,6 @@
 import { Router } from "express";
 import {
-    blacklistedStudentWise,blacklistedGroupWise,AutoApprovedAll,wardenGatepassDetails,getAllGatePassesToday,getHostelTowers,getAllWardens,getAllottedTowersReport
+    blacklistedStudentWise,blacklistedGroupWise,AutoApprovedAll,wardenGatepassDetails,getAllGatePassesToday,getHostelTowers,getAllWardens,getAllottedTowersReport,insertTowerWarden
 } from "../controllers/ChiefWarden.controller";
 
 const router = Router();
@@ -13,5 +13,6 @@ router.get("/ChiefWarden/getAllGatePassesToday", getAllGatePassesToday);
 router.get("/ChiefWarden/getHostelTowers/:hostel", getHostelTowers);
 router.get("/ChiefWarden/getAllWardens", getAllWardens);
 router.get("/ChiefWarden/getAllottedTowersReport", getAllottedTowersReport);
+router.put("/ChiefWarden/insertTowerWarden", insertTowerWarden);
 
 export default router;
