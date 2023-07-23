@@ -50,7 +50,7 @@ const WardenSubNavbar = ({ tabs }) => {
       <div className={`${designs.subnav.d2}`}>
         <h1 className={`${designs.subnav.d3}`}>Welcome {userName}</h1>
         <div>
-          {tabs.map(tab => <button name={tab} key={tab} className=" text-white -ml-1 mr-2 mt-5 mb-0 pb-0 text-xs text-center p-2 rounded-sm  hover:text-Navbar_bg hover:bg-white " onClick={e => nav(e)}> {tab}</button>)
+          {tabs.map(tab => <button name={tab} key={tab} className={` ${designs.subnav.d10} hover:text-Navbar_bg hover:bg-white`} onClick={e => nav(e)}> {tab}</button>)
           }
         </div>
       </div>
