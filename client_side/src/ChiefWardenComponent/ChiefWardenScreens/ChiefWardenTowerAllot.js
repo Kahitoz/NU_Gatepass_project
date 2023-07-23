@@ -8,8 +8,8 @@ import TowerAllotForm from "../ChiefWardenSkeleton/CW5_TowerAllotForm"
 
 const ChiefWardenTowerAllot = () => {
   const accessToken = Cookies.get("ACCESS_TOKEN");
+  const tabs=[];
   // console.log(accessToken);
-  const tabs = ["  ", " "," ", "  ", " "]
   const [GpDropdown, setGpDropdown] = useState("Currently AutoApproved")
   const dropdownValues=["Currently AutoApproved", "All AutoApproved"]
   const [Tb_data_Api, setTb_data_Api] = useState("");
@@ -42,7 +42,7 @@ const ChiefWardenTowerAllot = () => {
       <div>
         <Navbar />
       </div>
-      <div>
+      <div className="h-20 bg-Navbar_bg">
         <SubNavbar tabs={tabs} />
       </div>
       {/* <div>
