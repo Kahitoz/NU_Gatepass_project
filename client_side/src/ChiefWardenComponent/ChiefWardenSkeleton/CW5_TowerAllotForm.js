@@ -7,6 +7,7 @@ const CW9_TowerAllotForm = () => {
  const[masterGroup,setMasterGroup]=useState('');
  const [selectedhostel,setSelectedHostel]=useState('UG 1');
  const [hostelTowers,setHostelTowers]=useState([]);
+ const [wardens,setWardens]=useState([]);
  const current=useLocation().pathname;
 
   useEffect(() => {
@@ -25,6 +26,22 @@ const CW9_TowerAllotForm = () => {
   }
   fetchTowers();
 }, [selectedhostel]);
+
+useEffect(() => {
+  const fetchWardens=async()=>{
+    let url=`http://localhost:4000/gatepass/v2/ChiefWarden/getAllWardens`;
+    const response=await fetch(url,{
+      method:'GET',
+      headers:{
+        'Content-Type':'application/json',
+        'Authorization':Cookies.get('ACCESS_TOKEN')
+      }
+    }
+    );
+    const data=await response.json();
+    setWardens(data);
+  }
+},[]);
 
   return (
     <div className={`${designs.d1}`}>
@@ -72,9 +89,9 @@ const CW9_TowerAllotForm = () => {
               className={`${designs.d13} `}
               onClick={async (e)=>setMasterGroup(e.target.value)}
             >
-              <option value='hostel 1' > Warden 1</option>
-              <option value='hostel 2' > Warden 2</option>
-              <option value='hostel 3' > Warden 3</option>
+              {wardens.map((item,idx)=>(
+                <option value={{'user_id':item.user_id,'warden_name':item.warden_name}} key={item.user_id} > {item.warden_name}</option>
+              ))}
             </select>
             </form>
             <button className={`bg-Navbar_bg text-background m-2 ml-6  p-2 px-4 rounded-md`}>Insert</button>
