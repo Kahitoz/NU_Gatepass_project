@@ -15,27 +15,22 @@ const ChiefWardenTowerAllot = () => {
   const [Tb_data_Api, setTb_data_Api] = useState("");
   const [data, setData] = useState([]);
  
-  // useEffect( () => {
-  //   if (GpDropdown === "Currently AutoApproved") {
-  //     setTb_data_Api("");
-  //   } else {
-  //     setTb_data_Api("");
-  //   }
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await fetch(Tb_data_Api, {
-  //         headers: {
-  //           Authorization: accessToken,
-  //         },
-  //       });
-  //       const jsonData = await response.json();
-  //       setData(jsonData);
-  //     } catch (error) {
-  //       console.error("Error fetching data:", error);
-  //     }
-  //   };
-  //   fetchData();
-  // }, [GpDropdown, Tb_data_Api, accessToken])
+  useEffect( () => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(Tb_data_Api, {
+          headers: {
+            Authorization: accessToken,
+          },
+        });
+        const jsonData = await response.json();
+        setData(jsonData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
+  }, [GpDropdown, Tb_data_Api, accessToken])
 
   return (
     <div className="w-screen h-screen bg-background">
