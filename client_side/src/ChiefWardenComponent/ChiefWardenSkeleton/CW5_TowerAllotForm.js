@@ -1,19 +1,30 @@
 import designs from "../ChiefWardenStyling/CW6_wardenWiseGatepassCSS";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-const CW5_AutoApprovedBlockedForm = () => {
+import Cookies from "js-cookie";
+const CW9_TowerAllotForm = () => {
  const [api, setApi] = useState('');
  const[masterGroup,setMasterGroup]=useState('');
+ const [selectedhostel,setSelectedHostel]=useState('UG 1');
+ const [hostelTowers,setHostelTowers]=useState([]);
  const current=useLocation().pathname;
-  useEffect(() => {
-    if (current==='/ChiefWarden/home/AutoApproved') {
-      setApi('set AutoApproved api here')
-    }
-    else{
-      setApi('set Blocked api here')
-    }
 
-  }, [current]);
+  useEffect(() => {
+  const fetchTowers=async()=>{
+    let url=`http://localhost:4000/gatepass/v2/ChiefWarden/getHostelTowers/${selectedhostel}`;
+    const response=await fetch(url,{
+      method:'GET',
+      headers:{
+        'Content-Type':'application/json',
+        'Authorization':Cookies.get('ACCESS_TOKEN')
+      }
+    }
+    );
+    const data=await response.json();
+    setHostelTowers(data);
+  }
+  fetchTowers();
+}, [selectedhostel]);
 
   return (
     <div className={`${designs.d1}`}>
@@ -34,13 +45,14 @@ const CW5_AutoApprovedBlockedForm = () => {
           <form name='TowerAllotForm' className="p-5" >
            <label htmlFor="setHostel"> Select Hostel</label> 
            <select
-           id='masterGroup'
+           id='masterHostal'
               className={`${designs.d13} `}
-              onClick={async (e)=>setMasterGroup(e.target.value)}
+              onClick={async (e)=>setSelectedHostel(e.target.value)}
             >
-              <option value='hostel 1' > hostel 1</option>
-              <option value='hostel 2' > hostel 2</option>
-              <option value='hostel 3' > hostel 3</option>
+              <option value='UG 1' > UG 1</option>
+              <option value='UG 2' > UG 2</option>
+              <option value='PG 1' > PG 1</option>
+              <option value='PG 2' > PG 2</option>
             </select>
 
             <label htmlFor="setTower"> Select Tower</label> 
@@ -49,9 +61,9 @@ const CW5_AutoApprovedBlockedForm = () => {
               className={`${designs.d13} `}
               onClick={async (e)=>setMasterGroup(e.target.value)}
             >
-              <option value='hostel 1' > tower 1</option>
-              <option value='hostel 2' > tower 2</option>
-              <option value='hostel 3' > tower 3</option>
+              { hostelTowers.map((item,idx)=>(
+                <option value={item.mastertowername}  key={item.mastertowername} > {item.mastertowername}</option>
+              ))}
             </select>
 
             <label htmlFor="setWarden"> select warden</label> 
@@ -72,4 +84,4 @@ const CW5_AutoApprovedBlockedForm = () => {
   );
 };
 
-export default CW5_AutoApprovedBlockedForm;
+export default CW9_TowerAllotForm;
