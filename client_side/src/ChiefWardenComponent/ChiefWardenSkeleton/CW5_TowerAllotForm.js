@@ -2,13 +2,14 @@ import designs from "../ChiefWardenStyling/CW6_wardenWiseGatepassCSS";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Cookies from "js-cookie";
-const CW9_TowerAllotForm = () => {
+const CW9_TowerAllotForm = ({refresh,setrefresh}) => {
  const [api, setApi] = useState('');
- const[masterGroup,setMasterGroup]=useState('');
- const [selectedhostel,setSelectedHostel]=useState('UG 1');
  const [hostelTowers,setHostelTowers]=useState([]);
  const [wardens,setWardens]=useState([]);
  const current=useLocation().pathname;
+ const [selectedtowerID,setSelectedTowerID]=useState(0);
+ const [selectedhostel,setSelectedHostel]=useState('UG 1');
+  const [selectedwarden,setSelectedWarden]=useState([]);
 
   useEffect(() => {
   const fetchTowers=async()=>{
@@ -46,6 +47,35 @@ useEffect(() => {
   fetchWardens();
 },[]);
 
+const handleClick=async(event)=>{
+  let url=`http://localhost:4000/gatepass/v2/ChiefWarden/insertTowerWarden`;
+  
+  try
+  {const [warden_id,warden_name]= selectedwarden.split(',');
+    console.log(warden_id,warden_name,selectedtowerID,selectedhostel);
+    const response=await fetch(url,{
+    method:'PUT',
+    headers:{
+      'Content-Type':'application/json',
+      'Authorization':Cookies.get('ACCESS_TOKEN')
+    },
+    body:JSON.stringify({
+      'hostel_name':selectedhostel,
+      'hostel_id':selectedtowerID,
+      'warden_id':warden_id,
+      'warden_name':warden_name
+    })
+  }
+  );
+  alert(`warden ${warden_name} has been alloted the tower`)
+}
+catch(err){
+  console.log(err);
+}
+setrefresh(!refresh);
+
+}
+
   return (
     <div className={`${designs.d1}`}>
       {/* <div className={`${designs.d2}`}>
@@ -62,7 +92,7 @@ useEffect(() => {
 
       <div className={`${designs.d10}`}>
         <div  className={`${designs.d12}`}>
-          <form name='TowerAllotForm' className="p-5" >
+          <div name='TowerAllotForm' className="p-5"  >
            <label htmlFor="setHostel"> Select Hostel</label> 
            <select
            id='masterHostal'
@@ -79,25 +109,27 @@ useEffect(() => {
            <select
            id='masterGroup'
               className={`${designs.d13} `}
-              onClick={async (e)=>setMasterGroup(e.target.value)}
+              onClick={async (e)=>{setSelectedTowerID(e.target.value)}}
             >
               { hostelTowers.map((item,idx)=>(
-                <option value={item.mastertowername}  key={item.mastertowername} > {item.mastertowername}</option>
+                <option value={item.masterhostal_id}  key={item.mastertowername} > {item.mastertowername}</option>
               ))}
             </select>
 
             <label htmlFor="setWarden"> select warden</label> 
            <select
-           id='masterGroup'
+           id='wardenSelect'
               className={`${designs.d13} `}
-              onClick={async (e)=>setMasterGroup(e.target.value)}
+              onClick={async (e)=>{setSelectedWarden(e.target.value);}}
             >
               {wardens.map((item,idx)=>(
-                <option value={{'user_id':item.user_id,'warden_name':item.warden_name}} key={item.user_id} > {item.warden_name}</option>
+                <option value={[item.user_id,item.warden_name]} key={item.user_id} > {item.warden_name}</option>
               ))}
             </select>
-            </form>
-            <button className={`bg-Navbar_bg text-background m-2 ml-6  p-2 px-4 rounded-md`}>Insert</button>
+            </div>
+            <button  className={`bg-Navbar_bg text-background m-2 ml-6  p-2 px-4 rounded-md hover:cursor-pointer active:-translate-y-0.5 active:-translate-x-0.5`} 
+            onClick={(event) => handleClick(event)}
+            > Insert </button>
             </div>
             </div>
             </div>
