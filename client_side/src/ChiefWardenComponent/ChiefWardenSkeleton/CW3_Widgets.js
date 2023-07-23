@@ -5,8 +5,7 @@ import { useLocation } from "react-router-dom";
 const W3_Widgets = ({setGpDropdown,dropdownValues,totalPending}) => {
   const userToken = Cookies.get("ACCESS_TOKEN");
   const [totalStudents, setTotalStudents] = useState(0);
-  const current=useLocation().pathname;
-  // console.log(current);
+  const current=useLocation().pathname;  
   useEffect(() => {
     fetch(
    `http://127.0.1:4000/gatepass/v2/admin/student_in_campus`,
@@ -23,7 +22,7 @@ const W3_Widgets = ({setGpDropdown,dropdownValues,totalPending}) => {
  });
 
 
-}, []);
+}, [userToken]);
  
   return (
     <div className={`${designs.d1}`}>
