@@ -13,6 +13,20 @@ const date = require("date-and-time");
     }
   };
 
+  export const getHostelTowers = async (req, res) => {
+    try {
+      const{hostel}=req.params;
+      const pool = await getConnection();
+      const result = await pool
+        .request()
+        .input("hostel", sql.VarChar, hostel)
+        .query(queries.getHostelTowers);
+      return res.json(result.recordset);
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+  };
+
   export const getAllGatePassesToday = async (req, res) => {
     try {
       const pool = await getConnection();
