@@ -72,7 +72,7 @@ const WardenSubNavbar = ({ tabs }) => {
                 <button
                     name={tab}
                     key={tab}
-                    className={` -ml-1 mr-2 mt-5 mb-1 pb-0 text-xl text-center p-2 rounded-sm  ${
+                    className={` -ml-1 mr-2 mt-5 mb-1 pb-0 text-s text-center p-2 rounded-sm  ${
                         selectedTab === tab ? "bg-white text-Navbar_bg" : "hover:bg-white text-white hover:text-Navbar_bg"
                     }`}
                     onClick={(e) => nav(e)}
