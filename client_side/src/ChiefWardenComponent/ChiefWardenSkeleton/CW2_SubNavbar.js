@@ -1,10 +1,29 @@
 import React, { useState,useEffect } from "react";
 import designs from "../ChiefWardenStyling/CW2_SubNavbarCSS"
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
+
 import Cookies from "js-cookie";
 import jwt_decode from "jwt-decode";
 const WardenSubNavbar = ({ tabs }) => {
   const [userName, setUserName] = useState("");
+  const [selectedTab, setSelectedTab] = useState("Gatepass Requests");
+  let current=useLocation().pathname.split("/")[3];
+  current=current?current:"Gatepass Requests";
+  useEffect(() => {
+    if (current==="AutoApproved"){
+      setSelectedTab("AutoApproved");
+    }
+    else if (current==="Blocked"){
+      setSelectedTab("Blocked");
+    }
+    else if (current==="Notifications"){
+      setSelectedTab("Notifications");
+    }
+    else if (current==="ProfileRequests"){
+      setSelectedTab("Profile Requests");
+    }
+
+  }, [current]);
   const navigate = useNavigate();
   const nav = (e) => {
 
@@ -50,7 +69,9 @@ const WardenSubNavbar = ({ tabs }) => {
       <div className={`${designs.subnav.d2}`}>
         <h1 className={`${designs.subnav.d3}`}>Welcome {userName}</h1>
         <div>
-          {tabs.map(tab => <button name={tab} key={tab} className={` ${designs.subnav.d10} hover:text-Navbar_bg hover:bg-white`} onClick={e => nav(e)}> {tab}</button>)
+          {tabs.map(tab => <button name={tab} key={tab} className={` ${designs.subnav.d10} ${
+                        selectedTab === tab ? "bg-white text-Navbar_bg" : "hover:bg-white text-white hover:text-Navbar_bg"
+                    }`} onClick={e => nav(e)}> {tab}</button>)
           }
         </div>
       </div>
