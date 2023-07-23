@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Modal from '../../WardenComponent/WardenSkeleton/W4_tableComponents/Modal/ModalPending'
-import A2_GatepassTable from "../A2_AdminSkeletion/A2_GatepassTable";
+import A1_PendingTable from "../A5_Handlers/A1_PendingTable";
 import Cookies from "js-cookie";
 
-const A2_GatepassFunc = () => {
+const A2_PendingFunc = () => {
     const [userData, setUserData] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [pgNo, setPgNo] = useState(1);
@@ -21,7 +21,6 @@ const A2_GatepassFunc = () => {
                 });
                 if (response.ok) {
                     const data = await response.json();
-                    console.log("The data from the others gate-pass is ", data)
                     const paginatedData = paginate(data, 5, pgNo);
                     await setTbData(paginatedData);
                 } else {
@@ -53,7 +52,7 @@ const A2_GatepassFunc = () => {
     return (
         <div>
             {showModal && <Modal setOpenModal={setShowModal} data={userData} />}
-            <A2_GatepassTable
+            <A1_PendingTable
                 TbData={TbData}
                 handlePreviousPage={handlePreviousPage}
                 handleNextPage={handleNextPage}
@@ -65,4 +64,4 @@ const A2_GatepassFunc = () => {
     );
 };
 
-export default A2_GatepassFunc;
+export default A2_PendingFunc;
