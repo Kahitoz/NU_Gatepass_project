@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import designs from "../WardenStyling/W2_SubNavbarCSS";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import jwt_decode from "jwt-decode";
 
@@ -9,8 +9,11 @@ const WardenSubNavbar = ({ tabs }) => {
   const decoded = jwt_decode(userToken);
   const email = decoded.data.email_id;
   const [userName, setUserName] = useState("");
-  const [selectedTab, setSelectedTab] = useState(null);
+  const [selectedTab, setSelectedTab] = useState("Pending Requests");
+  let current=useLocation().pathname.split("/")[3];
+  current=current?current:"Pending Requests";
   const navigate = useNavigate();
+
 
   useEffect(() => {
     async function fetchUserDetails() {
@@ -25,12 +28,25 @@ const WardenSubNavbar = ({ tabs }) => {
       const data = await response.json();
       setUserName(data.name);
     }
+    fetchUserDetails();
   }, []);
 
-  const nav = (e) => {
-    let name = e.target.name;
-    setSelectedTab(name); // Update the selected tab when a button is clicked
 
+  useEffect(() => {
+    if (current==="ApprovedCancelled"){
+      setSelectedTab("Approved / Cancelled");}
+    else if (current==="VisitorRequest"){
+      setSelectedTab("Visitor Requests");}
+    else if (current==="LeaveManagement"){
+      setSelectedTab("Warden Leave Management");}
+    else if (current==="ApplyLeave"){
+      setSelectedTab("Apply Leave");}
+    else if (current==="AutoApproved"){
+      setSelectedTab("AutoApproved");}
+  }, [current]);
+
+  const nav = async (e) => {
+    let name = e.target.name; // Update the selected tab when a button is clicked;
     if (name === "Pending Requests") {
       navigate("/Warden/home");
     } else if (name === "Approved / Cancelled") {
@@ -44,6 +60,7 @@ const WardenSubNavbar = ({ tabs }) => {
     } else if (name === "Apply Leave") {
       navigate("/Warden/Leave/ApplyLeave");
     }
+    return name;
   };
 
   return (
@@ -55,8 +72,8 @@ const WardenSubNavbar = ({ tabs }) => {
                 <button
                     name={tab}
                     key={tab}
-                    className={`text-white -ml-1 mr-2 mt-5 mb-0 pb-0 text-xl text-center p-2 rounded-sm hover:text-Navbar_bg ${
-                        selectedTab === tab ? "bg-red-500" : "hover:bg-white"
+                    className={` -ml-1 mr-2 mt-5 mb-1 pb-0 text-s text-center p-2 rounded-sm  ${
+                        selectedTab === tab ? "bg-white text-Navbar_bg" : "hover:bg-white text-white hover:text-Navbar_bg"
                     }`}
                     onClick={(e) => nav(e)}
                 >
