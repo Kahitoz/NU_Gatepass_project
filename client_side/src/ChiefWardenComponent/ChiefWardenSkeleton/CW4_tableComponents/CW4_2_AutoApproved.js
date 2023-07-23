@@ -50,7 +50,7 @@ import orderBy from "lodash/orderBy";
             <div className={`${designs.d3}`}>
               {TbData.map((item, idx) => (
                 <div className={`${designs.d4} hover:bg-row_hover_bg hover:-translate-y-1 hover:duration-75`} key={idx}>
-                  <h1 className={`${designs.d5} `}>{idx+1}</h1>
+                  <h1 className={`${designs.d5} `}>{idx+1+((pgNo-1)*5)}</h1>
                   <h1 className={`${designs.d5} `}>{item.groupName}</h1>
                   <h1 className={`${designs.d5}`}>{item.subGroup}</h1>
                   <h1 className={`${designs.d5}`}>
