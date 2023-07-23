@@ -45,7 +45,7 @@ const ChiefWardenTowerAllot = () => {
         <Table data={data}  />
         </div>
         <div className="flex-1">
-        <TowerAllotForm refresh={refresh}/>
+        <TowerAllotForm refresh={refresh} setrefresh={setRefresh}/>
       </div>
       </div>
     </div>
