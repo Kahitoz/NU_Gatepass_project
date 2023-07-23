@@ -1,6 +1,6 @@
 import Navbar from "../A2_AdminSkeletion/A1_Navbar"
 import SubNavbar from "../../StudentComponent/StudentSkeleton/S2_SubNavbar";
-import A2_GatepassFunc from "../A4_Functionality/A2_GatepassFunc";
+import A2_PendingFunc from "../A4_Functionality/A1_PendingFunc";
 import A3_DropDown from "../A2_AdminSkeletion/A3_DropDown";
 import A4_Widgets from "../A2_AdminSkeletion/A4_Widgets";
 import A5_GroupSubgroupTable from "../A2_AdminSkeletion/A5_GroupSubgroupTable";
@@ -9,7 +9,14 @@ import A7_Notification from "../A2_AdminSkeletion/A7_Notification";
 import A8_ExcelWidget from "../A2_AdminSkeletion/A8_ExcelWidget";
 import A9_GroupSubGroupWidget from "../A2_AdminSkeletion/A9-GroupSubgroupWidget";
 import add from "../../StudentComponent/icons/icon-add.png"
+import {useState} from "react";
+import A2_GroupFunc from "../A4_Functionality/A2_GroupFunc";
 const A1_Home = () =>{
+
+    const [selectedOption, setSelectedOption] = useState("");
+    const handleOptionChange  = (option) =>{
+        setSelectedOption(option);
+    }
    return(
       <div className="w-screen h-screen bg-background ">
          <div>
@@ -23,7 +30,7 @@ const A1_Home = () =>{
               <div className={`flex-1`}>
                   <div className={`justify-between px-4 py-4 flex sm:flex-row sm:items-start`}>
                       <div className={`flex-1`}>
-                          <A3_DropDown/>
+                          <A3_DropDown onChangeOption={handleOptionChange}/>
                       </div>
                       <div className={`flex-1`}>
                           <A4_Widgets/>
@@ -31,7 +38,9 @@ const A1_Home = () =>{
                   </div>
 
                   <div>
-                      <A2_GatepassFunc/>
+                      {selectedOption === "" && <A2_PendingFunc/>}
+                      {selectedOption === "Pending_Gatepass" && <A2_PendingFunc/>}
+                      {selectedOption === "Group" && <A2_GroupFunc/>}
                   </div>
               </div>
 
