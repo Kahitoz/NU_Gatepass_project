@@ -52,7 +52,6 @@ const handleClick=async(event)=>{
   
   try
   {const [warden_id,warden_name]= selectedwarden.split(',');
-    console.log(warden_id,warden_name,selectedtowerID,selectedhostel);
     const response=await fetch(url,{
     method:'PUT',
     headers:{
