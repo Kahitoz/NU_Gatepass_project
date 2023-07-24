@@ -44,7 +44,6 @@ const A2_GroupFunc = () =>{
         getData()
     },[token, pageNumber])
 
-console.log("Group data ", groupData)
 
     return(
         <div>
