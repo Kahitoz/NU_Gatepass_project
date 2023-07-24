@@ -20,8 +20,8 @@ const GuardSubNavbar = ({ setSubOption, handleChange, tab_Css }) => {
                 <h1 className={`${designs.subnav.d3}`}>Welcome Guard</h1>
                 <button
                     name="Check Out"
-                    className={`text-white -ml-2 mt-5 mb-0 pb-0 text-xl text-center p-2 rounded-sm ${
-                        selectedOption === "Check Out" ? "bg-red-500  rounded-xl" : "hover:text-Navbar_bg hover:bg-white"
+                    className={`ml-2 mt-5 mb-0 pb-0 text-s p-2 rounded-sm ${
+                        selectedOption === "Check Out"  ? "bg-white text-Navbar_bg" : "hover:text-Navbar_bg hover:bg-white text-white"
                     }`}
                     onClick={handleCheckOutClick}
                 >
@@ -29,8 +29,8 @@ const GuardSubNavbar = ({ setSubOption, handleChange, tab_Css }) => {
                 </button>
                 <button
                     name="Check In"
-                    className={`text-white mt-5 mb-0 pb-0 text-xl text-center p-2 ml-3 rounded-sm ${
-                        selectedOption === "Check In" ? "bg-red-500 rounded-xl" : "hover:text-Navbar_bg hover:bg-white"
+                    className={` mt-5 mb-0 pb-0 text-s text-center p-2 ml-3 rounded-sm ${
+                        selectedOption === "Check In" ? "bg-white text-Navbar_bg" : "hover:text-Navbar_bg hover:bg-white text-white"
                     }`}
                     onClick={handleCheckInClick}
                 >
