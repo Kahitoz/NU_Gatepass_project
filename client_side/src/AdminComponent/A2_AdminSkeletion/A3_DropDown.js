@@ -18,7 +18,7 @@ const A3_DropDown = ({onChangeOption}) =>{
                     <option value="Pending_Gatepass">Pending Gatepass</option>
                     <option value="Group">Group</option>
                     <option value="Subgroup">Subgroup</option>
-                    <option value="BlockedStudents">BlockedStudents</option>
+                    <option value="ParameterConfig">Parameter Configuration</option>
                     <option value="Allusers">All Users</option>
                     <option value="ChangeRole">Change Role</option>
                 </select>
