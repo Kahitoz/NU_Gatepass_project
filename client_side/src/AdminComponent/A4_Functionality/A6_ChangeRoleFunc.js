@@ -16,45 +16,67 @@ const A6_ChangeRole = () => {
 
 
     useEffect(() => {
+        // Fetching role data
         fetch("http://127.0.0.1:4000/gatepass/v2/admin/all_role", {
             headers: {
                 Authorization: accessToken,
             },
         })
-            .then((response) => {
-                return response.json();
+            .then((response) => response.json())
+            .then((data) => {
+                setRole(data);
             })
-            .then((text) => {
-                setRole(text);
-            });
-        console.log(role);
+            .catch((error) => console.error("Error fetching role data:", error));
 
+        // Fetching status data
         fetch("http://127.0.0.1:4000/gatepass/v2/admin/all_status", {
             headers: {
                 Authorization: accessToken,
             },
         })
-            .then((response) => {
-                return response.json();
+            .then((response) => response.json())
+            .then((data) => {
+                setStatus(data);
             })
-            .then((text) => {
-                setStatus(text);
-            });
-        console.log(status);
+            .catch((error) => console.error("Error fetching status data:", error));
 
+        // Fetching user data
         fetch("http://127.0.0.1:4000/gatepass/v2/admin/user_role", {
             headers: {
                 Authorization: accessToken,
             },
         })
-            .then((response) => {
-                return response.json();
+            .then((response) => response.json())
+            .then((data) => {
+                setUser(data);
             })
-            .then((text) => {
-                setUser(text);
-            });
-        console.log(user);
-    }, []);
+            .catch((error) => console.error("Error fetching user data:", error));
+    }, [accessToken]);
+
+    const handleNextPage = () => {
+        setPageNumber((prevPage) => prevPage + 1);
+    };
+
+    const handlePreviousPage = () => {
+        if (pageNumber > 1) {
+            setPageNumber((prevPage) => prevPage - 1);
+        }
+    };
+
+    const usersPerPage = 5;
+    const startIndex = (pageNumber - 1) * usersPerPage;
+    const endIndex = startIndex + usersPerPage;
+    const paginatedUsers = user.slice(startIndex, endIndex);
+
+    const handleSearch = (event) => {
+        const searchQuery = event.target.value.toLowerCase();
+        const filteredUsers = user.filter((row) =>
+            row.employeename.toLowerCase().includes(searchQuery)
+        );
+        setUser(filteredUsers);
+        setPageNumber(1);
+    };
+
 
     const changeRoleOrStatus = async (user_id, status, role_id) => {
         let fetchData = await fetch(
@@ -100,69 +122,81 @@ const A6_ChangeRole = () => {
 
     return (
         <div>
-            
-            <div>
-           
-                <div>
-                    <div>Change Role</div>
-                            <div className={`${designs.d1}`}>
-                                <div className={`${designs.d2}`}>
-                                    <h1 className={`${designs.d5}`}>Name</h1>
-                                    <h1 className={`${designs.d5}`}>Current Role</h1>
-                                    <h1 className={`${designs.d5}`}>Change Role</h1>
-                                    <h1 className={`${designs.d5}`}>Current Status</h1>
-                                    <h1 className={`${designs.d5}`}>Change Status</h1>
-                                    <h1 className={`${designs.d5}`}></h1>
-                                </div>
-                            </div>
 
-                    <div className={`${designs.d3}`}>
-                                {user.map((row) => (
-                                    <div key={row.employeecode} className={`${designs.d4}`}>
-                                        <h1 className={`${designs.d5}`}>
-                                            {row.employeename}
-                                        </h1>
-                                        <h1 className={`${designs.d5}`}>
-                                            {row.employeerole}
-                                        </h1>
-                                        <h1 className={`${designs.d5}`}>
-                                            <Dropdown
-                                                options={role.map((props) => props.role_name)}
-                                                style={{ borderRadius: "40" }}
-                                                placeholder="Select a role"
-                                                onChange={handleRoleDropdown}
-                                                id={row.employeecode}
-                                            />
-                                        </h1>
-                                        <h1 className={`${designs.d5}`}>
-                                            {row.employeestatus}
-                                        </h1>
-                                        <h1 className={`${designs.d5}`}>
-                                            <Dropdown
-                                                options={status.map((props) => props.status)}
-                                                style={{ borderRadius: "40" }}
-                                                placeholder="Select a status"
-                                                onChange={handleStatusDropdown}
-                                            />
-                                        </h1>
-                                        <h1 className={`${designs.d5}`}>
-                                            <button
-                                                type="button"
-                                                style={{
-                                                    background: "green",
-                                                    color: "#fff",
-                                                    borderRadius: "5px",
-                                                }}
-                                                id={row.employeecode}
-                                                onClick={handleClick}
-                                            >
-                                                Save
-                                            </button>
-                                        </h1>
-                                    </div>
-                                ))}
-                            </div>
+            <div>
+
+                <div className={`${designs.d1}`}>
+                    <input
+                        type="text"
+                        placeholder="Search User"
+                        onChange={handleSearch}
+                        className={`rounded-xl px-2`}
+                    />
+                    <div className={`${designs.d2}`}>
+                        <h1 className={`${designs.d5}`}>Name</h1>
+                        <h1 className={`${designs.d5}`}>Current Role</h1>
+                        <h1 className={`${designs.d5}`}>Change Role</h1>
+                        <h1 className={`${designs.d5}`}>Current Status</h1>
+                        <h1 className={`${designs.d5}`}>Change Status</h1>
+                        <h1 className={`${designs.d5}`}>Action</h1>
+                    </div>
                 </div>
+                <div className={`${designs.d3}`}>
+                    {paginatedUsers.map((row) => (
+                        // Rendering user data for the current page
+                        <div key={row.employeecode} className={`${designs.d4}`}>
+                            <h1 className={`${designs.d5}`}>{row.employeename}</h1>
+                            <h1 className={`${designs.d5}`}>{row.employeerole}</h1>
+                            <h1 className={`${designs.d5}`}>
+                                <Dropdown
+                                    options={role.map((props) => props.role_name)}
+                                    placeholder="Select a role"
+                                    onChange={handleRoleDropdown}
+                                    className={`bg-white  px-1 rounded-md font-bold text-black shadow-md`}
+                                    id={row.employeecode}
+                                />
+                            </h1>
+                            <h1 className={`${designs.d5}`}>{row.employeestatus}</h1>
+                            <h1 className={`${designs.d5}`}>
+                                <Dropdown
+                                    options={status.map((props) => props.status)}
+                                    placeholder="Select a status"
+                                    className={`bg-white  px-1 rounded-md font-bold text-black shadow-md`}
+                                    onChange={handleStatusDropdown}
+                                />
+                            </h1>
+                            <h1 className={`${designs.d5}`}>
+                                <button
+                                    type="button"
+                                    className="bg-Navbar_bg p-2 text-white hover:border-2"
+                                    id={row.employeecode}
+                                    onClick={handleClick}
+                                >
+                                    Save
+                                </button>
+                            </h1>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            {/* Pagination */}
+            <div className="flex justify-center mt-4 bg-background">
+                <button
+                    className="px-4 py-2 mx-2 bg-blue-500 text-white rounded"
+                    onClick={handlePreviousPage}
+                    disabled={pageNumber === 1}
+                >
+                    Previous
+                </button>
+                <div className="mx-2 bg-background mt-2">Page: {pageNumber}</div>
+                <button
+                    className="px-4 py-2 mx-2 bg-blue-500 text-white rounded"
+                    onClick={handleNextPage}
+                    disabled={endIndex >= user.length}
+                >
+                    Next
+                </button>
             </div>
         </div>
     );
