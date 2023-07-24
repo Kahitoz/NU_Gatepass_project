@@ -3,7 +3,6 @@ import React from "react";
 import add from "../../StudentComponent/icons/icon-add.png"
 
 const A2_GroupTable = ({groupData, handleNextPage, handlePreviousPage, page_number}) =>{
-    console.log("this is the group data",  groupData)
     if (!groupData || !Array.isArray(groupData)) {
         return <div>Loading...</div>;
     }
@@ -32,7 +31,7 @@ const A2_GroupTable = ({groupData, handleNextPage, handlePreviousPage, page_numb
                     }
                 </div>
             </div>
-            <div className="mx-2 bg-background">Page: {page_number}</div>
+
             <div className="flex justify-center mt-4 bg-background">
 
                 <button
@@ -42,6 +41,7 @@ const A2_GroupTable = ({groupData, handleNextPage, handlePreviousPage, page_numb
                 >
                     Previous
                 </button>
+                <div className="mx-2 bg-background mt-2 ">Page: {page_number}</div>
                 <button
                     className="px-4 py-2 mx-2 bg-blue-500 text-white rounded"
                     onClick={handleNextPage}
