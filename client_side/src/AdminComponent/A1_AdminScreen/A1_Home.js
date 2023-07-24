@@ -11,6 +11,10 @@ import A9_GroupSubGroupWidget from "../A2_AdminSkeletion/A9-GroupSubgroupWidget"
 import add from "../../StudentComponent/icons/icon-add.png"
 import {useState} from "react";
 import A2_GroupFunc from "../A4_Functionality/A2_GroupFunc";
+import A3_SubGroupFunc from "../A4_Functionality/A3_SubGroupFunc";
+import A4_ParaConfigFunc from "../A4_Functionality/A4_ParaConfigFunc";
+import A5_AllUsersFunc from "../A4_Functionality/A5_AllUsersFunc";
+import A6_ChangeRole from "../A4_Functionality/A6_ChangeRoleFunc";
 const A1_Home = () =>{
 
     const [selectedOption, setSelectedOption] = useState("");
@@ -41,6 +45,10 @@ const A1_Home = () =>{
                       {selectedOption === "" && <A2_PendingFunc/>}
                       {selectedOption === "Pending_Gatepass" && <A2_PendingFunc/>}
                       {selectedOption === "Group" && <A2_GroupFunc/>}
+                      {selectedOption === "Subgroup" && <A3_SubGroupFunc/>}
+                      {selectedOption === "ParameterConfig" && <A4_ParaConfigFunc/>}
+                      {selectedOption === "Allusers" && <A5_AllUsersFunc/>}
+                      {selectedOption === "ChangeRole" && <A6_ChangeRole/>}
                   </div>
               </div>
 
