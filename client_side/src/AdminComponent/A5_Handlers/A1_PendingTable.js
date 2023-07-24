@@ -2,8 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import designs from "../A3_AdminStyling/A2_GatepassTableStyling";
 
-const A2_GatepassTable = ({ TbData, handlePreviousPage, handleNextPage, setShowModal, setUserData, pgNo }) => {
-    console.log("adasd", TbData)
+const A1_PendingTable = ({ TbData, handlePreviousPage, handleNextPage, setShowModal, setUserData, pgNo }) => {
     if (!TbData || TbData.length === 0) {
         return <div>No data available</div>;
     }
@@ -71,4 +70,4 @@ const A2_GatepassTable = ({ TbData, handlePreviousPage, handleNextPage, setShowM
     );
 };
 
-export default A2_GatepassTable;
+export default A1_PendingTable;

@@ -1,6 +1,11 @@
 import React, {useState} from "react";
-const A3_DropDown = () =>{
+const A3_DropDown = ({onChangeOption}) =>{
     const [selectedOption, setSelectedOption] = useState("")
+    const handleOptionChange = (event) =>{
+        const value = event.target.value;
+        setSelectedOption(value);
+        onChangeOption(value);
+    }
 
     return(
         <div>
@@ -8,11 +13,12 @@ const A3_DropDown = () =>{
                 <select
                     className="bg-white py-2 px-4 rounded-xl m-4 font-bold text-black shadow-md"
                     value={selectedOption}
+                    onChange={handleOptionChange}
                 >
-                    <option value="">Pending Gatepass</option>
+                    <option value="Pending_Gatepass">Pending Gatepass</option>
                     <option value="Group">Group</option>
                     <option value="Subgroup">Subgroup</option>
-                    <option value="BlockedStudents">BlockedStudents</option>
+                    <option value="ParameterConfig">Parameter Configuration</option>
                     <option value="Allusers">All Users</option>
                     <option value="ChangeRole">Change Role</option>
                 </select>
