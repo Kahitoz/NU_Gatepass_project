@@ -1,8 +1,12 @@
 import designs from "../A3_AdminStyling/A2_GatepassTableStyling";
-import React from "react";
+import React, {useState} from "react";
 import add from "../../StudentComponent/icons/icon-add.png"
+import A2_AddGroup from "../A6_Modals/A2_AddGroup";
 
 const A2_GroupTable = ({groupData, handleNextPage, handlePreviousPage, page_number}) =>{
+
+        const [showAddGroup, setShowAddGroup] = useState(false);
+
     if (!groupData || !Array.isArray(groupData)) {
         return <div>Loading...</div>;
     }
@@ -13,11 +17,14 @@ const A2_GroupTable = ({groupData, handleNextPage, handlePreviousPage, page_numb
         <div className={`bg-background`}>
 
             <div>
+                <div>
+                    {showAddGroup === true && <A2_AddGroup setShowAddGroup={setShowAddGroup}/>}
+                </div>
                 <div className={`${designs.d1}`}>
                     <div className={`${designs.d2} grid grid-cols-12`}>
                         <div className={`${designs.d5} col-span-5`}>Sno.</div>
                         <div className={`${designs.d5} col-span-6`} >Group Name</div>
-                        <div className={`${designs.d5} col-span-1`}><img src={add} className={`w-6 h-6`} alt={`add`}/> </div>
+                        <div className={`${designs.d5} col-span-1 hover:cursor-pointer`}><img src={add} className={`w-6 h-6`} alt={`add`} onClick={()=>setShowAddGroup(true)}/> </div>
                     </div>
                 </div>
 
