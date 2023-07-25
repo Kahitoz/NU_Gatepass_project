@@ -52,7 +52,7 @@ const O1_skeleton = () => {
       if (role === 1) {
         navigate("/student/home");
       } else if (role === 4) {
-        navigate("/admin");
+        navigate("/admin/dashboard");
       } else if (role === 7) {
         navigate("/bch");
       } else if (role === 5) {

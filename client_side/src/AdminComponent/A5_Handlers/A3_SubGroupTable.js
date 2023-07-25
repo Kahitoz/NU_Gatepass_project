@@ -1,8 +1,12 @@
 import designs from "../A3_AdminStyling/A2_GatepassTableStyling";
-import React from "react";
+import React, {useState} from "react";
 import add from "../../StudentComponent/icons/icon-add.png"
+import A3_AddSubGroup from "../A6_Modals/A3_AddSubGroup";
 
 const A2_SubGroupTable = ({subgroupData, handleNextPage, handlePreviousPage, page_number}) =>{
+
+    const [showAddSubGroup, setShowAddSubGroup] = useState(false);
+
     if (!subgroupData || !Array.isArray(subgroupData)) {
         return <div>Loading...</div>;
     }
@@ -13,11 +17,14 @@ const A2_SubGroupTable = ({subgroupData, handleNextPage, handlePreviousPage, pag
         <div className={`bg-background`}>
 
             <div>
+                <div>
+                    {showAddSubGroup === true && <A3_AddSubGroup setShowAddSubGroup = {setShowAddSubGroup}/>}
+                </div>
                 <div className={`${designs.d1}`}>
                     <div className={`${designs.d2} grid grid-cols-12`}>
                         <div className={`${designs.d5} col-span-5`}>Sno.</div>
                         <div className={`${designs.d5} col-span-6`} >SubGroup Name</div>
-                        <div className={`${designs.d5} col-span-1`}><img src={add} className={`w-6 h-6`} alt={`add`}/> </div>
+                        <div className={`${designs.d5} col-span-1 hover:cursor-pointer`}><img src={add} className={`w-6 h-6`} alt={`add`} onClick={()=>setShowAddSubGroup(true)}/> </div>
                     </div>
                 </div>
 
