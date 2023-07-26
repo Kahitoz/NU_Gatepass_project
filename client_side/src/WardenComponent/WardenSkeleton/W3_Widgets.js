@@ -28,11 +28,24 @@ const W3_Widgets = ({setGpDropdown,dropdownValues,pendingRequests}) => {
     <div className={`${designs.d1}`}>
       <div className={`${designs.d2 }`}>
       <div className={`items-center justify-center text-center flex flex-col sm:flex-row`}>
-            <select name="GatepassDropdown" onChange={(e) => setGpDropdown(e.target.value)}>
+            { current==='/Warden/home/ApprovedCancelled' ?
+              <select name="GatepassDropdown" onChange={(e) => setGpDropdown(e.target.value)}>
               { dropdownValues.map((value) => (
                 <option value={value} key={value}>{value}</option>
               ))}
             </select>
+              :
+              dropdownValues.map((value) => (
+                <div key={value} className="ms-1 me-1">
+                <input
+                type='radio'
+                name='GatepassDropdown'
+                className="text-center ms-1 me-1" 
+                value={value} 
+                onClick={(e)=>setGpDropdown(e.target.value)}/>
+                <label className="text-center" >{value}</label>
+                </div>
+              ))}
       </div>
     
       </div>
