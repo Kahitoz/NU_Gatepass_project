@@ -26,10 +26,11 @@ const S5_Profile = () => {
         },
       });
       const data = await response.json();
+      const uniqueUserIds = [...new Set(data.user_id)];
       setUserName(data.name);
       setStudentName(data.name);
       setStudentHostel(data.hostel);
-      setStudentEnrollment(data.user_id);
+      setStudentEnrollment(uniqueUserIds[0]);
       setStudentContact(data.contact_number);
       setProfilePath(data.image);
     }
