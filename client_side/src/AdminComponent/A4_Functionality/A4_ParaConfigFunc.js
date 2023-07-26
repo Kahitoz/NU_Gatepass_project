@@ -41,7 +41,7 @@ export const A4_ParaConfigFunc = () => {
         }
 
 
-    });
+    }, []);
 
     const refresh = () => window.location.reload(true);
     const handleClick = (event) => {
