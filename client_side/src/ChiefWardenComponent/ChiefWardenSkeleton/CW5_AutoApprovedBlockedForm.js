@@ -1,10 +1,17 @@
+import Cookies from "js-cookie";
 import designs from "../ChiefWardenStyling/CW6_wardenWiseGatepassCSS";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 const CW5_AutoApprovedBlockedForm = () => {
  const [api, setApi] = useState('');
- const[masterGroup,setMasterGroup]=useState('');
+ const[masterGroups,setMasterGroups]=useState('');
+ const [AllGroups,setAllGroups]=useState('');
+ const[groups,setGroups]=useState('');
+ const [selectedGroup,setSelectedGroup]=useState('');
+ const [selectedMasterGroup,setSelectedMasterGroup]=useState('');
  const [text,setText]=useState('');
+ const accessToken = Cookies.get("ACCESS_TOKEN");
+ let [mastergroup_id,mastergroup_name]=selectedMasterGroup.split(',')[0];
  const current=useLocation().pathname;
   useEffect(() => {
     if (current==='/ChiefWarden/home/AutoApproved') {
@@ -17,6 +24,43 @@ const CW5_AutoApprovedBlockedForm = () => {
     }
 
   }, [current]);
+
+  useEffect(() => {
+    const fetchMasterGroups = async () => {
+      try {
+        const response = await fetch('http://localhost:4000/gatepass/v2/admin/getAllMasterGroups', {
+          headers: {
+            Authorization: accessToken ,
+          },
+        });
+        const jsonData = await response.json();
+        setMasterGroups(jsonData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+    const fetchAllGroups = async () => {
+      try {
+        const response = await fetch('http://localhost:4000/gatepass/v2/admin/get_all_groups', {
+          headers: {
+            Authorization: accessToken ,
+          },
+        });
+        const jsonData = await response.json();
+        setAllGroups(jsonData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+    fetchAllGroups();
+    fetchMasterGroups();
+  }, [accessToken]);
+
+  useEffect(() => {
+    if(AllGroups.length>1)
+    {setGroups(AllGroups.filter((item)=>item.mastergroup_id==mastergroup_id));}
+  }, [selectedMasterGroup,AllGroups,mastergroup_id]);
+
 
   return (
     <div className={`${designs.d1}`}>
@@ -40,46 +84,25 @@ const CW5_AutoApprovedBlockedForm = () => {
            <select
            id='masterGroup'
               className={`${designs.d13} `}
-              onClick={async (e)=>setMasterGroup(e.target.value)}
+              onClick={async (e)=>setSelectedMasterGroup(e.target.value)}
             >
-              <option value='Master Group 1' > Master Group 1</option>
-              <option value='Master Group 2' > Master Group 2</option>
-              <option value='Master Group 3' > Master Group 3</option>
+              <option value='none'> None</option>
+              {masterGroups.length>1 && masterGroups.map((item,idx)=>(
+                <option value={[item.mastergroup_id,item.mastergroup_name]} key={idx}>{item.mastergroup_name}</option>
+              ))}
             </select>
             <label className={`${designs.d14}`}>Group </label>
             <div className="flex rounded-sm border p-2 bg-Items_bg ">
-            <div >
-            <input
-              type="checkbox"
-              id='groupCheckbox'
-              className={`m-1`}
-              value='group1'
-            /><label> group 1</label>
+           {groups.length>1 && groups.map((item,idx)=>(
+                <div key={idx}>
+                <input
+                  type="checkbox"
+                  id='groupCheckbox'
+                  className={`m-1`}
+                  value={[item.mastergroup_id,item.groupname]}
+                /> <label htmlFor="groupCheckbox" className="overflow:hidden">{item.groupname}</label>
             </div>
-            <div>
-            <input
-              type="checkbox"
-              id='groupCheckbox'
-              className={`m-1`}
-              value='group1'
-            /> <label> group 2</label>
-            </div>
-            <div>
-            <input
-              type="checkbox"
-              id='groupCheckbox'
-              className={`m-1`}
-              value='group1'
-            /><label> group 3</label>
-            </div>
-            <div>
-            <input
-              type="checkbox"
-              id='groupCheckbox'
-              className={`m-1`}
-              value='group4'
-            /><label> group 4</label>
-            </div>
+           ))}
             </div>
 
 
