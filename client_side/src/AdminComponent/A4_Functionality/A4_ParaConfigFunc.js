@@ -21,16 +21,33 @@ export const A4_ParaConfigFunc = () => {
     const accessToken = Cookies.get("ACCESS_TOKEN");
 
     useEffect(() => {
-        fetch("http://127.0.0.1:4000/gatepass/v2/admin/parameter_config", {
-            headers: {
-                Authorization: accessToken,
-            },
-        })
-            .then((response) => response.json())
-            .then((text) => {
-                setParameter(text);
-            });
+        // Function to fetch the data
+        const fetchData = () => {
+            fetch("http://127.0.0.1:4000/gatepass/v2/admin/parameter_config", {
+                headers: {
+                    Authorization: accessToken,
+                },
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    setParameter(data);
+                });
+        };
 
+        // Fetch data initially
+        fetchData();
+
+        // Set interval to fetch data every second
+        const intervalId = setInterval(() => {
+            fetchData();
+        }, 1000);
+
+        // Cleanup the interval when the component is unmounted
+        return () => clearInterval(intervalId);
+    }, [accessToken]); // Don't forget to add the dependencies in the array if you have any
+
+    useEffect(() => {
+        // Update state variables when the 'parameter' state changes
         if (parameter.length !== 0) {
             setLimit(parameter[0]["value"]);
             setOutTime(parameter[1]["value"]);
@@ -39,13 +56,10 @@ export const A4_ParaConfigFunc = () => {
             setArrivalLB(parameter[4]["value"]);
             setFlex(parameter[5]["value"]);
         }
-
-
-    });
+    }, [parameter]);
 
     const refresh = () => window.location.reload(true);
     const handleClick = (event) => {
-        
         switch (event.target.name) {
             case "limit": {
                 const requestOptions = {

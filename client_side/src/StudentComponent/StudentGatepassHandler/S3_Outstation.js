@@ -88,11 +88,16 @@ const handle_Outstation = async function (
     departureDate,
     purpose,
     destination,
+    setModalTitle,
+    setModalMessage,
+    setShowModal
 ) {
     console.log("Handle submit button - clicked");
     const check = await check_Outstation(accessToken, startTime, endTime, departureTime);
     if (check === true) {
-        alert("You have Successfully applied for Outstation Gate-pass");
+        setModalTitle("Success");
+        setModalMessage("You have Successfully applied for Outstation Gate-pass");
+        setShowModal(true);
         await apply_outstation(
             accessToken,
             departureDate,

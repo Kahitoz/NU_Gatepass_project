@@ -42,7 +42,7 @@ const A1_Home = () =>{
                   </div>
 
                   <div>
-                      {selectedOption === "" && <A2_PendingFunc/>}
+                      {selectedOption === "" && <A4_ParaConfigFunc/>}
                       {selectedOption === "Pending_Gatepass" && <A2_PendingFunc/>}
                       {selectedOption === "Group" && <A2_GroupFunc/>}
                       {selectedOption === "Subgroup" && <A3_SubGroupFunc/>}
@@ -60,18 +60,12 @@ const A1_Home = () =>{
                       <div className={`flex-1`}>
                           <p className={`font-bold text-center`}>Allowed</p>
                           <A5_GroupSubgroupTable/>
-                          <div className={`flex justify-center`}>
-                              <img src={`${add}`} />
-                          </div>
                           <A6_StartEndHandler/>
                           <A8_ExcelWidget/>
                       </div>
                       <div className={`flex-1`}>
                           <p className={`font-bold text-center`}>Restricted</p>
                           <A5_GroupSubgroupTable/>
-                          <div className={`flex justify-center`}>
-                              <img src={`${add}`} />
-                          </div>
                           <div>
                               <A7_Notification/>
                           </div>

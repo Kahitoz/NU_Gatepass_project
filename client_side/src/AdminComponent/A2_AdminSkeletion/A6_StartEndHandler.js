@@ -1,4 +1,5 @@
-import refresh from "../../StudentComponent/icons/icon-refresh.png"
+
+import React from "react";
 const A6_StartEndHandler = () =>{
     return(
         <div>
@@ -13,7 +14,7 @@ const A6_StartEndHandler = () =>{
                     type={`number`}
                     placeholder={`00`}/>
                 <p className={` mx-2 font-bold`}>mm</p>
-                <img src={`${refresh}`}></img>
+                <img className='hover:rotate-180 hover:duration-200 h-5 active:translate-y-0.5 hover:cursor-pointer 'src="https://img.icons8.com/ios-glyphs/30/000000/refresh--v1.png" alt="refresh"/>
             </div>
 
             <div className={`flex bg-Items_bg rounded-xl p-3 justify-evenly mt-2`}>
@@ -27,7 +28,7 @@ const A6_StartEndHandler = () =>{
                     type={`number`}
                     placeholder={`00`}/>
                 <p className={` mx-2 font-bold`}>mm</p>
-                <img src={`${refresh}`}></img>
+                <img className='hover:rotate-180 hover:duration-200 h-5 active:translate-y-0.5 hover:cursor-pointer'src="https://img.icons8.com/ios-glyphs/30/000000/refresh--v1.png" alt="refresh"/>
             </div>
         </div>
     )
