@@ -60,18 +60,12 @@ const A1_Home = () =>{
                       <div className={`flex-1`}>
                           <p className={`font-bold text-center`}>Allowed</p>
                           <A5_GroupSubgroupTable/>
-                          <div className={`flex justify-center`}>
-                              <img src={`${add}`} />
-                          </div>
                           <A6_StartEndHandler/>
                           <A8_ExcelWidget/>
                       </div>
                       <div className={`flex-1`}>
                           <p className={`font-bold text-center`}>Restricted</p>
                           <A5_GroupSubgroupTable/>
-                          <div className={`flex justify-center`}>
-                              <img src={`${add}`} />
-                          </div>
                           <div>
                               <A7_Notification/>
                           </div>
