@@ -85,11 +85,16 @@ const handle_Emergency = async function (
     departureDate,
     purpose,
     destination,
+    setModalTitle,
+    setModalMessage,
+    setShowModal
 ) {
     console.log("Handle submit button - clicked");
     const check = await check_Emergency(accessToken, startTime, endTime, departureTime);
     if (check === true) {
-        alert("You have Successfully applied for Emergency Gate-pass");
+        setModalTitle("Success");
+        setModalMessage("You have Successfully applied for Emergency Gate-pass");
+        setShowModal(true);
         await apply_emergency(
             accessToken,
             departureDate,
