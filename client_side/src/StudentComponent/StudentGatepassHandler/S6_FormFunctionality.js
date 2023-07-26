@@ -8,6 +8,7 @@ import { handle_submit_local_flexible } from "./S2_LocalFelxible";
 import {handle_Outstation} from "./S3_Outstation";
 import {handle_Emergency} from "./S4_Emergency";
 import moment from 'moment'
+import G1_MessageModal from "../../GlobalComponent/G1_Modals/G1_MessageModal";
 const S6_FormFunctionality = () => {
   const [selectedOption, setSelectedOption] = useState("");
   const [wselec, setWselect] = useState("");
@@ -34,6 +35,9 @@ const S6_FormFunctionality = () => {
   const [og_arrivalDate, set_og_arrivalDate] = useState("");
   const [destination, setDestination] = useState("");
   const [og_arrivalTime, set_og_arrivalTime] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [modalTitle, setModalTitle] = useState("");
+  const [modalMessage, setModalMessage] = useState("")
 
   const date = moment();
   const formatted_Date = date.format("YYYY-MM-DD");
@@ -79,12 +83,16 @@ const S6_FormFunctionality = () => {
           arrivalTime,
           weekLimit
         );
-        alert("You have successfully applied for Local Fixed Gatepass!");
+        setModalTitle("Success");
+        setModalMessage("You have successfully applied for Local Fixed Gatepass!");
+        setShowModal(true);
       }
     } catch (error) {
       console.error(error);
       // Handle the error here
-      alert("An error occurred while applying for Local Fixed Gatepass!");
+      setModalTitle("Error");
+      setModalMessage("An error occurred while applying for Local Fixed Gatepass!");
+      setShowModal(true);
     }
   };
 
@@ -125,11 +133,11 @@ const S6_FormFunctionality = () => {
     if (selectedOption === "Local Fixed") {
       handleClick()
     } else if (selectedOption === "Local Flexible") {
-      handle_submit_local_flexible(accessToken,departureTime, arrivalTime, lf_departureTime, arrivalDate, departureDate, reason);
+      handle_submit_local_flexible(accessToken,departureTime, arrivalTime, lf_departureTime, arrivalDate, departureDate, reason, setModalTitle, setModalMessage, setShowModal);
     } else if (selectedOption === "Outstation") {
-      handle_Outstation(accessToken,departureTime, og_arrivalTime, lf_departureTime, og_arrivalDate, og_departureDate, reason, destination);
+      handle_Outstation(accessToken,departureTime, og_arrivalTime, lf_departureTime, og_arrivalDate, og_departureDate, reason, destination, setModalTitle, setModalMessage, setShowModal);
     } else if (selectedOption === "Emergency") {
-      handle_Emergency(accessToken,departureTime, og_arrivalTime, lf_departureTime, og_arrivalDate, og_departureDate, reason, destination)
+      handle_Emergency(accessToken,departureTime, og_arrivalTime, lf_departureTime, og_arrivalDate, og_departureDate, reason, destination, setModalTitle, setModalMessage, setShowModal)
     }
   };
 
@@ -137,35 +145,40 @@ const S6_FormFunctionality = () => {
 
 
   return (
-    <S6_FormDesigns
-      selectedOption={selectedOption}
-      departureDateVisible={departureDateVisible}
-      departureTimeVisible={departureTimeVisible}
-      arrivalDateVisible={arrivalDateVisible}
-      arrivalTimeVisible={arrivalTimeVisible}
-      destinationVisible={destinationVisible}
-      reasonVisible={reasonVisible}
-      wardenVisible={wardenVisible}
-      departureTime={departureTime}
-      arrivalTime={arrivalTime}
-      handleOptionSelect={handleOptionSelect}
-      handleWselect={handleWselect}
-      handlewDropDown={handlewDropDown}
-      wselec={wselec}
-      wOpen={wOpen}
-      Altwardens={Altwardens}
-      handleClick={handleButtonClick}
-      reason={reason}
-      setReason = {setReason}
-      lf_departureTime = {set_lf_departureTime}
-      d_Time = {lf_departureTime}
-      og_arrivalDate = {set_og_arrivalDate}
-      og_departureDate = {set_og_departureDate}
-      destination = {destination}
-      set_destination = {setDestination}
-      set_og_arrivalTime = {set_og_arrivalTime}
-      og_arrivalTime = {og_arrivalTime}
-    />
+      <>
+        <S6_FormDesigns
+            selectedOption={selectedOption}
+            departureDateVisible={departureDateVisible}
+            departureTimeVisible={departureTimeVisible}
+            arrivalDateVisible={arrivalDateVisible}
+            arrivalTimeVisible={arrivalTimeVisible}
+            destinationVisible={destinationVisible}
+            reasonVisible={reasonVisible}
+            wardenVisible={wardenVisible}
+            departureTime={departureTime}
+            arrivalTime={arrivalTime}
+            handleOptionSelect={handleOptionSelect}
+            handleWselect={handleWselect}
+            handlewDropDown={handlewDropDown}
+            wselec={wselec}
+            wOpen={wOpen}
+            Altwardens={Altwardens}
+            handleClick={handleButtonClick}
+            reason={reason}
+            setReason = {setReason}
+            lf_departureTime = {set_lf_departureTime}
+            d_Time = {lf_departureTime}
+            og_arrivalDate = {set_og_arrivalDate}
+            og_departureDate = {set_og_departureDate}
+            destination = {destination}
+            set_destination = {setDestination}
+            set_og_arrivalTime = {set_og_arrivalTime}
+            og_arrivalTime = {og_arrivalTime}
+        />
+        {showModal && <G1_MessageModal title={modalTitle} message={modalMessage} action={setShowModal}/>}
+
+      </>
+
   );
 };
 
