@@ -42,7 +42,7 @@ const A1_Home = () =>{
                   </div>
 
                   <div>
-                      {selectedOption === "" && <A2_PendingFunc/>}
+                      {selectedOption === "" && <A4_ParaConfigFunc/>}
                       {selectedOption === "Pending_Gatepass" && <A2_PendingFunc/>}
                       {selectedOption === "Group" && <A2_GroupFunc/>}
                       {selectedOption === "Subgroup" && <A3_SubGroupFunc/>}
