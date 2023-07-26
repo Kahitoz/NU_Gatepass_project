@@ -49,7 +49,7 @@ const A5_AllUsersTable = ({ userData, handleNextPage, handlePreviousPage, page_n
                             setSelectedUserId(item.user_id);
                         }}>
                             <h1 className={`${designs.d5}`}>{idx + filteredStartingIndex + 1}</h1>
-                            <h1 className={`${designs.d5} overflow-x-scroll`}>{item.email_id}</h1>
+                            <h1 className={`${designs.d5} hover:overflow-visible`}>{item.email_id}</h1>
                             <h1 className={`${designs.d5}`}>{item.name}</h1>
                             <h1 className={`${designs.d5}`}>{item.contact_number}</h1>
                         </div>
