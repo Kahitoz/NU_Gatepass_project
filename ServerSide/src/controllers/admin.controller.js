@@ -672,6 +672,15 @@ export const getStudentTenureWise = async (req, res) => {
   }
 };
 
+export const getAllMasterGroups = async (req, res) => {
+  try {
+    const pool = await getConnection();
+    const result = await pool.request().query(queries.getAllMasterGroups);
+    res.json(result.recordset);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+};
 export const getStudentTenureWiseDownload = async (req, res) => {
   try {
     const { id, sd, ed } = req.params;
