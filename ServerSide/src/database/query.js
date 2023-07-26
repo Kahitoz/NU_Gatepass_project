@@ -41,9 +41,9 @@ export const queries = {
   deleteGroup: "DELETE FROM [gps_db].[gps_db].[gps_groups] WHERE gps_groupid=@id;",
   deleteSubgroup: "DELETE FROM [gps_db].[gps_db].[gps_subgroup] WHERE subgroup_id=@id;",
 
-
-  getAllGroups: "SELECT * FROM [gps_db].[gps_db].[gps_groups]",
-  getAllSubGroups: "SELECT * FROM [gps_db].[gps_db].[gps_subgroup]",
+  getAllMasterGroups: "select * from gps_db.gps_mastergroups;",
+  getAllGroups: "select gps_groupname as groupname, gps_group_mastergroup_id as mastergroup_id from gps_db.gps_groups;",
+  getAllSubGroups: "SELECT [subgroup_name],[subgroup_mastergroup_id] as mastergroup_id FROM [gps_db].[gps_db].[gps_subgroup]",
   getAllusers: "SELECT * FROM [gps_db].[gps_db].[gps_usersmaster]",
 
   /////////////////////////////Roles//////////////////////////////
