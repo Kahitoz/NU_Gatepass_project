@@ -3,7 +3,7 @@ import Navbar from "../ChiefWardenSkeleton/CW1_Navbar";
 import SubNavbar from "../ChiefWardenSkeleton/CW2_SubNavbar";
 import Table from "../ChiefWardenSkeleton/CW4_tableComponents/CW4_5_TowerAllot"
 import Cookies from "js-cookie";
-import TowerAllotForm from "../ChiefWardenSkeleton/CW5_TowerAllotForm"
+import TowerAllotForm from "../ChiefWardenSkeleton/CW9_TowerAllotForm"
 
 const ChiefWardenTowerAllot = () => {
   const accessToken = Cookies.get("ACCESS_TOKEN");

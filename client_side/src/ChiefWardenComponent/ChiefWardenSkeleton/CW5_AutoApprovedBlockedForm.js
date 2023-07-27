@@ -1,14 +1,20 @@
 import Cookies from "js-cookie";
-import designs from "../ChiefWardenStyling/CW6_wardenWiseGatepassCSS";
+import designs from "../ChiefWardenStyling/CW5_formCSS";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import moment from 'moment';
 const CW5_AutoApprovedBlockedForm = () => {
  const [api, setApi] = useState('');
  const[masterGroups,setMasterGroups]=useState('');
  const [AllGroups,setAllGroups]=useState('');
+  const [AllSubGroups,setAllSubGroups]=useState('');
  const[groups,setGroups]=useState('');
+ const[subGroups,setSubGroups]=useState('');
  const [selectedGroup,setSelectedGroup]=useState('');
  const [selectedMasterGroup,setSelectedMasterGroup]=useState('');
+ const [selectedSubGroup,setSelectedSubGroup]=useState('');
+ const [fromTime,setFromTime]=useState(moment().format('YYYY-MM-DD HH:mm'));
+ const [toTime,setToTime]=useState(moment().format('YYYY-MM-DD HH:mm'));
  const [text,setText]=useState('');
  const accessToken = Cookies.get("ACCESS_TOKEN");
  let [mastergroup_id,mastergroup_name]=selectedMasterGroup.split(',')[0];
@@ -52,32 +58,40 @@ const CW5_AutoApprovedBlockedForm = () => {
         console.error("Error fetching data:", error);
       }
     }
+    const fetchAllSubGroups = async () => {
+      try {
+        const response = await fetch('http://localhost:4000/gatepass/v2/admin/get_all_sub_groups', {
+          headers: {
+            Authorization: accessToken ,
+          },
+        });
+        const jsonData = await response.json();
+        setAllSubGroups(jsonData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+    fetchAllSubGroups();
     fetchAllGroups();
     fetchMasterGroups();
   }, [accessToken]);
 
   useEffect(() => {
-    if(AllGroups.length>1)
-    {setGroups(AllGroups.filter((item)=>item.mastergroup_id==mastergroup_id));}
-  }, [selectedMasterGroup,AllGroups,mastergroup_id]);
+    if(AllGroups.length>1 && AllSubGroups.length>1 && mastergroup_id!=0)
+    {setGroups(AllGroups.filter((item)=>item.mastergroup_id==mastergroup_id));
+     setSubGroups(AllSubGroups.filter((item)=>item.mastergroup_id==mastergroup_id));
+    }
+    if(mastergroup_id==0){
+      setGroups(AllGroups);
+      setSubGroups(AllSubGroups);
+    }
+  }, [selectedMasterGroup,AllGroups,mastergroup_id,AllSubGroups]);
 
 
   return (
     <div className={`${designs.d1}`}>
-      {/* <div className={`${designs.d2}`}>
-        <div className={`${designs.d3}`}>
-          <div className={`${designs.d4}`}>
-            <div className={`${designs.d7}`}>
-              <div className={`${designs.d8}`}>
-                <button className={`${designs.d9}`}>Request Upload</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> */}
-
       <div className={`${designs.d10}`}>
-        <div  className={`${designs.d12}`}>
+        <div  className={`bg-background  rounded-lg  center`}>
         <p className={`m-2 text-center font-bold border-b-2 border-black`}>{`Create New ${text} Request`}</p>
           <form name='setAutoApproval/BlockedForm' className="p-5" >
            <label htmlFor="masterGroup"> Master Group</label> 
@@ -92,54 +106,43 @@ const CW5_AutoApprovedBlockedForm = () => {
               ))}
             </select>
             <label className={`${designs.d14}`}>Group </label>
-            <div className="flex rounded-sm border p-2 bg-Items_bg ">
-           {groups.length>1 && groups.map((item,idx)=>(
+            <div className="flex-wrap rounded-sm border p-2 bg-Items_bg w-96 overflow-auto">
+           {groups.length>1 && mastergroup_id!=0 ? groups.map((item,idx)=>(
                 <div key={idx}>
+                  <div className="flex items-center">
                 <input
                   type="checkbox"
                   id='groupCheckbox'
                   className={`m-1`}
                   value={[item.mastergroup_id,item.groupname]}
-                /> <label htmlFor="groupCheckbox" className="overflow:hidden">{item.groupname}</label>
+                  onChange={(e)=>{setSelectedGroup(e.target.checked); console.log(selectedGroup);}}
+                  /> 
+                  <label htmlFor="groupCheckbox" className="overflow:hidden">{item.groupname}</label>
             </div>
-           ))}
+            {idx%4==0 && <div className="block"></div>}
+            </div>
+           )): mastergroup_id==0?<h1 className="text-center">All groups selected</h1>:<h1 className="text-center">No groups</h1>}
             </div>
 
 
             <label className={`${designs.d14}`}> Sub Group </label>
-            <div className="flex rounded-sm border p-2 bg-Items_bg ">
-            <div >
-            <input
-              type="checkbox"
-              id='SubgroupCheckbox'
-              className={`m-1`}
-              value='group1'
-            />Subgroup 1
+            <div className="flex-wrap rounded-sm border p-1 bg-Items_bg ">
+           
+            {subGroups.length>1 && mastergroup_id!=0? subGroups.map((item,idx)=>(
+
+                <div key={idx}>
+                  <div className="flex items-center w-fit">
+                <input
+                  type="checkbox"
+                  id='subGroupCheckbox'
+                  className={`m-1`}
+                  value={[item.mastergroup_id,item.subgroup_name]}
+                  onChange={(e)=>setSelectedSubGroup(e.target.checked)}
+                  />
+                  <label htmlFor="subGroupCheckbox" className="overflow:auto">{item.subgroup_name}</label>
             </div>
-            <div>
-            <input
-              type="checkbox"
-              id='SubgroupCheckbox'
-              className={`m-1`}
-              value='group1'
-            /> Subgroup 2
             </div>
-            <div>
-            <input
-              type="checkbox"
-              id='SubgroupCheckbox'
-              className={`m-1`}
-              value='group1'
-            /> Subgroup 3
-            </div>
-            <div>
-            <input
-              type="checkbox"
-              id='SubgroupCheckbox'
-              className={`m-1`}
-              value='group4'
-            />Subgroup 4
-            </div>
+            )): mastergroup_id==0? <h1 className="text-center">All subgroups selected</h1>:<h1 className="text-center">No subgroups</h1>}
             </div>
 
               <label className={`${designs.d14}`}>From Date Time</label>
@@ -148,6 +151,10 @@ const CW5_AutoApprovedBlockedForm = () => {
                type='datetime-local'
                id='fromDateTime'
                className="w-full bg-transparent"
+               disabled={mastergroup_id==='n'}
+               required={true}
+               value={fromTime}
+               onChange={(e)=>setFromTime(moment(e.target.value).format('YYYY-MM-DD HH:mm'))}
                />
             </div>
 
@@ -157,10 +164,19 @@ const CW5_AutoApprovedBlockedForm = () => {
                type='datetime-local'
                id='fromDateTime'
                className="w-full bg-transparent"
+               disabled={mastergroup_id==='n'}
+               required={true}
+               value={toTime}
+               onChange={(e)=>setToTime(moment(e.target.value).format('YYYY-MM-DD HH:mm'))}
                />
             </div>
           </form>
-        <button className={`bg-Navbar_bg text-background m-2 ml-4 p-2 rounded-md`}>Confirm Done</button>
+          {toTime<fromTime && <h1 className="text-center text-xs text-red-700 font-bold">To Datetime must be Greater than from Datetime</h1>}
+
+        <button 
+        className={`bg-Navbar_bg text-background m-2 ml-4 p-2 rounded-md`}
+        disabled={mastergroup_id==='n'}
+        >Confirm Done</button>
         </div>
       </div>
     </div>
