@@ -35,7 +35,7 @@ const A5_AllUsersTable = ({ userData, handleNextPage, handlePreviousPage, page_n
                     </div>
                     <div className={`${designs.d2} `}>
                         <div className={`${designs.d5} `}>Sno.</div>
-                        <div className={`${designs.d5} `}>Email Id</div>
+                        <div className={`${designs.d5} -ms-40 me-20`}>Email Id</div>
                         <div className={`${designs.d5} `}>Name </div>
                         <div className={`${designs.d5} `}>Phone </div>
                     </div>
@@ -49,7 +49,7 @@ const A5_AllUsersTable = ({ userData, handleNextPage, handlePreviousPage, page_n
                             setSelectedUserId(item.user_id);
                         }}>
                             <h1 className={`${designs.d5}`}>{idx + filteredStartingIndex + 1}</h1>
-                            <h1 className={`${designs.d5} hover:overflow-visible`}>{item.email_id}</h1>
+                            <h1 className={`${designs.d5} overflow-visible -ms-40 me-20`}>{item.email_id}</h1>
                             <h1 className={`${designs.d5}`}>{item.name}</h1>
                             <h1 className={`${designs.d5}`}>{item.contact_number}</h1>
                         </div>
