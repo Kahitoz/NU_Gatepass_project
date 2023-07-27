@@ -3,37 +3,34 @@ import {check_status} from "./S0_CommonChecks";
 import {get_warden_details} from "./S0_CommonChecks";
 
 
-const check_Outstation= async function (accessToken, startTime, lastTime, departureTime) {
+const check_Outstation = async function (accessToken, startTime, lastTime, departureTime) {
     const res1 = await check_black_list(accessToken);
     const res2 = await check_status(accessToken);
 
     if (res1 === true) {
         console.log("Gate-pass is blocked");
-        alert("Sorry, the gate-pass is blocked");
-        return false;
-
+        return { success: false, message: "Sorry, the gate-pass is blocked" };
     } else if (res2.rowsAffected[0] === 0) {
-        return true;
+        return { success: true };
     } else if (
         res2.recordset[0].count > 0 &&
         res2.recordset[0].status === "CHECKEDOUT"
     ) {
-        alert("You are already checked out");
-        return false;
+        return { success: false, message: "You are already checked out" };
     } else if (
         res2.recordset[0].count > 0 &&
         res2.recordset[0].status === "Pending"
     ) {
-        alert("You have one pending gate-pass");
-        return false;
+        return { success: false, message: "You have one pending gate-pass" };
     } else {
         console.log("Time is valid");
         console.log("Overall Result: true");
-        return true;
+        return { success: true };
     }
 };
 
 export { check_Outstation };
+
 
 const apply_outstation = async function (
     accessToken,
@@ -93,8 +90,9 @@ const handle_Outstation = async function (
     setShowModal
 ) {
     console.log("Handle submit button - clicked");
-    const check = await check_Outstation(accessToken, startTime, endTime, departureTime);
-    if (check === true) {
+    const checkResult = await check_Outstation(accessToken, startTime, endTime, departureTime);
+
+    if (checkResult.success) {
         setModalTitle("Success");
         setModalMessage("You have Successfully applied for Outstation Gate-pass");
         setShowModal(true);
@@ -107,7 +105,12 @@ const handle_Outstation = async function (
             purpose,
             destination
         );
+    } else {
+        setModalTitle("Failure");
+        setModalMessage(checkResult.message);
+        setShowModal(true);
     }
 };
 
 export { handle_Outstation };
+
