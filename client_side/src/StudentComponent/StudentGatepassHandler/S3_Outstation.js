@@ -1,15 +1,50 @@
 import {check_black_list} from "./S0_CommonChecks";
 import {check_status} from "./S0_CommonChecks";
 import {get_warden_details} from "./S0_CommonChecks";
+import moment from "moment/moment";
 
 
-const check_Outstation = async function (accessToken, startTime, lastTime, departureTime) {
+const check_time_Outstation = (lastTime, departureTime, departureDate, arrivalDate) => {
+    const lastTimeMoment = moment(lastTime, 'HH:mm');
+    const departureTimeMoment = moment(departureTime, 'HH:mm');
+    const departureDateMoment = moment(departureDate, 'YYYY-MM-DD');
+    const arrivalDateMoment = moment(arrivalDate, 'YYYY-MM-DD');
+
+    const allowed_time = allowedTime();
+
+
+
+    if (departureDateMoment.isSame(moment(), 'day') && departureTimeMoment.isSameOrBefore(lastTimeMoment)) {
+        return false;
+    }
+    if (departureDateMoment.isSameOrBefore(moment(), 'day')) {
+        return false;
+    }
+    if (arrivalDateMoment.isSameOrBefore(departureDateMoment, 'day')) {
+        return false;
+    }
+    if (departureTimeMoment.isAfter(moment(allowed_time, 'HH:mm'))) {
+        return true;
+    }
+ /*   if (lastTimeMoment.isSameOrBefore(departureTimeMoment)) {
+        return false;
+    }
+*/
+    return true;
+};
+export {check_time_Outstation}
+const allowedTime = () => {
+    return moment().add(2, 'hours').format('HH:mm');
+};
+
+
+const check_Outstation = async function (accessToken, lastTime, departureTime, departureDate, arrivalDate) {
     const res1 = await check_black_list(accessToken);
     const res2 = await check_status(accessToken);
+    const res3 = check_time_Outstation(lastTime, departureTime, departureDate, arrivalDate)
 
-    if (res1 === true) {
-        console.log("Gate-pass is blocked");
-        return { success: false, message: "Sorry, the gate-pass is blocked" };
+    if (res3 === false) {
+        return { success: false, message: "Sorry, The time selected is incorrect" };
     } else if (res2.rowsAffected[0] === 0) {
         return { success: true };
     } else if (
@@ -22,9 +57,9 @@ const check_Outstation = async function (accessToken, startTime, lastTime, depar
         res2.recordset[0].status === "Pending"
     ) {
         return { success: false, message: "You have one pending gate-pass" };
-    } else {
-        console.log("Time is valid");
-        console.log("Overall Result: true");
+    } else if (res1===true){
+        return {success:false, message:"Sorry Gatepass is blocked"}
+    }else {
         return { success: true };
     }
 };
@@ -90,9 +125,9 @@ const handle_Outstation = async function (
     setShowModal
 ) {
     console.log("Handle submit button - clicked");
-    const checkResult = await check_Outstation(accessToken, startTime, endTime, departureTime);
+    const checkResult = await check_Outstation(accessToken, endTime, departureTime, departureDate, arrivalDate);
 
-    if (checkResult.success) {
+    if (checkResult.success===true) {
         setModalTitle("Success");
         setModalMessage("You have Successfully applied for Outstation Gate-pass");
         setShowModal(true);
@@ -105,7 +140,7 @@ const handle_Outstation = async function (
             purpose,
             destination
         );
-    } else {
+    } else if(checkResult.success === false) {
         setModalTitle("Failure");
         setModalMessage(checkResult.message);
         setShowModal(true);
