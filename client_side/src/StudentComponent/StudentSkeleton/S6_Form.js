@@ -149,7 +149,7 @@ const S6_FormDesigns = ({
                   <input
                       type="time"
                       value={
-                        selectedOption === "Local Fixed"
+                        selectedOption === "Local Fixed" || selectedOption === "Local Flexible"
                             ? arriveTime
                             : (selectedOption === "Local Flexible" || selectedOption === "Outstation" || selectedOption === "Emergency")
                                 ? og_arrivalTime
