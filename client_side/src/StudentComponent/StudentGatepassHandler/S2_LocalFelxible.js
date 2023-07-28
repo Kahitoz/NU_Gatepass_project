@@ -100,7 +100,7 @@ const handle_submit_local_flexible = async function (
   setModalMessage,
   setShowModal
 ) {
-  console.log("Handle submit button - clicked");
+
   const check = await check_other_gatePass(accessToken, startTime, endTime, departureTime);
   if (check === true) {
     setModalTitle("Success");

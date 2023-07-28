@@ -1,3 +1,5 @@
+import moment from "moment";
+
 const get_warden_details = async function (accessToken) {
     const response = await fetch(
         "http://localhost:4000/gatepass/v2/student/get_warden_details",
@@ -42,27 +44,36 @@ const check_status = async function (accessToken) {
 export { check_status };
 
 const check_time_localFlexible = async function (accessToken, startTime, lastTime, departureTime) {
-    let currentTime = "";
-    const response = fetch(
-        "http://localhost:4000/gatepass/v2/student/get_dates",
-        {
-            headers: { Authorization: accessToken },
-        }
-    )
-        .then((Response) => Response.json())
-        .then((response) => {
-            currentTime = response.currentTime;
-        });
+    const response = await fetch("http://localhost:4000/gatepass/v2/student/get_dates", {
+        headers: { Authorization: accessToken },
+    });
 
-    const startTimeObject = startTime;
-    const lastTimeObject = lastTime;
-    const curTimeObject = departureTime;
+    const allowed_time = allowedTime();
 
-    if (startTimeObject <= curTimeObject && curTimeObject <= lastTimeObject) {
-        return true;
-    } else {
+    const startTimeObject = moment(startTime, 'HH:mm');
+    const lastTimeObject = moment(lastTime, 'HH:mm');
+    const curTimeObject = moment(departureTime, 'HH:mm');
 
+    if (curTimeObject.isBefore(moment(allowed_time, 'HH:mm'))) {
         return false;
     }
+    if (moment(allowed_time, 'HH:mm').isAfter(lastTimeObject.clone().subtract(1, 'hour'))) {
+        return false;
+    }
+    if (curTimeObject.isAfter(lastTimeObject.clone().subtract(1, 'hour'))) {
+        return false;
+    }
+    if (curTimeObject.isSameOrAfter(startTimeObject) && curTimeObject.isSameOrBefore(lastTimeObject)) {
+        return true;
+    }
+    return false;
 };
+
 export { check_time_localFlexible };
+
+
+const allowedTime = () => {
+    return moment().add(2, 'hours').format('HH:mm');
+};
+
+
