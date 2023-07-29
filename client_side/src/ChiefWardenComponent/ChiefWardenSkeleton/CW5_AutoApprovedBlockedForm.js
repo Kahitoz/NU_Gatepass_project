@@ -73,7 +73,7 @@ const CW5_AutoApprovedBlockedForm = () => {
         console.error("Error fetching data:", error);
       }
     }
-    fetchAllSubGroups();
+    // fetchAllSubGroups();
     fetchAllGroups();
     fetchMasterGroups();
 
@@ -82,19 +82,19 @@ const CW5_AutoApprovedBlockedForm = () => {
   useEffect(() => {
     if(AllGroups.length>1 && AllSubGroups.length>1 && mastergroup_id!=0)
     {setGroups(AllGroups.filter((item)=>item.mastergroup_id==mastergroup_id));
-     setSubGroups(AllSubGroups.filter((item)=>item.mastergroup_id==mastergroup_id));
+    //  setSubGroups(AllSubGroups.filter((item)=>item.mastergroup_id==mastergroup_id));
     }
     if(mastergroup_id==0){
       setGroups(AllGroups);
-      setSubGroups(AllSubGroups);
+      // setSubGroups(AllSubGroups);
     }
 
     for(const element of groups){
       selectedGroup[element.group_id]=false;
     }
-    for(const element of subGroups){
-      selectedSubGroup[element.subgroup_id]=false;
-    }
+    // for(const element of subGroups){
+    //   selectedSubGroup[element.subgroup_id]=false;
+    // }
   }, [selectedMasterGroup,AllGroups]);
 
   const handleGroupChecked=async (e)=>{
@@ -102,10 +102,10 @@ const CW5_AutoApprovedBlockedForm = () => {
       selectedGroup[e.target.value]=e.target.checked;
       console.log(selectedGroup);
     }
-  const handleSubGroupChecked=async (e)=>{
-    selectedSubGroup[e.target.value]=e.target.checked;
-    console.log(selectedSubGroup);
-    }
+  // const handleSubGroupChecked=async (e)=>{
+  //   selectedSubGroup[e.target.value]=e.target.checked;
+  //   console.log(selectedSubGroup);
+  //   }
   const handleSubmit=async (e)=>{
     e.preventDefault();
     const data={
@@ -169,11 +169,11 @@ const CW5_AutoApprovedBlockedForm = () => {
             </div>
             {idx%4==0 && <div className="block"></div>}
             </div>
-           )): mastergroup_id==0?<h1 className="text-center">All groups selected</h1>:<h1 className="text-center">No groups</h1>}
+           )): mastergroup_id==0?<h1 className="text-center">All Groups and MasterGroups selected</h1>:<h1 className="text-center">No groups</h1>}
             </div>
 
 
-            <label className={`${designs.d14}`}> Sub Group </label>
+            {/* <label className={`${designs.d14}`}> Sub Group </label>
             <div className="flex-wrap rounded-sm border p-1 bg-Items_bg ">
            
             {subGroups.length>1 && mastergroup_id!=0? subGroups.map((item,idx)=>(
@@ -191,7 +191,7 @@ const CW5_AutoApprovedBlockedForm = () => {
             </div>
             </div>
             )): mastergroup_id==0? <h1 className="text-center">All subgroups selected</h1>:<h1 className="text-center">No subgroups</h1>}
-            </div>
+            </div> */}
 
               <label className={`${designs.d14}`}>From Date Time</label>
             <div className="flex rounded-sm border p-2 bg-Items_bg" >
