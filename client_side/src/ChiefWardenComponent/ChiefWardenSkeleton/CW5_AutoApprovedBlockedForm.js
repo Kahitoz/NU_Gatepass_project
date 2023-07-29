@@ -10,14 +10,15 @@ const CW5_AutoApprovedBlockedForm = () => {
   const [AllSubGroups,setAllSubGroups]=useState('');
  const[groups,setGroups]=useState('');
  const[subGroups,setSubGroups]=useState('');
- const [selectedGroup,setSelectedGroup]=useState('');
+ const selectedGroup ={}
  const [selectedMasterGroup,setSelectedMasterGroup]=useState('');
- const [selectedSubGroup,setSelectedSubGroup]=useState('');
+ const selectedSubGroup={}
  const [fromTime,setFromTime]=useState(moment().format('YYYY-MM-DD HH:mm'));
  const [toTime,setToTime]=useState(moment().format('YYYY-MM-DD HH:mm'));
  const [text,setText]=useState('');
  const accessToken = Cookies.get("ACCESS_TOKEN");
  let [mastergroup_id,mastergroup_name]=selectedMasterGroup.split(',')[0];
+
  const current=useLocation().pathname;
   useEffect(() => {
     if (current==='/ChiefWarden/home/AutoApproved') {
@@ -54,6 +55,7 @@ const CW5_AutoApprovedBlockedForm = () => {
         });
         const jsonData = await response.json();
         setAllGroups(jsonData);
+        console.log(jsonData);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -74,6 +76,7 @@ const CW5_AutoApprovedBlockedForm = () => {
     fetchAllSubGroups();
     fetchAllGroups();
     fetchMasterGroups();
+
   }, [accessToken]);
 
   useEffect(() => {
@@ -85,7 +88,52 @@ const CW5_AutoApprovedBlockedForm = () => {
       setGroups(AllGroups);
       setSubGroups(AllSubGroups);
     }
-  }, [selectedMasterGroup,AllGroups,mastergroup_id,AllSubGroups]);
+
+    for(const element of groups){
+      selectedGroup[element.group_id]=false;
+    }
+    for(const element of subGroups){
+      selectedSubGroup[element.subgroup_id]=false;
+    }
+  }, [selectedMasterGroup,AllGroups]);
+
+  const handleGroupChecked=async (e)=>{
+    
+      selectedGroup[e.target.value]=e.target.checked;
+      console.log(selectedGroup);
+    }
+  const handleSubGroupChecked=async (e)=>{
+    selectedSubGroup[e.target.value]=e.target.checked;
+    console.log(selectedSubGroup);
+    }
+  const handleSubmit=async (e)=>{
+    e.preventDefault();
+    const data={
+      mastergroup_id:mastergroup_id,
+      mastergroup_name:mastergroup_name,
+      groups:selectedGroup,
+      subgroups:selectedSubGroup,
+      fromTime:fromTime,
+      toTime:toTime
+    }
+    console.log(data);
+    try {
+      const response = await fetch(api, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: accessToken,
+        },
+        body: JSON.stringify(data),
+      });
+      const jsonData = await response.json();
+      console.log(jsonData);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }
+
+
 
 
   return (
@@ -114,8 +162,8 @@ const CW5_AutoApprovedBlockedForm = () => {
                   type="checkbox"
                   id='groupCheckbox'
                   className={`m-1`}
-                  value={[item.mastergroup_id,item.groupname]}
-                  onChange={(e)=>{setSelectedGroup(e.target.checked); console.log(selectedGroup);}}
+                  value={item.group_id}
+                  onChange={(e)=>{handleGroupChecked(e);}}
                   /> 
                   <label htmlFor="groupCheckbox" className="overflow:hidden">{item.groupname}</label>
             </div>
@@ -136,8 +184,8 @@ const CW5_AutoApprovedBlockedForm = () => {
                   type="checkbox"
                   id='subGroupCheckbox'
                   className={`m-1`}
-                  value={[item.mastergroup_id,item.subgroup_name]}
-                  onChange={(e)=>setSelectedSubGroup(e.target.checked)}
+                  value={item.subgroup_id}
+                  onChange={(e)=>handleSubGroupChecked(e)}
                   />
                   <label htmlFor="subGroupCheckbox" className="overflow:auto">{item.subgroup_name}</label>
             </div>
