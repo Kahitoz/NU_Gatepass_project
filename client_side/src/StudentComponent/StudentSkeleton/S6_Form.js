@@ -3,6 +3,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import React, { useEffect } from "react";
 import moment from "moment";
+
 const S6_FormDesigns = ({
   selectedOption,
   departureDateVisible,
@@ -26,14 +27,13 @@ const S6_FormDesigns = ({
   d_Time,
   setReason,
   og_arrivalDate,
-  og_departureDate, destination, set_destination,set_og_arrivalTime,og_arrivalTime,
+  og_departureDate, destination, set_destination,set_og_arrivalTime,og_arrivalTime,checkTodayGatepass
 
 }) => {
   const [depTime,setDepTime] = React.useState(departureTime);
   const [arriveTime,setArriveTime] = React.useState(arrivalTime);
   const [selectedDate, setSelectedDate] = React.useState(new Date());
   const [selectedArrival, setSelectedArrival] = React.useState(new Date())
-
   const handleDateChange = (date) => {
     setSelectedDate(date);
     console.log("Departure Date is ", date);
@@ -58,6 +58,9 @@ const S6_FormDesigns = ({
     arrivalDateValue = new Date();
   }
 
+
+
+
   useEffect(() => {
     if (selectedOption === "Local Fixed") {
       setDepTime(departureTime);
@@ -74,13 +77,18 @@ const S6_FormDesigns = ({
           <div className={designs.d12}>
             <div className=" p-2">
               <select
-                className="bg-gray-200 text-gray-700 py-2 px-4 rounded-md"
-                value={selectedOption}
-                onChange={(e) => handleOptionSelect(e.target.value)}
+                  className="bg-gray-200 text-gray-700 py-2 px-4 rounded-md"
+                  value={selectedOption}
+                  onChange={(e) => handleOptionSelect(e.target.value)}
               >
                 <option value="">Select an Option</option>
-                <option value="Local Fixed">Local Fixed</option>
-                <option value="Local Flexible">Local Flexible</option>
+                {!checkTodayGatepass && (
+                    // Show "Local Fixed" and "Local Flexible" options only if checkTodayGatepass is false
+                    <>
+                      <option value="Local Fixed">Local Fixed</option>
+                      <option value="Local Flexible">Local Flexible</option>
+                    </>
+                )}
                 <option value="Outstation">Outstation</option>
                 <option value="Emergency">Emergency</option>
               </select>

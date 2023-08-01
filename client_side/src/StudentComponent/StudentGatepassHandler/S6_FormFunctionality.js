@@ -9,6 +9,7 @@ import {handle_Outstation} from "./S3_Outstation";
 import {handle_Emergency} from "./S4_Emergency";
 import moment from 'moment'
 import G1_MessageModal from "../../GlobalComponent/G1_Modals/G1_MessageModal";
+import {check_todays_gatepass} from "./S0_CommonChecks";
 const S6_FormFunctionality = () => {
   const [selectedOption, setSelectedOption] = useState("");
   const [wselec, setWselect] = useState("");
@@ -39,6 +40,8 @@ const S6_FormFunctionality = () => {
   const [modalTitle, setModalTitle] = useState("");
   const [modalMessage, setModalMessage] = useState("")
 
+  const [checkToadyGatepass, setTodayGatepass] = useState(false)
+
   const date = moment();
   const formatted_Date = date.format("YYYY-MM-DD");
 
@@ -60,8 +63,20 @@ const S6_FormFunctionality = () => {
     get_warden();
     setDepartureDate(formatted_Date);
     setArrivalDate(formatted_Date);
-    console.log("date  = ", departureDate);
+
+    const getToday = async () => {
+      setTodayGatepass(await check_todays_gatepass(accessToken))
+      if(await check_todays_gatepass(accessToken) === true){
+        console.log("you have applied for the gatepass today")
+      }else{
+        console.log("You have not applied for the gatepass today")
+      }
+    }
+
+    getToday()
   }, []);
+
+
 
   const handleClick = async () => {
     try {
@@ -129,6 +144,8 @@ const S6_FormFunctionality = () => {
     setWopen(!wOpen);
   };
 
+
+
   const handleButtonClick = () => {
     if (selectedOption === "Local Fixed") {
       handleClick()
@@ -174,6 +191,7 @@ const S6_FormFunctionality = () => {
             set_destination = {setDestination}
             set_og_arrivalTime = {set_og_arrivalTime}
             og_arrivalTime = {og_arrivalTime}
+            checkTodayGatepass = {checkToadyGatepass}
         />
         {showModal && <G1_MessageModal title={modalTitle} message={modalMessage} action={setShowModal}/>}
 
