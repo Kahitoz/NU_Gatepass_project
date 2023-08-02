@@ -15,6 +15,7 @@ import A3_SubGroupFunc from "../A4_Functionality/A3_SubGroupFunc";
 import A4_ParaConfigFunc from "../A4_Functionality/A4_ParaConfigFunc";
 import A5_AllUsersFunc from "../A4_Functionality/A5_AllUsersFunc";
 import A6_ChangeRole from "../A4_Functionality/A6_ChangeRoleFunc";
+import A7_StartEndFunc from "../A4_Functionality/A7_StartEndFunc";
 const A1_Home = () =>{
 
     const [selectedOption, setSelectedOption] = useState("");
@@ -58,13 +59,21 @@ const A1_Home = () =>{
                   </div>
                   <div className={`justify-between px-4 py-4 flex sm:flex-row sm:items-start`}>
                       <div className={`flex-1`}>
-                          <p className={`font-bold text-center`}>Allowed</p>
+                          <div className={`flex justify-center`}>
+                              <p className={`font-bold text-center`}>Allowed</p>
+                              <img src={`${add}`} alt = {`add`} className={`w-6 h-6 ms-2`}></img>
+                          </div>
+
+
                           <A5_GroupSubgroupTable/>
-                          <A6_StartEndHandler/>
+                          <A7_StartEndFunc/>
                           <A8_ExcelWidget/>
                       </div>
                       <div className={`flex-1`}>
-                          <p className={`font-bold text-center`}>Restricted</p>
+                          <div className={`flex justify-center`}>
+                              <p className={`font-bold text-center`}>Restricted</p>
+                              <img src={`${add}`} alt = {`add`} className={`w-6 h-6 ms-2`}></img>
+                          </div>
                           <A5_GroupSubgroupTable/>
                           <div>
                               <A7_Notification/>
