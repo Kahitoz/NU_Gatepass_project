@@ -18,7 +18,7 @@ const A8_ExcelWidget = () =>{
                             </div>
                         </div>
                         <div className={`mt-2`}>
-                            <img src={`${add}`}></img>
+                            <img src={`${add}`} alt={`add`} className={`w-8 h-8`}></img>
                         </div>
                     </div>
 
