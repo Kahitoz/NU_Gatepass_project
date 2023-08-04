@@ -67,7 +67,7 @@ const A1_Home = () =>{
 
                           <A5_GroupSubgroupTable/>
                           <A7_StartEndFunc/>
-                          <A8_ExcelWidget/>
+
                       </div>
                       <div className={`flex-1`}>
                           <div className={`flex justify-center`}>
@@ -79,7 +79,7 @@ const A1_Home = () =>{
                               <A7_Notification/>
                           </div>
                           <div>
-                              <A9_GroupSubGroupWidget/>
+                              <A8_ExcelWidget/>
                           </div>
                       </div>
                   </div>
