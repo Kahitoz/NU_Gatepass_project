@@ -58,9 +58,6 @@ const S6_FormDesigns = ({
     arrivalDateValue = new Date();
   }
 
-
-
-
   useEffect(() => {
     if (selectedOption === "Local Fixed") {
       setDepTime(departureTime);

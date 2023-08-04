@@ -49,6 +49,48 @@ const A6_StartEndHandler = ({ startDay, endDay, onStartDayChange, onEndDayChange
                     onClick={handleRefreshClick}
                 />
             </div>
+
+            <div className={`grid grid-cols-3  bg-Items_bg rounded-xl p-3 mt-2`}>
+                <p className={`font-bold col-span-1`}>Start Time</p>
+
+                <input
+                    type="time"
+                    className="disabled:bg-Items_bg bg-Items_bg border-2 border-gray-300 rounded-md col-span-1 text-center"/>
+
+
+                <img
+                    className='hover:rotate-180 hover:duration-200 h-5 hover:cursor-pointer ms-8'
+                    src="https://img.icons8.com/ios-glyphs/30/000000/refresh--v1.png"
+                    alt="refresh"
+                />
+            </div>
+
+            <div className={`grid grid-cols-3 bg-Items_bg rounded-xl p-3 mt-2`}>
+                <p className={`font-bold col-span-1`}>End Time</p>
+
+                <input
+                    type="time"
+                    className="disabled:bg-Items_bg bg-Items_bg border-2 border-gray-300 rounded-md col-span-1 text-center"/>
+
+                <img
+                    className='hover:rotate-180 hover:duration-200 h-5 hover:cursor-pointer ms-8'
+                    src="https://img.icons8.com/ios-glyphs/30/000000/refresh--v1.png"
+                    alt="refresh"
+                />
+            </div>
+
+            <div className={`grid grid-cols-3  bg-Items_bg rounded-xl p-3 mt-2`}>
+                <p className={`font-bold col-span-1`}>Buffer Time</p>
+
+                <input
+                type = "number"
+                className={`rounded-full  text-center`}/>
+                <img
+                    className='hover:rotate-180 hover:duration-200 h-5 hover:cursor-pointer ms-8'
+                    src="https://img.icons8.com/ios-glyphs/30/000000/refresh--v1.png"
+                    alt="refresh"
+                />
+            </div>
         </div>
     );
 }
