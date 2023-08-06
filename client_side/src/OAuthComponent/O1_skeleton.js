@@ -30,7 +30,7 @@ const O1_skeleton = () => {
   }
 
   useEffect(() => {
-    try {
+
       /* global google */
       google.accounts.id.initialize({
         client_id: "372946592599-u1gj83quodhpdae46ejslj4tto3mn3vn.apps.googleusercontent.com",
@@ -40,9 +40,7 @@ const O1_skeleton = () => {
         theme: "outline",
         size: "large",
       });
-    } catch (error) {
-      window.location.reload();
-    }
+
   }, []);
 
   useEffect(() => {
