@@ -5,6 +5,9 @@ import A6_StartEndHandler from "../A2_AdminSkeletion/A6_StartEndHandler";
 const A7_StartEndFunc = () => {
     const [startDay, setStartDay] = useState("");
     const [endDay, setEndDay] = useState("");
+    const [startTime, setStartTime] = useState("");
+    const [endTime, setEndTime] = useState("");
+    const [bufferTime, setBufferTime] = useState("")
 
     const accessToken = Cookies.get("ACCESS_TOKEN");
 
@@ -21,11 +24,24 @@ const A7_StartEndFunc = () => {
                 // Find and set start and end days
                 const startDayParam = data.find(item => item.parameter === "Start Day");
                 const endDayParam = data.find(item => item.parameter === "End Day");
+                const startTimeParam = data.find((item) => item.parameter === "Start Time");
+                const endTimeParam = data.find((item) => item.parameter === "End Time");
+                const bufferTimeParam = data.find((item) => item.parameter === "Buffer Time");
+
                 if (startDayParam) {
                     setStartDay(startDayParam.value);
                 }
                 if (endDayParam) {
                     setEndDay(endDayParam.value);
+                }
+                if (startTimeParam) {
+                    setStartTime(startTimeParam.value);
+                }
+                if (endTimeParam) {
+                    setEndTime(endTimeParam.value);
+                }
+                if (bufferTimeParam) {
+                    setBufferTime(bufferTimeParam.value);
                 }
             })
             .catch(error => {
@@ -72,7 +88,20 @@ const A7_StartEndFunc = () => {
         setEndDay(selectedDay);
     };
 
+    const handleStartTimeChange = (selectedTime) => {
+        updateStartEndDays(13, "start_day", selectedTime, accessToken);
+        setStartTime(selectedTime);
+    };
 
+    const handleEndTimeChange = (selectedTime) => {
+        updateStartEndDays(14, "start_day", selectedTime, accessToken);
+        setEndTime(selectedTime)
+    };
+
+    const handleBufferTimeChange = (selectedDay) => {
+        updateStartEndDays(12, "start_day", selectedDay, accessToken);
+        setBufferTime(selectedDay)
+    };
 
     return (
         <>
@@ -82,6 +111,12 @@ const A7_StartEndFunc = () => {
                     endDay={endDay}
                     onStartDayChange={handleStartDayChange}
                     onEndDayChange={handleEndDayChange}
+                    onStartTimeChange = {handleStartTimeChange}
+                    onEndTimeChange={handleEndTimeChange}
+                    onBufferTimeChange={handleBufferTimeChange}
+                    startTime={startTime}
+                    endTime={endTime}
+                    bufferTime={bufferTime}
                 />
             </div>
         </>
