@@ -1,10 +1,13 @@
 import React from "react";
 
-const A6_StartEndHandler = ({ startDay, endDay, onStartDayChange, onEndDayChange }) => {
+const A6_StartEndHandler = ({ startDay, endDay, startTime, endTime, bufferTime, onStartDayChange, onEndDayChange, onStartTimeChange, onEndTimeChange, onBufferTimeChange }) => {
     const handleRefreshClick = () => {
         onStartDayChange(startDay);
         onEndDayChange(endDay);
-        alert("The day has been refreshed")
+        onStartTimeChange(startTime)
+        onEndTimeChange(endTime)
+        onBufferTimeChange(bufferTime)
+        alert("The Values Have been updated")
     };
     return (
         <div>
@@ -55,13 +58,20 @@ const A6_StartEndHandler = ({ startDay, endDay, onStartDayChange, onEndDayChange
 
                 <input
                     type="time"
-                    className="disabled:bg-Items_bg bg-Items_bg border-2 border-gray-300 rounded-md col-span-1 text-center"/>
+                    className="disabled:bg-Items_bg bg-Items_bg border-2 border-gray-300 rounded-md col-span-1 text-center font-bold"
+                    value={startTime}
+                    onChange={(e) => {
+                        const newStartTime = e.target.value;
+                        onStartTimeChange(newStartTime);
+                    }}
 
+                />
 
                 <img
-                    className='hover:rotate-180 hover:duration-200 h-5 hover:cursor-pointer ms-8'
+                    className='hover:rotate-180 hover:duration-200 h-5 hover:cursor-pointer ms-8 '
                     src="https://img.icons8.com/ios-glyphs/30/000000/refresh--v1.png"
                     alt="refresh"
+                    onClick={handleRefreshClick}
                 />
             </div>
 
@@ -70,12 +80,19 @@ const A6_StartEndHandler = ({ startDay, endDay, onStartDayChange, onEndDayChange
 
                 <input
                     type="time"
-                    className="disabled:bg-Items_bg bg-Items_bg border-2 border-gray-300 rounded-md col-span-1 text-center"/>
+                    className="disabled:bg-Items_bg bg-Items_bg border-2 border-gray-300 rounded-md col-span-1 text-center font-bold"
+                    value={endTime}
+                    onChange={(e) => {
+                        const newStartTime = e.target.value;
+                        onEndTimeChange(newStartTime);
+                    }}
+                />
 
                 <img
                     className='hover:rotate-180 hover:duration-200 h-5 hover:cursor-pointer ms-8'
                     src="https://img.icons8.com/ios-glyphs/30/000000/refresh--v1.png"
                     alt="refresh"
+                    onClick={handleRefreshClick}
                 />
             </div>
 
@@ -83,12 +100,19 @@ const A6_StartEndHandler = ({ startDay, endDay, onStartDayChange, onEndDayChange
                 <p className={`font-bold col-span-1`}>Buffer Time</p>
 
                 <input
-                type = "number"
-                className={`rounded-full  text-center`}/>
+                    type="number"
+                    className={`rounded-full  text-center`}
+                    value={bufferTime}
+                    onChange={(e) => {
+                        const newStartTime = e.target.value;
+                        onBufferTimeChange(newStartTime);
+                    }}
+                />
                 <img
                     className='hover:rotate-180 hover:duration-200 h-5 hover:cursor-pointer ms-8'
                     src="https://img.icons8.com/ios-glyphs/30/000000/refresh--v1.png"
                     alt="refresh"
+                    onClick={handleRefreshClick}
                 />
             </div>
         </div>
