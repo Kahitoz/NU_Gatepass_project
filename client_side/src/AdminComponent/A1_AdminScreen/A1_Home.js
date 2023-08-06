@@ -4,10 +4,6 @@ import A2_PendingFunc from "../A4_Functionality/A1_PendingFunc";
 import A3_DropDown from "../A2_AdminSkeletion/A3_DropDown";
 import A4_Widgets from "../A2_AdminSkeletion/A4_Widgets";
 import A5_GroupSubgroupTable from "../A2_AdminSkeletion/A5_GroupSubgroupTable";
-import A6_StartEndHandler from "../A2_AdminSkeletion/A6_StartEndHandler";
-import A7_Notification from "../A2_AdminSkeletion/A7_Notification";
-import A8_ExcelWidget from "../A2_AdminSkeletion/A8_ExcelWidget";
-import A9_GroupSubGroupWidget from "../A2_AdminSkeletion/A9-GroupSubgroupWidget";
 import add from "../../StudentComponent/icons/icon-add.png"
 import {useState} from "react";
 import A2_GroupFunc from "../A4_Functionality/A2_GroupFunc";
@@ -16,6 +12,7 @@ import A4_ParaConfigFunc from "../A4_Functionality/A4_ParaConfigFunc";
 import A5_AllUsersFunc from "../A4_Functionality/A5_AllUsersFunc";
 import A6_ChangeRole from "../A4_Functionality/A6_ChangeRoleFunc";
 import A7_StartEndFunc from "../A4_Functionality/A7_StartEndFunc";
+import A6_Notification from "../A5_Handlers/A6_Notification";
 const A1_Home = () =>{
 
     const [selectedOption, setSelectedOption] = useState("");
@@ -50,6 +47,7 @@ const A1_Home = () =>{
                       {selectedOption === "ParameterConfig" && <A4_ParaConfigFunc/>}
                       {selectedOption === "Allusers" && <A5_AllUsersFunc/>}
                       {selectedOption === "ChangeRole" && <A6_ChangeRole/>}
+                      {selectedOption === "Notification" && <A6_Notification/>}
                   </div>
               </div>
 
@@ -63,23 +61,10 @@ const A1_Home = () =>{
                               <p className={`font-bold text-center`}>Allowed</p>
                               <img src={`${add}`} alt = {`add`} className={`w-6 h-6 ms-2`}></img>
                           </div>
-
-
                           <A5_GroupSubgroupTable/>
                           <A7_StartEndFunc/>
-
                       </div>
-                      <div className={`flex-1`}>
-                          <div className={`flex justify-center`}>
-                              <p className={`font-bold text-center`}>Restricted</p>
-                              <img src={`${add}`} alt = {`add`} className={`w-6 h-6 ms-2`}></img>
-                          </div>
-                          <A5_GroupSubgroupTable/>
-                          <div>
-                              <A7_Notification/>
-                          </div>
 
-                      </div>
                   </div>
 
               </div>
