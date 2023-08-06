@@ -21,6 +21,7 @@ const A3_DropDown = ({onChangeOption}) =>{
                     <option value="Subgroup">Subgroup</option>
                     <option value="Allusers">All Users</option>
                     <option value="ChangeRole">Change Role</option>
+                    <option value="Notification">Notification</option>
                 </select>
             </div>
         </div>

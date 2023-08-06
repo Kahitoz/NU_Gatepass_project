@@ -1,6 +1,8 @@
 import designs from "../A3_AdminStyling/A2_GatepassTableStyling";
 import React, {useState} from "react";
 import A4_UpdateUser from "../A6_Modals/A4_UpdateUser";
+import Add from"../../StudentComponent/icons/icon-add.png"
+import Excel from "../../StudentComponent/icons/icon-excel.png"
 
 const A5_AllUsersTable = ({ userData, handleNextPage, handlePreviousPage, page_number, searchQuery, setSearchQuery }) => {
 
@@ -20,6 +22,18 @@ const A5_AllUsersTable = ({ userData, handleNextPage, handlePreviousPage, page_n
 
     return (
         <div className={`bg-background`}>
+            <div className="flex justify-center">
+                <div className={`inline-flex bg-Items_bg rounded-md p-2 mb-1 border hover:border-black hover:cursor-pointer`}>
+                    <p className={`font-bold`}>Create User</p>
+                    <img src={Add} alt={`add`} className={`w-4 h-4 ms-2 mt-1`} />
+                </div>
+
+                <div className={`inline-flex ms-2 bg-Items_bg rounded-md p-2 mb-1 border hover:border-black hover:cursor-pointer`}>
+                    <p className={`font-bold`}>Bulk Upload</p>
+                    <img src={Excel} alt={`add`} className={`w-4 h-4 ms-2 mt-1`} />
+                </div>
+            </div>
+
             <div>
                 {ShowUpdateUser === true && <A4_UpdateUser setShowUpdateUser={setShowUpdateUser} selectedUserId={selectedUserId}/>}
             </div>
