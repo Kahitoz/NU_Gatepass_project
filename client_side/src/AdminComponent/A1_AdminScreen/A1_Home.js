@@ -78,9 +78,7 @@ const A1_Home = () =>{
                           <div>
                               <A7_Notification/>
                           </div>
-                          <div>
-                              <A8_ExcelWidget/>
-                          </div>
+
                       </div>
                   </div>
 
