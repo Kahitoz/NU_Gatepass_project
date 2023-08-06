@@ -40,7 +40,7 @@ export const A4_ParaConfigFunc = () => {
         // Set interval to fetch data every second
         const intervalId = setInterval(() => {
             fetchData();
-        }, 1000);
+        }, 100000);
 
         // Cleanup the interval when the component is unmounted
         return () => clearInterval(intervalId);
