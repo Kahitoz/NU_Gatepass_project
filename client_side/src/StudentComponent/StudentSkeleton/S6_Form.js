@@ -27,7 +27,7 @@ const S6_FormDesigns = ({
   d_Time,
   setReason,
   og_arrivalDate,
-  og_departureDate, destination, set_destination,set_og_arrivalTime,og_arrivalTime,checkTodayGatepass
+  og_departureDate, destination, set_destination,set_og_arrivalTime,og_arrivalTime,checkTodayGatepass,autoApprovalDay
 
 }) => {
   const [depTime,setDepTime] = React.useState(departureTime);
@@ -83,7 +83,8 @@ const S6_FormDesigns = ({
                     // Show "Local Fixed" and "Local Flexible" options only if checkTodayGatepass is false
                     <>
                       <option value="Local Fixed">Local Fixed</option>
-                      <option value="Local Flexible">Local Flexible</option>
+                      {autoApprovalDay === false && (<option value="Local Flexible">Local Flexible</option>)}
+
                     </>
                 )}
                 <option value="Outstation">Outstation</option>

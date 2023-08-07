@@ -10,11 +10,11 @@ import {handle_Emergency} from "./S4_Emergency";
 import moment from 'moment'
 import G1_MessageModal from "../../GlobalComponent/G1_Modals/G1_MessageModal";
 import {check_todays_gatepass} from "./S0_CommonChecks";
+import {check_valid_day} from "./S8_AutoApprovalCheck";
 const S6_FormFunctionality = () => {
   const [selectedOption, setSelectedOption] = useState("");
   const [wselec, setWselect] = useState("");
   const [wOpen, setWopen] = useState(false);
-
   const [departureDateVisible, setDepartureDateVisible] = useState(false);
   const [departureTimeVisible, setDepartureTimeVisible] = useState(false);
   const [arrivalDateVisible, setArrivalDateVisible] = useState(false);
@@ -22,7 +22,6 @@ const S6_FormFunctionality = () => {
   const [destinationVisible, setDestinationVisible] = useState(false);
   const [reasonVisible, setReasonVisible] = useState(false);
   const [wardenVisible, setWardenVisible] = useState(false);
-
   const [departureTime, setDepartureTime] = useState("");
   const [arrivalTime, setArrivalTime] = useState("");
   const [departureDate, setDepartureDate] = useState("");
@@ -30,7 +29,6 @@ const S6_FormFunctionality = () => {
   const [weekLimit, setWeekLimit] = useState(0);
   const [warden, setWarden] = useState("");
   const [reason, setReason] = useState("");
-  const accessToken = Cookies.get("ACCESS_TOKEN");
   const [lf_departureTime, set_lf_departureTime] = useState("");
   const [og_departureDate, set_og_departureDate] = useState("");
   const [og_arrivalDate, set_og_arrivalDate] = useState("");
@@ -39,12 +37,13 @@ const S6_FormFunctionality = () => {
   const [showModal, setShowModal] = useState(false);
   const [modalTitle, setModalTitle] = useState("");
   const [modalMessage, setModalMessage] = useState("")
-
   const [checkToadyGatepass, setTodayGatepass] = useState(false)
+  const [autoApprovalDay, setAutoApprovalDay] = useState(false)
 
   const date = moment();
   const formatted_Date = date.format("YYYY-MM-DD");
 
+  const accessToken = Cookies.get("ACCESS_TOKEN");
   useEffect(() => {
     const fetchData = async () => {
       let config = await week(accessToken);
@@ -74,6 +73,13 @@ const S6_FormFunctionality = () => {
     }
 
     getToday()
+
+    const fetchIsValidDay = async () => {
+      const result = await check_valid_day(accessToken);
+      setAutoApprovalDay(result);
+    };
+
+    fetchIsValidDay();
   }, []);
 
 
@@ -192,6 +198,7 @@ const S6_FormFunctionality = () => {
             set_og_arrivalTime = {set_og_arrivalTime}
             og_arrivalTime = {og_arrivalTime}
             checkTodayGatepass = {checkToadyGatepass}
+            autoApprovalDay = {autoApprovalDay}
         />
         {showModal && <G1_MessageModal title={modalTitle} message={modalMessage} action={setShowModal}/>}
 
