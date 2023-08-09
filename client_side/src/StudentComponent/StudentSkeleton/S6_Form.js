@@ -5,29 +5,37 @@ import React, { useEffect } from "react";
 import moment from "moment";
 
 const S6_FormDesigns = ({
-  selectedOption,
-  departureDateVisible,
-  departureTimeVisible,
-  arrivalDateVisible,
-  arrivalTimeVisible,
-  destinationVisible,
-  reasonVisible,
-  wardenVisible,
-  departureTime,
-  arrivalTime,
-  handleOptionSelect,
-  handleWselect,
-  handlewDropDown,
-  wselec,
-  wOpen,
-  Altwardens,
-  handleClick,
-  reason,
-  lf_departureTime,
-  d_Time,
-  setReason,
-  og_arrivalDate,
-  og_departureDate, destination, set_destination,set_og_arrivalTime,og_arrivalTime,checkTodayGatepass,autoApprovalDay
+                          selectedOption,
+                          departureDateVisible,
+                          departureTimeVisible,
+                          arrivalDateVisible,
+                          arrivalTimeVisible,
+                          destinationVisible,
+                          reasonVisible,
+                          wardenVisible,
+                          departureTime,
+                          arrivalTime,
+                          handleOptionSelect,
+                          handleWselect,
+                          handlewDropDown,
+                          wselec,
+                          wOpen,
+                          Altwardens,
+                          handleClick,
+                          reason,
+                          lf_departureTime,
+                          d_Time,
+                          setReason,
+                          og_arrivalDate,
+                          og_departureDate,
+                          destination,
+                          set_destination,
+                          set_og_arrivalTime,
+                          og_arrivalTime,
+                          checkTodayGatepass,
+                          autoApprovalDay,
+                          autoApprovalDep,
+                          autoApprovalArr
 
 }) => {
   const [depTime,setDepTime] = React.useState(departureTime);
@@ -117,7 +125,7 @@ const S6_FormDesigns = ({
                       type="time"
                       value={
                         selectedOption === "Local Fixed"
-                            ? departureTime
+                            ? (autoApprovalDay ? autoApprovalDep : departureTime)
                             : (selectedOption === "Local Flexible" || selectedOption === "Outstation" || selectedOption === "Emergency")
                                 ? d_Time
                                 : departureTime
@@ -127,6 +135,7 @@ const S6_FormDesigns = ({
                       placeholder="Time to be fetched from server"
                       disabled={selectedOption === "Local Fixed"}
                   />
+
 
                 </div>
               </>
@@ -156,7 +165,7 @@ const S6_FormDesigns = ({
                       type="time"
                       value={
                         selectedOption === "Local Fixed" || selectedOption === "Local Flexible"
-                            ? arriveTime
+                            ? (autoApprovalDay ? autoApprovalArr : arriveTime)
                             : (selectedOption === "Local Flexible" || selectedOption === "Outstation" || selectedOption === "Emergency")
                                 ? og_arrivalTime
                                 : arriveTime
@@ -166,6 +175,7 @@ const S6_FormDesigns = ({
                       placeholder="Time to be fetched from server"
                       disabled={selectedOption === "Local Fixed"}
                   />
+
                 </div>
               </>
             )}

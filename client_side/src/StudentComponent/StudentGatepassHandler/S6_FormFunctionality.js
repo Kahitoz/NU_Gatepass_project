@@ -7,10 +7,13 @@ import { get_warden_details } from "./S0_CommonChecks";
 import { handle_submit_local_flexible } from "./S2_LocalFelxible";
 import {handle_Outstation} from "./S3_Outstation";
 import {handle_Emergency} from "./S4_Emergency";
-import moment from 'moment'
+import moment, {max} from 'moment'
 import G1_MessageModal from "../../GlobalComponent/G1_Modals/G1_MessageModal";
 import {check_todays_gatepass} from "./S0_CommonChecks";
 import {check_valid_day} from "./S8_AutoApprovalCheck";
+import {departure_time} from "./S8_AutoApprovalCheck";
+import {arrival_time} from "./S8_AutoApprovalCheck";
+
 const S6_FormFunctionality = () => {
   const [selectedOption, setSelectedOption] = useState("");
   const [wselec, setWselect] = useState("");
@@ -36,9 +39,11 @@ const S6_FormFunctionality = () => {
   const [og_arrivalTime, set_og_arrivalTime] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [modalTitle, setModalTitle] = useState("");
-  const [modalMessage, setModalMessage] = useState("")
-  const [checkToadyGatepass, setTodayGatepass] = useState(false)
-  const [autoApprovalDay, setAutoApprovalDay] = useState(false)
+  const [modalMessage, setModalMessage] = useState("");
+  const [checkToadyGatepass, setTodayGatepass] = useState(false);
+  const [autoApprovalDay, setAutoApprovalDay] = useState(false);
+  const [autoApprovalIn, setAutoApprovalIn] = useState("");
+  const [autoApprovalOut, setAutoApprovalOut] = useState("");
 
   const date = moment();
   const formatted_Date = date.format("YYYY-MM-DD");
@@ -80,6 +85,20 @@ const S6_FormFunctionality = () => {
     };
 
     fetchIsValidDay();
+
+    const fetchAutoDepartureTime = async () =>{
+      const result = await departure_time(accessToken)
+      setAutoApprovalIn(result)
+    }
+
+    fetchAutoDepartureTime();
+
+    const fetchArrivalTime = async ()=>{
+      const result = await arrival_time(accessToken)
+      setAutoApprovalOut(result)
+    }
+
+    fetchArrivalTime();
   }, []);
 
 
@@ -199,6 +218,8 @@ const S6_FormFunctionality = () => {
             og_arrivalTime = {og_arrivalTime}
             checkTodayGatepass = {checkToadyGatepass}
             autoApprovalDay = {autoApprovalDay}
+            autoApprovalDep = {autoApprovalIn}
+            autoApprovalArr = {autoApprovalOut}
         />
         {showModal && <G1_MessageModal title={modalTitle} message={modalMessage} action={setShowModal}/>}
 
