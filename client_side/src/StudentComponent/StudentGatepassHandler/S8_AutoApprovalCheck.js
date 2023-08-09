@@ -1,13 +1,15 @@
+
+const api =" http://127.0.0.1:4000/gatepass/v2/admin/parameter_config"
 const check_valid_day = async (accessToken) => {
     try {
-        const response = await fetch('http://127.0.0.1:4000/gatepass/v2/admin/parameter_config', {
+        const response = await fetch(api, {
             headers: {
                 Authorization: accessToken
             }
         });
 
         if (!response.ok) {
-            throw new Error("Failed to fetch data from the API");
+            throw new Error("Failed to fetch days from the API");
         }
 
         const parameterConfig = await response.json();
@@ -31,3 +33,42 @@ const check_valid_day = async (accessToken) => {
 };
 
 export {check_valid_day}
+
+const departure_time = async (accessToken) =>{
+    const response = await fetch(api, {
+        headers:{
+             Authorization:accessToken
+        }
+    });
+    if(!response.ok){
+        throw new Error("Failed to fetch the departure time from the api")
+    }
+    const parameterData = await response.json();
+    const departureTime = parameterData.find(param => param.parameter === 'Start Time')?.value;
+
+    if(departureTime!=null){
+        return departureTime;
+    }else{
+        return null;
+    }
+}
+export {departure_time}
+
+const arrival_time = async (accessToken)=>{
+    const response = await  fetch(api, {
+        headers:{
+            Authorization:accessToken
+        }
+    });
+    if(!response.ok){
+        throw new Error("Failed to fetch the arrival time from the api")
+    }
+    const parameterData = await response.json();
+    const arrivalTime = parameterData.find(param => param.parameter === 'End Time')?.value;
+    if(arrivalTime!=null){
+        return arrivalTime
+    }else{
+        return null;
+    }
+}
+export {arrival_time}
