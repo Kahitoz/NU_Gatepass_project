@@ -21,6 +21,8 @@ import {
     updateWeekLimit,
     updateOutTime,
     updateInTime,
+    updateStartDay,
+    updateEndDay,
     updateArrivalRestrictUB,
     updateArrivalRestrictLB,
     updateFlexibleEntry,
@@ -92,6 +94,8 @@ router.put('/admin/parameter_config/in_time/:param_id', updateInTime);
 router.put('/admin/parameter_config/arrival_restrict_ub/:param_id', updateArrivalRestrictUB);
 router.put('/admin/parameter_config/arrival_restrict_lb/:param_id', updateArrivalRestrictLB);
 router.put('/admin/parameter_config/flexible_entry/:param_id', updateFlexibleEntry);
+router.put('/admin/parameter_config/start_day/:param_id', updateStartDay);
+router.put('/admin/parameter_config/end_day/:param_id', updateEndDay);
 //////////////Users///////////////////////////
 router.get('/admin/all_status', getAllStatus);
 router.put('/admin/update_user/:user_id', updateUser);

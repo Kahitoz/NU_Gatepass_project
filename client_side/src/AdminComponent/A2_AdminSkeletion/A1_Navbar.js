@@ -13,6 +13,7 @@ const A1_Navbar = () =>{
                         <h1 className={`${designs.d4}`}>
                             NIIT University
                         </h1>
+                        <p className={`font-bold ms-2`}>(Admin)</p>
                     </div>
                     <div className={`${designs.d5}`}>
                         <ul className={`${designs.d6}`}>

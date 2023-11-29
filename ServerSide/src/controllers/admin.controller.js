@@ -561,6 +561,52 @@ export const updateFlexibleEntry = async (req, res) => {
   }
 };
 
+export const updateStartDay = async (req, res) => {
+  const { param_id } = req.params;
+  const { value } = req.body;
+
+  if (value == null) {
+    return res.status(400).json({ msg: "Bad Request. Please fill all fields" });
+  }
+
+  try {
+    const pool = await getConnection();
+    await pool
+        .request()
+        .input("value", sql.VarChar, value)
+        .input("param_id", sql.Int, param_id)
+        .query(queries.updateParameterConfig);
+
+    return res.send("AutoApproval Start Day Successfully updated!");
+  } catch (error) {
+    res.status(500);
+    res.send(error.message);
+  }
+};
+
+export const updateEndDay = async (req, res) => {
+  const { param_id } = req.params;
+  const { value } = req.body;
+
+  if (value == null) {
+    return res.status(400).json({ msg: "Bad Request. Please fill all fields" });
+  }
+
+  try {
+    const pool = await getConnection();
+    await pool
+        .request()
+        .input("value", sql.VarChar, value)
+        .input("param_id", sql.Int, param_id)
+        .query(queries.updateParameterConfig);
+
+    return res.send("AutoApproval End Day Successfully updated!");
+  } catch (error) {
+    res.status(500);
+    res.send(error.message);
+  }
+};
+
 ///////create user
 export const createUser = async (req, res) => {
   const {

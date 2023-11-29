@@ -15,12 +15,13 @@ const A3_DropDown = ({onChangeOption}) =>{
                     value={selectedOption}
                     onChange={handleOptionChange}
                 >
+                    <option value="ParameterConfig">Parameter Configuration</option>
                     <option value="Pending_Gatepass">Pending Gatepass</option>
                     <option value="Group">Group</option>
                     <option value="Subgroup">Subgroup</option>
-                    <option value="ParameterConfig">Parameter Configuration</option>
                     <option value="Allusers">All Users</option>
                     <option value="ChangeRole">Change Role</option>
+                    <option value="Notification">Notification</option>
                 </select>
             </div>
         </div>

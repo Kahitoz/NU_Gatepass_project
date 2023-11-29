@@ -4,8 +4,8 @@ const A8_ExcelWidget = () =>{
         return(
             <div>
                 <div className={``}>
-                    <div className={`bg-white shadow-md rounded-xl`}>
-                        <p className={`font-bold p-2 mt-4 text-center`}>Upload Excel User Data</p>
+                    <div className={`text-center`}>
+                        <p className={`font-bold`}>Upload Excel User Data</p>
                     </div>
 
                     <div className={`flex flex-col items-center mx-16`}>
@@ -18,7 +18,7 @@ const A8_ExcelWidget = () =>{
                             </div>
                         </div>
                         <div className={`mt-2`}>
-                            <img src={`${add}`}></img>
+                            <img src={`${add}`} alt={`add`} className={`w-8 h-8`}></img>
                         </div>
                     </div>
 

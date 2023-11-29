@@ -7,12 +7,17 @@ import { get_warden_details } from "./S0_CommonChecks";
 import { handle_submit_local_flexible } from "./S2_LocalFelxible";
 import {handle_Outstation} from "./S3_Outstation";
 import {handle_Emergency} from "./S4_Emergency";
-import moment from 'moment'
+import moment, {max} from 'moment'
+import G1_MessageModal from "../../GlobalComponent/G1_Modals/G1_MessageModal";
+import {check_todays_gatepass} from "./S0_CommonChecks";
+import {check_valid_day} from "./S8_AutoApprovalCheck";
+import {departure_time} from "./S8_AutoApprovalCheck";
+import {arrival_time} from "./S8_AutoApprovalCheck";
+
 const S6_FormFunctionality = () => {
   const [selectedOption, setSelectedOption] = useState("");
   const [wselec, setWselect] = useState("");
   const [wOpen, setWopen] = useState(false);
-
   const [departureDateVisible, setDepartureDateVisible] = useState(false);
   const [departureTimeVisible, setDepartureTimeVisible] = useState(false);
   const [arrivalDateVisible, setArrivalDateVisible] = useState(false);
@@ -20,7 +25,6 @@ const S6_FormFunctionality = () => {
   const [destinationVisible, setDestinationVisible] = useState(false);
   const [reasonVisible, setReasonVisible] = useState(false);
   const [wardenVisible, setWardenVisible] = useState(false);
-
   const [departureTime, setDepartureTime] = useState("");
   const [arrivalTime, setArrivalTime] = useState("");
   const [departureDate, setDepartureDate] = useState("");
@@ -28,16 +32,23 @@ const S6_FormFunctionality = () => {
   const [weekLimit, setWeekLimit] = useState(0);
   const [warden, setWarden] = useState("");
   const [reason, setReason] = useState("");
-  const accessToken = Cookies.get("ACCESS_TOKEN");
   const [lf_departureTime, set_lf_departureTime] = useState("");
   const [og_departureDate, set_og_departureDate] = useState("");
   const [og_arrivalDate, set_og_arrivalDate] = useState("");
   const [destination, setDestination] = useState("");
   const [og_arrivalTime, set_og_arrivalTime] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [modalTitle, setModalTitle] = useState("");
+  const [modalMessage, setModalMessage] = useState("");
+  const [checkToadyGatepass, setTodayGatepass] = useState(false);
+  const [autoApprovalDay, setAutoApprovalDay] = useState(false);
+  const [autoApprovalIn, setAutoApprovalIn] = useState("");
+  const [autoApprovalOut, setAutoApprovalOut] = useState("");
 
   const date = moment();
   const formatted_Date = date.format("YYYY-MM-DD");
 
+  const accessToken = Cookies.get("ACCESS_TOKEN");
   useEffect(() => {
     const fetchData = async () => {
       let config = await week(accessToken);
@@ -56,8 +67,41 @@ const S6_FormFunctionality = () => {
     get_warden();
     setDepartureDate(formatted_Date);
     setArrivalDate(formatted_Date);
-    console.log("date  = ", departureDate);
+
+    const getToday = async () => {
+      setTodayGatepass(await check_todays_gatepass(accessToken))
+      if(await check_todays_gatepass(accessToken) === true){
+        console.log("you have applied for the gatepass today")
+      }else{
+        console.log("You have not applied for the gatepass today")
+      }
+    }
+
+    getToday()
+
+    const fetchIsValidDay = async () => {
+      const result = await check_valid_day(accessToken);
+      setAutoApprovalDay(result);
+    };
+
+    fetchIsValidDay();
+
+    const fetchAutoDepartureTime = async () =>{
+      const result = await departure_time(accessToken)
+      setAutoApprovalIn(result)
+    }
+
+    fetchAutoDepartureTime();
+
+    const fetchArrivalTime = async ()=>{
+      const result = await arrival_time(accessToken)
+      setAutoApprovalOut(result)
+    }
+
+    fetchArrivalTime();
   }, []);
+
+
 
   const handleClick = async () => {
     try {
@@ -79,12 +123,16 @@ const S6_FormFunctionality = () => {
           arrivalTime,
           weekLimit
         );
-        alert("You have successfully applied for Local Fixed Gatepass!");
+        setModalTitle("Success");
+        setModalMessage("You have successfully applied for Local Fixed Gatepass!");
+        setShowModal(true);
       }
     } catch (error) {
       console.error(error);
       // Handle the error here
-      alert("An error occurred while applying for Local Fixed Gatepass!");
+      setModalTitle("Error");
+      setModalMessage("An error occurred while applying for Local Fixed Gatepass!");
+      setShowModal(true);
     }
   };
 
@@ -121,15 +169,17 @@ const S6_FormFunctionality = () => {
     setWopen(!wOpen);
   };
 
+
+
   const handleButtonClick = () => {
     if (selectedOption === "Local Fixed") {
       handleClick()
     } else if (selectedOption === "Local Flexible") {
-      handle_submit_local_flexible(accessToken,departureTime, arrivalTime, lf_departureTime, arrivalDate, departureDate, reason);
+      handle_submit_local_flexible(accessToken,departureTime, arrivalTime, lf_departureTime, arrivalDate, departureDate, reason, setModalTitle, setModalMessage, setShowModal);
     } else if (selectedOption === "Outstation") {
-      handle_Outstation(accessToken,departureTime, og_arrivalTime, lf_departureTime, og_arrivalDate, og_departureDate, reason, destination);
+      handle_Outstation(accessToken,departureTime, og_arrivalTime, lf_departureTime, og_arrivalDate, og_departureDate, reason, destination, setModalTitle, setModalMessage, setShowModal);
     } else if (selectedOption === "Emergency") {
-      handle_Emergency(accessToken,departureTime, og_arrivalTime, lf_departureTime, og_arrivalDate, og_departureDate, reason, destination)
+      handle_Emergency(accessToken,departureTime, og_arrivalTime, lf_departureTime, og_arrivalDate, og_departureDate, reason, destination, setModalTitle, setModalMessage, setShowModal)
     }
   };
 
@@ -137,35 +187,44 @@ const S6_FormFunctionality = () => {
 
 
   return (
-    <S6_FormDesigns
-      selectedOption={selectedOption}
-      departureDateVisible={departureDateVisible}
-      departureTimeVisible={departureTimeVisible}
-      arrivalDateVisible={arrivalDateVisible}
-      arrivalTimeVisible={arrivalTimeVisible}
-      destinationVisible={destinationVisible}
-      reasonVisible={reasonVisible}
-      wardenVisible={wardenVisible}
-      departureTime={departureTime}
-      arrivalTime={arrivalTime}
-      handleOptionSelect={handleOptionSelect}
-      handleWselect={handleWselect}
-      handlewDropDown={handlewDropDown}
-      wselec={wselec}
-      wOpen={wOpen}
-      Altwardens={Altwardens}
-      handleClick={handleButtonClick}
-      reason={reason}
-      setReason = {setReason}
-      lf_departureTime = {set_lf_departureTime}
-      d_Time = {lf_departureTime}
-      og_arrivalDate = {set_og_arrivalDate}
-      og_departureDate = {set_og_departureDate}
-      destination = {destination}
-      set_destination = {setDestination}
-      set_og_arrivalTime = {set_og_arrivalTime}
-      og_arrivalTime = {og_arrivalTime}
-    />
+      <>
+        <S6_FormDesigns
+            selectedOption={selectedOption}
+            departureDateVisible={departureDateVisible}
+            departureTimeVisible={departureTimeVisible}
+            arrivalDateVisible={arrivalDateVisible}
+            arrivalTimeVisible={arrivalTimeVisible}
+            destinationVisible={destinationVisible}
+            reasonVisible={reasonVisible}
+            wardenVisible={wardenVisible}
+            departureTime={departureTime}
+            arrivalTime={arrivalTime}
+            handleOptionSelect={handleOptionSelect}
+            handleWselect={handleWselect}
+            handlewDropDown={handlewDropDown}
+            wselec={wselec}
+            wOpen={wOpen}
+            Altwardens={Altwardens}
+            handleClick={handleButtonClick}
+            reason={reason}
+            setReason = {setReason}
+            lf_departureTime = {set_lf_departureTime}
+            d_Time = {lf_departureTime}
+            og_arrivalDate = {set_og_arrivalDate}
+            og_departureDate = {set_og_departureDate}
+            destination = {destination}
+            set_destination = {setDestination}
+            set_og_arrivalTime = {set_og_arrivalTime}
+            og_arrivalTime = {og_arrivalTime}
+            checkTodayGatepass = {checkToadyGatepass}
+            autoApprovalDay = {autoApprovalDay}
+            autoApprovalDep = {autoApprovalIn}
+            autoApprovalArr = {autoApprovalOut}
+        />
+        {showModal && <G1_MessageModal title={modalTitle} message={modalMessage} action={setShowModal}/>}
+
+      </>
+
   );
 };
 

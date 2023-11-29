@@ -95,12 +95,17 @@ const handle_submit_local_flexible = async function (
   departureTime,
   arrivalDate,
   departureDate,
-  purpose
+  purpose,
+  setModalTitle,
+  setModalMessage,
+  setShowModal
 ) {
-  console.log("Handle submit button - clicked");
+
   const check = await check_other_gatePass(accessToken, startTime, endTime, departureTime);
   if (check === true) {
-   alert("You have Successfully applied for local flexible Gate-pass");
+    setModalTitle("Success");
+    setModalMessage("You have Successfully applied for Local Flexible Gate-pass");
+    setShowModal(true);
     await apply_local_flexible(
       accessToken,
       departureDate,
