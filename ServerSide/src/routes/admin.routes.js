@@ -49,6 +49,7 @@ import {
     updateGroup,
     updateSubGroup,
     getUserDetails,
+    getAllMasterGroups,
 
 } from "../controllers/admin.controller"
 
@@ -115,7 +116,7 @@ router.get('/admin/blacklisted_group_date_wise_report/:sd/:ed', getBlacklistedGr
 router.get('/admin/defaulter_date_wise_report/:sd/:ed', getDefaulterDateWise);
 router.get('/admin/eod_report/:date', getEOD);
 router.get('/admin/warden_report/:id/:sd/:ed', getWarden);
-
+router.get('/admin/getAllMasterGroups', getAllMasterGroups)
 
 
 router.post('/admin/blacklist_student', createBlacklistedStudent);
